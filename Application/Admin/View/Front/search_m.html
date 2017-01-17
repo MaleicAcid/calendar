@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>搜索结果页</title>
+	<meta charset="utf-8">
+	<meta name="copyright" content="">
+	<meta name="description" content="" id="description">
+	<meta name="keywords" content="">
+	<meta name="author" content="Vanklin">
+	<meta content="yes" name="apple-mobile-web-app-capable">
+	<meta content="black" name="apple-mobile-web-app-status-bar-style">
+	<meta content="telephone=no" name="format-detection">
+	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<link rel="stylesheet" type="text/css" href="__ROOT__/Public/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="__ROOT__/Public/css/index_m.css">
+</head>
+<body >
+	<!-- 搜索框 start-->
+	<div class="search-bar">
+			<form class="search_outer" style="margin-right: 35px;" action="__ROOT__/Admin/Front/getActivityByKeyword">
+				<div class="search-input-wrap input-group" style="width:90%">
+					<span class="input-group-addon">
+						<span class="glyphicon glyphicon-search" onclick="document.forms[0].submit()"></span>
+					</span>
+					<span id="bidui" style="display: none;color:#C1C0C0; "></span>
+					<input type="text" name="keyword" class="search-input form-control" id="search-input" placeholder="搜索" required />
+				</div>
+				<span class="user_icon glyphicon glyphicon-user"><a href="__ROOT__/Home/User/mindex
+">&nbsp;</a></span>
+			</form>
+	</div>
+	<!-- 搜索框 end -->
+	<!-- 图标 start -->
+	<div class="h-nav">
+            <a href="rili_m" >
+            <i class=" h-xf"></i>首页</a>
+            <a href="rili_m">
+            <i class=" h-mf"></i>本月</a>
+            <a href="today_m">
+            <i class=" h-zf"></i> 今日</a>
+            <a href="hot_m">
+            <i class=" h-spxzl"></i>热门</a>  
+	</div>
+	<!-- 图标 end -->
+	<!-- 推荐 start -->
+    <div class="h-mod-pdl">
+		<div class="h-recommend">
+			<label class="home-icon h-rec-tit"></label>
+			<p class="h-rec-box animate" id="recScroll" style="margin-left: 20px">
+				<!-- <a href="javascript:;"><em>●</em>热门事件推荐1</a>
+				<a href="javascript:;"><em>●</em>热门事件推荐2</a>
+				<a href="javascript:;"><em>●</em>热门事件推荐3</a>
+				<a href="javascript:;"><em>●</em>热门事件推荐4</a>
+				<a href="javascript:;"><em>●</em>热门事件推荐1</a> -->
+			</p>	
+		</div>
+	</div>
+    <!-- 推荐 end -->
+    <!-- 日历start -->
+    <div class="container clearfix">
+		<div class="menu fl  clearfix">
+			<div class="menu-header">
+				<span class="text fl">2016-12-18</span>
+				<span class="text fr">星期日</span>
+			</div>
+			<div id="menu-list">
+			  <if condition="!empty($result)">
+			<volist id="vo" name="result">
+				<div class="menu-list">
+					<ul>
+						<li class="list-item item-first">
+							<div class="item-first-div"><a href="/rili/Admin/Front/activitydetm/id/{$vo['id']}" class="item-a">{$vo['title']}</a><a></a></div>
+						</li>
+						<li class="list-item ">
+							<div class="item-bg item-bg-time"><span class="item">{$vo['startdate']}</span></div>
+							<div class="item-bg item-bg-type"><span class="item">{$vo['type']}</span></div>
+						</li>
+						<li class="list-item ">
+							<div class="item-bg item-bg-building"><span class="item">{$vo['address']}</span></div>
+							<a href="/rili/Admin/Front/activitydetm/id/{$vo['id']}" class="more fr">more</a>
+						</li>
+					</ul>
+				</div>	
+				</volist>
+                  <else/>
+                <div class="menu-list">
+					<ul>
+						<li class="list-item item-first">
+							<div class="item-first-div">未找到相关活动</div>
+						</li>
+						 
+					</ul>
+				</div>
+			</if>
+
+
+			<div class="page-change">
+			</div>
+		</div>
+	</div>
+    <!-- 日历end -->
+	<script type="text/javascript" src="__ROOT__/Public/js/jquery-1.6.4.min.js"></script>
+	<script type="text/javascript">
+		$(function(){
+			function getActivity() {
+				var t_itle="";
+				//请求列表数据
+				$.ajax({
+				   url:"__ROOT__/Admin/Front/getHotActivity",
+				   success: function(active){		
+				   		//初始化列表
+				   		$("#recScroll").empty();
+						var div="";
+						for(var i=0;i<5;i++){
+							if(active.length>0){
+								//简介
+								t_itle=active[i].title;										
+								//id
+								i_d=active[i].id;
+								div+="<a href='__ROOT__/Admin/Front/activitydetm/id/"+i_d+"'><em>●</em>"+t_itle+"</a>";		
+							}else{
+								div="<a href='javascript:;'><em>●</em>今日无热门事件</a>";
+							}
+																								
+						}									
+						//追加节点
+						$("#recScroll").append(div);				   		
+				  },
+				error:function(){
+					//alert("数据加载失败");
+				},
+				'type':'post',
+				'dataType':'json', 
+				}); 
+			} 	
+			getActivity();	
+		})
+	</script>
+</body>
+</html>

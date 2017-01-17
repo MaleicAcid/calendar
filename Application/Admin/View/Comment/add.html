@@ -1,0 +1,22 @@
+<div class="pageContent">
+	<form method="post" action="__ROOT__/Admin/Comment/addComment" class="pageForm" onsubmit="return validateCallback(this, dialogAjaxDone);">
+		<div class="pageFormContent" layoutH="56">
+		   <input name="pid" value="{$result.id}" type="hidden">
+		   <input name="activity_id" value="{$result.activity_id}" type="hidden">	 
+			<p>
+				<label>回复内容</label>
+			   <textarea cols="60" rows="10"  class="required" name="comment"></textarea>
+			</p>
+			 
+			 
+		</div>
+		<div class="formBar">
+			<ul>
+				<li><div class="buttonActive"><div class="buttonContent"><button type="submit">保存</button></div></div></li>
+				<li>
+					<div class="button"><div class="buttonContent"><button type="button" class="close">取消</button></div></div>
+				</li>
+			</ul>
+		</div>
+	</form>
+</div>

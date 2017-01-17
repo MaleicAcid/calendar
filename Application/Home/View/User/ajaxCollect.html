@@ -1,0 +1,45 @@
+{__NOLAYOUT__}                                                        
+<empty name="collect_list">
+    <p class="goods_title">您还没有收藏事件</p>
+    <else /> 
+    <foreach name="collect_list" item="vo" key="k">
+        <div class="menu-list" data-collect-id = {$vo.collect_id}>
+            <ul>
+                <li class="list-item item-first">
+                    <div class="item-first-div">
+                        <a href="{:U('Admin/Front/activitydet?id='.$vo['activity_id'].'')}" class="item-a">{$vo.title}<a/>
+                    </div>
+                </li>
+                <li class="list-item">
+                    <div class="item-bg item-bg-time">
+                        <span class="item">{$vo.startdate}</span>
+                    </div>
+                    <div class="item-bg item-bg-type">
+                        <span class="item">{$vo.type}</span>
+                    </div>
+                </li>
+                <li class="list-item ">
+                    <div class="item-bg item-bg-building">
+                        <a href="{:U('Admin/Front/activitydet?id='.$vo['activity_id'].'')}"><span  class="item">查看详情</span></a>
+                    </div>
+
+                    <if condition="($vo['is_overdue'] eq 1)">
+                        <a  class="more fr" style="color:grey;">事件已逾期</a>
+                        <elseif condition="($vo['is_remind'] eq 1) and ($vo['is_comet_remind'] eq 1)"/>
+                            <a href="javascript:void(0)" class="more fr" style="color:grey;">已设置提醒</a>
+                            <else/>
+                            <div class="input-group date form_datetime" style="display: inline-block;width: 180px;margin-left: 15%;vertical-align: bottom;">
+                                <input class="picktime" type="text"  data-startdate = {$vo.starttime} id={$vo.collect_id}  placeholder="设置提醒时间"  style="cursor: pointer;width: 155px;margin-left: 5px;" onclick="setTime(this)">
+                                <span class="input-group-addon" style="width: 20px;padding:0 ;float: right;display:none;"><span class="glyphicon glyphicon-th"></span></span>
+                            </div>
+                            <a style="cursor: pointer;" onclick="addRemind(this)" data-startdate = {$vo.startdate} data-collect-id = {$vo.collect_id} data-enddate = {$vo.enddate} class="more fr clearfix">设置提醒</a>
+                            <!--<a href="javascript:void(0)" data-collect-id = {$vo.collect_id} onclick = "addRemind(this)" class="more fr">设置提醒</a>-->
+                    </if>
+                <!--                                                                            <a href="javascript:void(0)" data-collect-id = {$vo.collect_id} onclick = "addRemind(this)"class="more fr">设置提醒</a>
+                                                                                                <a href="javascript:void(0)" class="more fr" style="color:grey;">已设置提醒</a>-->
+                </li>
+            </ul>
+            <div class="my-target"></div>
+        </div>
+    </foreach>
+</empty>

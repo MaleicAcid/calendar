@@ -1,0 +1,44 @@
+{__NOLAYOUT__}
+<empty name="collect_list">
+    <!-- ajax没有了 -->
+    <p id="no-ajax-content" style="text-align: center;font-size: 16px;color: #575151;padding: 15px 0 18px 0;">没有更多了</p>
+    <else /> 
+    <foreach name="collect_list" item="vo" key="k">
+        <div class="menu-list clearfix" style="height: 91px">
+            <input type="checkbox" class="mycheckbox clearfix" data-collect-id = {$vo.collect_id} name="chkSon" id="ch1" onclick="ChkSonClick('chkSon','chkAll')" style="display: none;">
+            <ul>
+                <li class="list-item item-first">
+                    <div class="item-first-div"><a href="{:U('Admin/Front/activitydetm?id='.$vo['activity_id'].'')}" class="item-a">{$vo.title}<a/></div>
+                </li>
+                <li class="list-item">
+                    <div class="item-bg item-bg-time">
+                        <span class="item">{$vo.startdate}</span>
+                    </div>
+                    <div class="item-bg item-bg-type">
+                        <span class="item">{$vo.type}</span>
+                    </div>
+                </li>
+                <li class="list-item ">
+                    <div class="item-bg item-bg-building">
+                        <span class="item" style="width: 40px;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;display: inline-block;">{$vo.address}</span>
+                    </div>
+                    <if condition="($vo['is_overdue'] eq 1)">
+                        <a  class="more fr" style="color:grey;">事件已逾期</a>
+                        <elseif condition="($vo['is_remind'] eq 1) and ($vo['is_comet_remind'] eq 1)"/>
+                        <a href="javascript:void(0)" class="more fr" style="color:grey;">已设置</a>
+                        <else/>
+
+                        <div class="input-group date form_datetime" style="display: inline-block;width: 150px;margin-left: 3%;vertical-align: super;">
+                            <input class="picktime" type="text"  data-startdate = {$vo.starttime} id={$vo.collect_id}  placeholder="设置提醒时间"  style="width: 125px;margin-left: 5px;" onclick="setTime(this)">
+                            <span class="input-group-addon" style="width: 20px;padding:0 ;float: right;display:none;"><span class="glyphicon glyphicon-th"></span></span>
+                        </div>
+                        <a onclick="addRemind(this)" data-startdate = {$vo.startdate} data-collect-id = {$vo.collect_id} data-enddate = {$vo.enddate} class="more fr clearfix">设置提醒</a>
+                    </if>
+
+                </li>
+            </ul>
+            <div class="my-target"></div>
+        </div>
+    </foreach>
+</empty>
+</html>

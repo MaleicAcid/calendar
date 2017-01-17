@@ -1,0 +1,79 @@
+<form id="pagerForm" action="__ROOT__/Admin/Color/colorList" method="post">
+	<input type="hidden" name="page" value="{$currentPage}"/>
+	<input type="hidden" name="color" value="{$color}"/>
+</form>
+<div class="pageHeader">
+	<form rel="pagerForm" onsubmit="return navTabSearch(this);" action="__ROOT__/Admin/Color/colorList" method="post">
+	<div class="searchBar">
+		<ul class="searchContent">
+			<li>
+				<label>用户名：</label>
+				<input type="text" name="color" value="{$color}" alt="请输入颜色值"/>
+				<input type="hidden" name="page" value="{$currentPage}"/>
+			</li>
+		</ul>
+		<div class="subBar">
+			<ul>
+				<li><div class="buttonActive"><div class="buttonContent"><button type="submit">查询</button></div></div></li>
+			</ul>
+		</div>
+	</div>
+	</form>
+</div>
+
+<div class="pageContent">
+	<div class="panelBar">
+		<ul class="toolBar">
+
+			<li><a class="add" href="__ROOT__/Admin/Color/add" target="dialog" mask="true" height="380"><span>新增</span></a></li>
+			<li><a class="delete" href="__ROOT__/Admin/Color/delColor/id/{sid_user}" target="ajaxTodo" title="你确定要删除吗？" warn="请选择用户"><span>删除</span></a></li>
+			<li><a class="edit" href="__ROOT__/Admin/Color/editColorView/id/{sid_user}" target="dialog" mask="true" warn="请选择用户" height="380"><span>编辑</span></a></li>
+
+		</ul>
+	</div>
+
+	<table class="table" width="100%" layoutH="138">
+		<thead>
+		<tr>
+			<th width="100">序号</th>
+			<th>颜色代码</th>
+            <th>颜色</th>
+			<th>颜色名称</th>
+			<th>创建时间</th>
+			<th>创建者</th>
+		</tr>
+		</thead>
+		<tbody>
+		<volist id="vo" name="result">
+			<tr target="sid_user" rel="{$vo['id']}">
+				<td>{$vo['id']}</td>
+				<td>{$vo['color']}</td>
+				<td style="background-color:{$vo['color']}"></td>
+				<td>{$vo['colorname']}</td>
+				<td>{$vo['createdate']}</td>
+				<td>{$vo['creator']}</td>
+			 
+			</tr>
+		</volist>
+		</tbody>
+	</table>
+ 
+	<div class="panelBar">
+		<div class="pages">
+			<span>显示</span>
+			<select class="combox" name="numPerPage"
+				onchange="navTabPageBreak({numPerPage:this.value})">
+				<option value="20">
+					20
+				</option>
+			</select>
+			<span>条，共{$totalCount}条，共{$totalPage }页</span>
+		</div>
+
+		<div class="pagination" targetType="navTab"
+			totalCount="{$totalCount}" numPerPage="{$pageSize }"
+			pageNumShown="10" currentPage="{$currentPage }"></div>
+	</div>
+</div>
+
+

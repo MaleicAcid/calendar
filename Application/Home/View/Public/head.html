@@ -1,0 +1,48 @@
+
+
+
+<notempty name='Think.session.user'>
+    <header role="header" class="head_wrap">
+        <div class="main_head">
+            <a href="#"><img id="logo_img" src="__ROOT__/Public/image/logo_img.png"/></a>
+            <span class="head_txt">{$Think.session.user.user_mail},<a href="{:U('User/index')}">个人中心</a> [<a href="{:U('User/logout')}">退出系统</a>] </span>
+            <div class="search_wrap">
+                <form action="__ROOT__/Admin/Front/getActivityByKeyword">
+                    <input type="text" name="keyword" class="search_input"/><input type="submit" class="search_btn button" value="搜索">
+                </form> 
+            </div>
+        </div>
+        <div class="sub_head_wrap">
+            <ul class="sub_head">
+                <li style="margin-left: 65px;border-left: none;"><a href="{:U('Admin/Front/rili')}">首页</a></li>
+                <li><a href="{:U('Admin/Front/year')}">今年</a></li>
+                <li><a href="{:U('Admin/Front/rili')}">本月</a></li>
+                <li><a href="{:U('Admin/Front/week')}">本周</a></li>
+                <li><a href="{:U('Admin/Front/today')}">今日</a></li>
+                <li style="border-right: none;"><a href="{:U('Admin/Front/hot')}">热门</a></li>
+            </ul>
+        </div>
+    </header>
+    <else />
+    <header role="header" class="head_wrap">
+        <div class="main_head">
+            <a href="#"><img id="logo_img" src="__ROOT__/Public/image/logo_img.png"/></a>
+            <span class="head_txt">欢迎进入日历网<a class="register_txt" href={:U('User/reg')}>注册</a>或<a href={:U('User/login')}>登录</a></span>
+            <div class="search_wrap">
+                <form action="__ROOT__/Admin/Front/getActivityByKeyword">
+                    <input type="text" name="keyword" class="search_input"/><input type="submit" class="search_btn button" value="搜索">
+                </form>
+            </div>
+        </div>
+        <div class="sub_head_wrap">
+            <ul class="sub_head">
+                <li style="margin-left: 65px;border-left: none;"><a href="#">首页</a></li>
+                <li><a href="#">今年</a></li>
+                <li><a href="#">本月</a></li>
+                <li><a href="#">本周</a></li>
+                <li><a href="#">今日</a></li>
+                <li style="border-right: none;"><a href="#">热门</a></li>
+            </ul>
+        </div>
+    </header>
+</notempty>

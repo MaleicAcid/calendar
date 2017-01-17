@@ -1,0 +1,169 @@
+﻿<!DOCTYPE html>
+<html>
+<!--[if lte IE 9]><div style="position:absolute;z-index:999;width:1920px;height:1500px;color:red;background-color:white;font-size:50px;">为了更好的用户体验，我们强烈建议你升级浏览器到IE10或者更高,<a target="_blank" href="https://support.microsoft.com/zh-cn/help/17621/internet-explorer-downloads">浏览器升级入口</a></div><![endif]-->
+<head>
+	<title>主页</title>
+	<meta charset="utf-8">
+	
+	<meta name="description" content="" id="description">
+	<meta name="keywords" content="">
+	<meta name="author" content="Vanklin">
+	<link rel="stylesheet" type="text/css" href="__ROOT__/Public/css/style.css">
+	<link rel="stylesheet" type="text/css" href="__ROOT__/Public/css/simple-calendar.css">
+	<script type="text/javascript" src="__ROOT__/Public/js/jquery-1.6.4.min.js"></script>
+	<script type="text/javascript" src="__ROOT__/Public/js/simple-calendar.js"></script>
+</head>
+<body>
+
+
+<div id="container">
+</div>
+
+<script type="text/javascript">
+	var myCalendar = new SimpleCalendar('#container');
+	var options = {
+		language: 'CH', //语言
+		showLunarCalendar: false, //阴历
+		showHoliday: false, //休假
+		showFestival: false, //节日
+		showLunarFestival: false, //农历节日
+		showSolarTerm: false, //节气
+		showMark: false, //标记
+		timeRange: {
+			startYear: 2000,
+			endYear: 2049
+		},
+		theme: {
+			changeAble: false,
+			weeks: {
+				backgroundColor: '#FBEC9C',
+				fontColor: '#4A4A4A',
+				fontSize: '20px',
+			},
+			days: {
+				backgroundColor: '#ffffff',
+				fontColor: '#565555',
+				fontSize: '24px'
+			},
+			todaycolor: 'orange',
+			activeSelectColor: 'orange',
+		}
+	}
+	//删除节气节点
+	$(".lunar-day").hide();
+</script>
+<script type="text/javascript">
+	$(function() {
+		//初始化event
+		//获取所有表格的内容
+		var td = $(".sc-item");//获取当前页日期节点
+		var endday = getDays(Year,Month);;//本月最后一天
+		var selectYear = $('.sc-select-year');//获取当前页年份
+		var selectMonth = $('.sc-select-month');//获取当前页月
+		var Month ='';//初始化月
+		if(selectMonth.val().length==2){
+			Month = selectMonth.val();
+		}else{
+			Month = '0'+selectMonth.val();
+		}
+		var Year = selectYear.val();
+		//根据指定的年月获取当月天数
+		var getDays = function(year, month) {
+			// month 取自然值，从 1-12 而不是从 0 开始
+			return new Date(year, month, 0).getDate();
+			// 如果 month 按 javascript 的定义从 0 开始的话就是
+			// return new Date(year, month + 1, 0).getDate()
+		}
+		//遍历当前页的日期做清空事件处理函数
+		var clearEvent = function(){
+			$.each($(".sc-item"),function(){
+				$(".event").remove();
+				if($(this).find(".event_label")){
+					$(".event_label").remove();
+				}
+			})
+		};
+		//动态获取改变后的日期
+		var getActiveDay = function(){
+			if(td.find(".day").change()){
+				td.find(".day").live('change',function(){
+					td = $(".sc-item");
+				})
+			}else{
+				console.log(" getActivetyDay function false");
+			}
+		}
+		//获取改变后的年月
+		selectYear.live("change",function(){
+			clearEvent();
+			Year = $(this).val();
+			endday = getDays(Year,Month);
+			getActiveDay();
+			changeEvent();
+		});
+		selectMonth.live("change",function(){
+			clearEvent();
+			Year = selectYear.val();
+			if($(this).val().length==2){
+				Month = $(this).val();
+			}else{
+				Month = '0'+$(this).val();
+			}
+			endday = getDays(Year,Month);
+			getActiveDay();
+			changeEvent();
+		})
+		//ajax请求后端数据
+		function changeEvent(){
+			$.ajax({
+				'url':'__ROOT__/Admin/Activity/getMonthActivity',
+				'data':'startdate='+Year+'-'+Month+'-'+'01'+'&enddate='+Year+'-'+Month+'-'+endday,
+				'success':function(dt){
+					//遍历当前页日期节点
+					$.each(td,function(){
+						//判断是否为有效的日期节点
+						if($(this).children(".day").css("color")!=$("#bidui").css("color")){
+							//添加指定日期的事件到$(this)标签内
+							var $sc_item = $(this);
+							$.each(dt.data, function(i, item) {
+								//获取事件的日期
+								activitydates = item.activitydate;
+								//筛选指定日期
+								if($sc_item.children(".day").text()==activitydates.substring(8,10)){
+									//添加事件
+									$sc_item.append(
+											"<div class='event' style='background:"+item.color+"' url=' '>&nbsp;<span class='time'></span>"+
+											"<span class='datetime'>"+item.startdate.substring(11,16)+"</span>"+
+											"<span class='company'>"+item.content+"</span></div>");
+								}
+							});
+							$.each(dt.count, function(j, items) {
+								countsday = items.activitydate.substring(8,10);
+								counts = items.count;
+								if($sc_item.children(".day").text()==countsday){
+									if($sc_item.find(".event").length>=3){
+										//删除多余事件节点
+										$sc_item.find(".event:gt(2)").remove();
+										//添加事件标签
+										$sc_item.css({"position":"relative","overflow":"hidden"}).append(
+												"<div class='event_label'>本日事件:"+counts+"&nbsp;</div>");
+									}
+								}
+							});
+						}
+					});
+				},
+				'type':'post',
+				'dataType':'json',
+			});
+		}
+		//初始化的显示当前月事件
+		changeEvent();
+		//鼠标样式
+		$('div.event').mousemove(function(){$('div.event').addClass("pointer")});
+		// 添加链接
+		$('div.event').click(function(){window.location.href= $(this).attr('url');});
+	});
+</script>
+</body>
+</html>

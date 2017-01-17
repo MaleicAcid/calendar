@@ -1,0 +1,25 @@
+<notempty name='Think.session.user'>
+	<div class="top-header">
+		<a id="back-btn" href="javascript:history.go(-1)" class="top-header-back">返回</a>
+	</div>
+	<div class="bottom-header">
+		 <a class="user-pic" href="javascript:;">
+		 	<img src="{$Think.config.IMG_URL}userlogo.png" alt="用户头像">
+		 </a><br>
+<!--		 <a href="javascript:;" class="btn-header">登录</a>
+		 <a href="javascript:;" class="btn-header">注册</a> -->
+		 <span class="myid" style="display: inline-block;">欢迎回来,{$user.user_mail}</span> <!-- 登录成功,休改display为inline-block -->
+	</div>
+    <else />
+	<div class="top-header">
+		<a id="back-btn" href="javascript:history.go(-1)" class="top-header-back">返回</a>
+	</div>
+	<div class="bottom-header">
+		 <a class="user-pic" href="javascript:;">
+		 	<img src="{$Think.config.IMG_URL}userlogo.png" alt="用户头像">
+		 </a><br>
+		 <a href="javascript:;" class="btn-header">登录</a>
+		 <a href="javascript:;" class="btn-header">注册</a> 
+		 <span class="myid" style="display: none;">你好,某某某</span> <!-- 登录成功,休改display为inline-block -->
+	</div>
+</notempty>

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="description" content="" id="description">
+	<meta name="keywords" content="">
+	<meta name="author" content="Pzj">
+	<title>我的资料</title>
+	<script type="text/javascript" src="__ROOT__/Public/js/jquery-1.6.4.min.js"></script>
+	<link rel="stylesheet" href="__ROOT__/Public/css/reset_m.css">
+	<link rel="stylesheet" href="__ROOT__/Public/css/myinformation_m.css">
+</head>
+<body>
+	<!-- 最上面 -->
+	<div class="top-header">
+		<a id="back-btn" href="javascript:history.go(-1)" class="top-header-back">返回</a>
+		<span>我的资料</span>
+		<i class="edit-icon"></i>
+		<span class="save">保存</span>
+	</div>
+	<!-- 编辑资料 -->
+	<div class="container">
+		<div class="my-header">
+			<a class="user-pic" href="javascript:;">
+			 	<img src="__ROOT__/Public/image/userlogo.png" alt="用户头像">
+			</a>
+			<span>我的邮箱@qq.com</span>
+		</div>
+		<div class="my-name my-header">
+			<span>我的姓名</span>
+			<i class="my-postion edit-inf">my name</i>
+			<input type="text" value="my name" class="input-postion myinput">
+		</div>
+		<div class="my-class my-header">
+			<span>专业班级</span>
+			<i class="my-postion edit-inf">计算机</i>
+			<input type="text" value="计算机" class="input-postion myinput">
+		</div>
+		<div class="my-state my-header">
+			<span>邮箱状态</span>
+			<i class="my-postion">未激活</i> 
+		</div>
+	</div>
+
+	<script>
+		//信息保存
+		function saveInfo() {
+			$('.save').click(function(){				
+				$(this).css("display","none");	 
+				$(this).parent().find(".edit-icon").show();
+				$(".my-name input[type='text']").css("display","none");
+				$(".my-class input[type='text']").css("display","none");
+				var edit_inf=document.getElementsByClassName("edit-inf");
+				var myname="";
+				var myclass="";
+				for(var i=0;i<edit_inf.length;i++){
+					myname=edit_inf[0].innerHTML;
+					myclass=edit_inf[1].innerHTML;					
+				}
+
+				var input_inf=document.getElementsByClassName("myinput");
+				var inputname="";
+				var inputclass="";
+				for(var i=0;i<input_inf.length;i++){
+					inputname=input_inf[0].value;
+					inputclass=input_inf[1].value;					
+				}
+
+			});			 
+		}
+		saveInfo();
+
+		//信息编辑
+		function myEdit() {
+			$('.edit-icon').click(function(){		
+				$(".my-name input[type='text']").css("display","inline-block");
+				$(".my-class input[type='text']").css("display","inline-block");
+				$(this).hide(); 
+				$(this).parent().find(".save").css("display","inline-block");
+				 
+			});
+			$('.my-thing').click(function() {
+				//$(this).siblings().slideUp();
+			/*	$('.submenu').fadeOut();
+				$('.submenu').fadeIn();*/
+				var flag = $(".submenu").css("display");
+		        if(flag == 'none') {
+		            $(".submenu").show();
+		            $('.sidebar .nav .menu-sub .icon').css("background-image","url(image/i_02.png)");
+		        }else {
+		            $(".submenu").hide();
+		            $('.sidebar .nav .menu-sub .icon').css("background-image","url(image/i_01.png)");
+		        }
+				 return false;
+			});
+		}
+		myEdit();
+	</script>
+</body>
+</html>

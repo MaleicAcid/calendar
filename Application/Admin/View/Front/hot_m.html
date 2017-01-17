@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>热门</title>
+	<meta charset="utf-8">
+	<meta name="copyright" content="">
+	<meta name="description" content="" id="description">
+	<meta name="keywords" content="">
+	<meta name="author" content="Vanklin">
+	<meta content="yes" name="apple-mobile-web-app-capable">
+	<meta content="black" name="apple-mobile-web-app-status-bar-style">
+	<meta content="telephone=no" name="format-detection">
+	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<link rel="stylesheet" type="text/css" href="__ROOT__/Public/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="__ROOT__/Public/css/index_m.css">	
+	<style type="text/css">
+		.list-item :first-child{width:60%;}
+	</style>
+</head>
+<body >
+	<!-- 搜索框 start-->
+	<div class="search-bar">
+			<form class="search_outer" style="margin-right: 35px;" action="__ROOT__/Admin/Front/getActivityByKeyword">
+				<div class="search-input-wrap input-group" style="width:90%">
+					<span class="input-group-addon">
+						<span class="glyphicon glyphicon-search" onclick="document.forms[0].submit()"></span>
+					</span>
+					<span id="bidui" style="display: none;color:#C1C0C0; "></span>
+					<input type="text" name="keyword" class="search-input form-control" id="search-input" placeholder="搜索" required />
+				</div>
+				<span class="user_icon glyphicon glyphicon-user"><a href="__ROOT__/Home/User/mindex
+">&nbsp;</a></span>
+			</form>
+	</div>
+	<!-- 搜索框 end -->
+	<!-- 图标 start -->
+	<div class="h-nav">
+            <a href="rili_m" >
+            <i class=" h-xf"></i>首页</a>
+            <a href="week_m">
+            <i class=" h-mf"></i>本周</a>
+            <a href="today_m">
+            <i class=" h-zf"></i> 今日</a>
+            <a href="javascript:;">
+            <i class=" h-spxzl"></i>热门</a>  
+	</div>
+	<!-- 图标 end -->
+	<!-- 推荐 start -->
+    <div class="h-mod-pdl">
+		<div class="h-recommend">
+			<label class="home-icon h-rec-tit"></label>
+			<p class="h-rec-box animate" id="recScroll" style="margin-left: 20px">
+				<!-- <a href="javascript:;"><em>●</em>热门事件推荐1</a>
+				<a href="javascript:;"><em>●</em>热门事件推荐2</a>
+				<a href="javascript:;"><em>●</em>热门事件推荐3</a>
+				<a href="javascript:;"><em>●</em>热门事件推荐4</a>
+				<a href="javascript:;"><em>●</em>热门事件推荐1</a> -->
+			</p>	
+		</div>
+	</div>
+    <!-- 推荐 end -->
+    <!-- 日历start -->
+    <div class="container clearfix">
+	    <div class="menu fl  clearfix">
+			<div class="menu-header">
+				<span class="text fl"> </span>
+				<span class="text fr"></span>
+			</div>	
+			<div id="menu-list">
+					
+			</div>		
+			<div class="page-change">
+			</div>
+		</div>
+	</div>
+    <!-- 日历end -->
+	<script type="text/javascript" src="__ROOT__/Public/js/jquery-1.6.4.min.js"></script>
+	<script type="text/javascript">
+		$(function(){
+			function getActivity() {
+				var t_itle="";
+				//请求列表数据
+				$.ajax({
+				   url:"__ROOT__/Admin/Front/getHotActivity",
+				   success: function(active){		
+				   		//初始化列表
+				   		$("#recScroll").empty();
+						var div="";
+						for(var i=0;i<5;i++){
+							if(active.length>0){
+								//简介
+								t_itle=active[i].title;										
+								//id
+								i_d=active[i].id;
+								div+="<a href='__ROOT__/Admin/Front/activitydetm/id/"+i_d+"'><em>●</em>"+t_itle+"</a>";		
+							}else{
+								div="<a href='javascript:;'><em>●</em>今日无热门事件</a>";
+							}
+																								
+						}									
+						//追加节点
+						$("#recScroll").append(div);				   		
+				  },
+				error:function(){
+					//alert("数据加载失败");
+				},
+				'type':'post',
+				'dataType':'json', 
+				}); 
+			} 	
+			getActivity();	
+		})
+	</script>
+	<script type="text/javascript">
+		var myDate = new Date();
+		function getDate(){			
+			//获取当日日期
+			var day=myDate.getDate()+'';
+			var month=(myDate.getMonth()+1)+'';
+			var year=myDate.getFullYear();
+			var week=myDate.getDay();
+			
+
+			if(day.length==2){
+  				day = day;
+  			}else{
+  				day = '0'+day;
+  			}
+			if(month.length==2){
+  				month = month;
+  			}else{
+  				month = '0'+month;
+  			}
+			return  year+'-'+month+'-'+day ; 
+		}
+		function getWeek(){
+			//初始化星期
+			var weekday=new Array(7)
+			weekday[0]="星期日"
+			weekday[1]="星期一"
+			weekday[2]="星期二"
+			weekday[3]="星期三"
+			weekday[4]="星期四"
+			weekday[5]="星期五"
+			weekday[6]="星期六" 
+			return weekday;
+		}
+
+		$(function(){
+			var mydate=getDate();
+			var myweek=getWeek();
+			var curPage = 1; //当前页码
+			var total,pageSize,totalPage;
+			$(".menu-header :first-child").text("热门事件").css({"font-size":"16px"});
+			function getActivity() {
+				var t_itle="";
+				var s_tartdate="";
+				var e_nddate="";
+				//请求列表数据
+				$.ajax({
+				   url:"__ROOT__/Admin/Front/getHotActivity",
+				   success: function(active){		
+				   		//初始化列表
+				   		$("#menu-list").empty();
+						var div="";
+						for(var i=0;i<active.length;i++){
+							if(active.length>0){
+								//时间 
+								s_tartdate=active[i].startdate;																								
+								e_nddate=active[i].enddate;							
+								t_ime=s_tartdate.substr(0,10)+' '+s_tartdate.substr(11,16); 
+								//简介
+								t_itle=active[i].title;								
+								//地址
+								address=active[i].address;
+								//类型
+								t_ype=active[i].type;
+								i_d=active[i].id;
+								div+="<div class='menu-list'><ul><li class='list-item item-first'><div class='item-first-div'><a href='__ROOT__/Admin/Front/activitydetm/id/"+i_d+"' class='item-a'>"+t_itle+"<a/></div></li><li class='list-item '><div class='item-bg item-bg-time'><span class='item'>"+t_ime+"</span></div><div class='item-bg item-bg-type'><span class='item'>"+t_ype+"</span></div></li><li class='list-item '><div class='item-bg item-bg-building'><span class='item'>"+address+"</span></div><a href='__ROOT__/Admin/Front/activitydetm/id/"+i_d+"' class='more fr'>more</a></li></ul></div>";		
+							}else{
+								div="<div class='menu-list'><ul><li class='list-item item-first'>无热门内容</li></ul></div>";
+							}
+																								
+						}									
+						//追加节点
+						$("#menu-list").append(div);	
+										   		
+				  },
+				error:function(){
+					//alert("数据加载失败");
+				},
+				'type':'post',
+				'dataType':'json', 
+						}); 
+			} 	
+			getActivity();
+									 
+			function getTab(page){
+				//请求热点新闻数据
+				$.ajax({
+					url:"__ROOT__/Admin/Front/getDayActivity",
+				   	'data': {'startdate':mydate,'page':page},
+				    success: function(active){	 
+				    	$("#hot-news").empty();
+				   		total = active.count; //总记录数				   		
+						pageSize = 5; //每页显示条数
+						curPage = page; //当前页
+						totalPage = Math.ceil(total/pageSize); //总页数 
+						
+						var div=""; 
+						if(total==0){
+							div="<div class='new-list'><ul><li class='list-item item-first'>今日无内容</li></ul></div>";
+							$("#mybtn").remove();
+							totalPage=1;
+						}else{
+							for(var i=0;i<active.data.length;i++){
+								t_itle=active.data[i].title;	
+								//获取日期
+								s_tartdate=active.data[i].startdate;						
+								t_ime=s_tartdate.substr(5,6); 
+								i_d=active.data[i].id;
+								div+="<li class='hot-item fl clearfix'><a href='__ROOT__/Admin/Front/activitydetm/id/"+i_d+"' class='fl'>"+t_itle+"</a><div class='fr date'>"+t_ime+"</div>";
+							}
+						}
+
+						//追加节点
+						$("#hot-news").append(div);	
+					},complete:function(){ //生成分页条
+						getPageBar();
+					},'type':'post'
+					,'dataType':'json',
+				});
+			} 
+
+			//获取分页条
+			function getPageBar(){
+				//页码大于最大页数
+				if(curPage>totalPage) {curPage=totalPage;}
+				
+				//页码小于1
+				if(curPage<1) {curPage=1;}
+				pageStr = "";
+				
+				//如果是第一页
+				if(curPage==1){
+					pageStr += "<span>上一页</span>";
+				}else{
+					pageStr += "<span><a href='javascript:void(0)' rel='"+(curPage-1)+"'>上一页</a></span>";
+				}
+				
+				//如果是最后页
+				if(curPage>=totalPage){
+					pageStr += "<span>下一页</span>";
+				}else{
+					pageStr += "<span><a href='javascript:void(0)' rel='"+(parseInt(curPage)+1)+"'>下一页</a></span>";
+				}
+					
+				$(".btn-new-group").html(pageStr);
+			}
+
+			getTab(1);
+			$(".btn-group span a").live('click',function(){
+				var rel = $(this).attr("rel");
+				if(rel){
+					getTab(rel);
+				}
+			});
+		})
+	</script>
+</body>
+</html>

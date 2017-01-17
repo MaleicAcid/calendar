@@ -1,0 +1,179 @@
+{__NOLAYOUT__}
+<!DOCTYPE html>
+<html lang="zh">
+    <head>
+        <title>登录</title>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+        <meta name="description" content="网页登陆">
+        <meta name="author" content="Vanklin">
+
+        <!-- Bootstrap -->
+        <link href="{$Think.config.CSS_URL}bootstrap.min.css" rel="stylesheet">
+        <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+          <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+          <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+        <![endif]-->
+        
+        	<style>
+	    .input-group{
+			margin:10px 0;width: 100%;
+		}
+		h3{
+			padding:5px;
+			border-bottom:1px solid #ddd;
+			margin-right: 10px;
+		}
+	    .vertical-center{
+		  position: absolute;
+		  width:450px;
+		  height:400px;
+		  top: 50%;
+		  left: 50%;
+		  transform: translate(-50%, -50%);
+		}
+		.container{width: 100%;margin-left: 0px;}
+		.btn-mysuccess{color: #fff;background-color: #5390FC;}
+		.btn:hover, .btn:focus, .btn.focus{color: #fff;}
+
+		.my-message{display: inline-block;width: 170px;font-size: 11px;color:#F41E1E;}
+		.well .form-control{width: 250px;}
+
+		.well input[type=button].btn-block{margin-top: 17px;}
+	</style>
+    </head>
+
+    <body>
+	<form action="{:U('do_login')}" method="post">
+       <div class="vertical-center">
+			<div class="well" style="background-color: #B9DBFF">
+				<h3><center>用户登录</center></h3>
+				<div class="container" style="padding: 0 10%;">
+				<div class="input-group input-group-md">
+					<span class="input-group-addon" >
+					<i class="glyphicon glyphicon-user" aria-hidden="true"></i></span>
+					<input type="text" name="username" id="username" maxlength="50" minlength="4" class="form-control" placeholder="邮箱" aria-describedby="sizing-addon1" style="width: 100%">
+					
+				</div>
+				<div class="input-group input-group-md">
+					<span id="my-name" class="my-message"></span>
+				</div>
+				<div class="input-group input-group-md">
+					<span class="input-group-addon" >
+					<i class="glyphicon glyphicon-lock"></i></span>
+					<input type="password" name="password" id="password" maxlength="16" minlength="4" class="form-control" placeholder="密码" aria-describedby="sizing-addon1" style="width: 100%">
+					
+				</div>
+				<div class="input-group input-group-md">
+					<span id="my-pwd" class="my-message"></span>
+				</div>
+				
+					<input type="button" class="btn btn-mysuccess btn-block my-tn" value="登录" onclick="checkLog()">
+<!--					<input type="button" onclick="checkLog()" class="btn btn-warning btn-block" value="注册">-->
+				</div>
+			</div>
+                   <a style="position: relative;left: 100px" href="{:U('User/reg')}">没有账户?点击注册</a>
+			</div>
+	</form>
+
+    <script>
+    function verify(){
+       $('#verify_code_img').attr('src','/index.php?m=Home&c=User&a=verify&r='+Math.random());
+    }
+
+    function IsPC(){  
+	    var userAgentInfo = navigator.userAgent;  
+	    var Agents = new Array("Android", "iPhone", "SymbianOS", "Windows Phone", "iPad", "iPod");  
+	    var flag = true;  
+	    for (var v = 0; v < Agents.length; v++) {  
+	        if (userAgentInfo.indexOf(Agents[v]) > 0) { flag = false; break; }  
+	    }  
+	    return flag;  
+	}    
+    
+	function checkLog()
+	{
+		var username = $.trim($('#username').val());
+		var password = $.trim($('#password').val());
+		//var referurl = $('#referurl').val();
+		//var verify_code = $.trim($('#verify_code').val());
+		if(username == ''){
+			showHtmlMessage("#my-name","<span class='glyphicon glyphicon-remove'></span>邮箱不能为空");
+			return false;
+		}
+		if(username !=''){
+			showHtmlMessage("#my-name","<span class='glyphicon glyphicon-ok' style='color:green;'></span>");
+		}
+		if(!checkEmail(username)){
+			showHtmlMessage("#my-name","<span class='glyphicon glyphicon-remove'></span>请填写正确的邮箱");
+			return false;
+		}
+		if(checkEmail(username)){
+			showHtmlMessage("#my-name","<span class='glyphicon glyphicon-ok' style='color:green;'></span>");
+		}
+		if(password == ''){
+			showHtmlMessage("#my-pwd","<span class='glyphicon glyphicon-remove'></span>密码不能为空");
+			return false;
+		}
+		if(password !=''){
+			showHtmlMessage("#my-pwd","<span class='glyphicon glyphicon-ok' style='color:green;'></span>");
+		}
+
+                
+//		if(verify_code == ''){
+//			showErrorMsg('验证码不能为空!');
+//			return false;
+//		}
+		
+		$.ajax({
+			type : 'post',
+			url : '__ROOT__/Home/User/do_login',
+			data : {username:username,password:password},
+			dataType : 'json',
+			success : function(res){
+				if(res.status == 1){
+					//window.location.href = "{:U('Admin/Front/rili','','')}";
+					if(IsPC()){
+						location.href="__ROOT__/Admin/Front/rili";
+					}else{
+						location.href="__ROOT__/Admin/Front/rili_m";
+					}
+				}else{
+					showHtmlMessage("#my-pwd","<span class='glyphicon glyphicon-remove'></span>账户或密码错误");
+					//verify();
+				}
+			},
+//			error : function(XMLHttpRequest, textStatus, errorThrown) {
+//				showErrorMsg('网络失败，请刷新页面后重试');
+//			}
+		})
+		
+	}
+    
+    function checkEmail(str){
+        var reg = /^[a-z0-9]([a-z0-9\\.]*[-_]{0,4}?[a-z0-9-_\\.]+)*@([a-z0-9]*[-_]?[a-z0-9]+)+([\.][\w_-]+){1,5}$/i;
+        if(reg.test(str)){
+            return true;
+        }else{
+            return false;
+        }
+    }
+    
+    function showErrorMsg(msg){
+    	alert(msg);
+    }
+
+    function showHtmlMessage(myid,msg) {
+    	$(myid).html(msg);
+    }
+</script>
+
+        <script src="{$Think.config.JS_URL}jquery-1.11.1.min.js"></script>
+        <script src="{$Think.config.JS_URL}bootstrap.min.js"></script>
+        
+
+    </body>
+</html>

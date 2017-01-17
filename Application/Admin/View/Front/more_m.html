@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="description" content="" id="description">
+	<meta name="keywords" content="">
+	<meta name="author" content="Pzj">
+	<title>{$result['title']}</title>
+	<script type="text/javascript" src="__ROOT__/Public/js/jquery-1.6.4.min.js"></script>
+	<link rel="stylesheet" href="__ROOT__/Public/css/bootstrap.css">	
+	<link rel="stylesheet" href="__ROOT__/Public/css/reset_m.css">	
+	<link rel="stylesheet" href="__ROOT__/Public/css/more_m.css">
+	<script>
+	function collect(activity_id){
+		$.ajax({
+			type : 'post',
+			url : '__ROOT__/Home/User/collect_activity',
+			data : {'activity_id':activity_id},
+			dataType : 'json',
+			success : function(res){
+				if("{$_SESSION['user']['username']}"==""){
+					alert("请先登录！");
+					location.href="__ROOT__/Home/User/login";
+				}
+				if(res.status == 1){
+					alert("收藏成功!");
+					window.location.reload();
+				}else if(res.status== -3){
+					alert("您已经取消收藏");
+					window.location.reload();
+				}else if(res.status == -1){
+					alert('请先登录.');
+					location.href="__ROOT__/Home/User/login";
+				}
+
+			},
+			error : function(XMLHttpRequest, textStatus, errorThrown) {
+				alert('收藏失败,请先登录');
+				location.href="__ROOT__/Home/User/login";
+			}
+
+		})
+	}
+	$(function(){
+		/*发表评论为空*/
+		$(".mybtn").live('click',function(){
+			var comment=$('.myarea').val();
+			if(comment.length==0){
+				alert("请输入内容!");
+				$('.myarea').focus();
+				return false;
+			}else if(comment.length<5){
+				alert("输入内容太少哟!");
+				return false;
+			}else{
+				if("$_SESSION['user']['username']"){
+					alert("提交失败，请先登录!");
+				}else{
+					alert("提交成功!");
+				}
+			}
+		});
+	});	
+	</script>
+</head>
+<body>
+	<!-- 返回按钮+事件简介 -->
+	<div class="top-header">
+		<a id="back-btn" href="javascript:history.go(-1)" class="top-header-back">返回</a>
+		<span>{$result['title']}</span>
+		<!-- 可以返回到个人中心页 -->
+		<a href="__ROOT__/Home/User/mindex
+"">
+			<i class="user-icon glyphicon glyphicon-user"></i>
+		</a>	
+	</div>
+	<!-- 事件标题 -->
+	<div class="title">
+		<span>{$result['title']} </span>
+		<div class="line"></div>
+		<if condition="$status eq 0">
+			<a href="javascript:collect('{$result['id']}')">收藏本活动</a>
+			<else/>
+			<a href="javascript:collect('{$result['id']}')">取消收藏</a>
+		</if>
+
+	</div>
+	<!-- 具体事宜 -->
+	<div class="job-info">
+		<p class="address">
+			<span>
+				<i class="icon" title="举办地址"></i>
+				<span>{$result['address']}</span>
+			</span>					
+		</p>
+		<p>				
+			<span>开始时间：</span>
+			<span>{$result['startdate']}</span>			
+		</p>
+		<p>
+			<span class="">结束时间：</span>
+			<span>{$result['enddate']}</span>
+		</p>
+		<p class="type">
+			<span>
+				<i class="icon" title="类型"></i>
+				<span>{$result['type']}</span>
+			</span>	
+		</p>
+		<!--<p>-->
+			<!--<span>-->
+				<!--<span>联系人：</span>-->
+				<!--<span>{$result['people']}</span>-->
+			<!--</span>	-->
+		<!--</p>-->
+		<!--<p class="phone">-->
+			<!--<span>-->
+				<!--<i class="myphone-icon glyphicon glyphicon-phone" title="手机"></i>-->
+				<!--<span>{$result['telephone']}</span>-->
+			<!--</span>	-->
+		<!--</p>-->
+		<p>
+			<span>
+				<span>浏览次数：</span>
+				<span>{$result['readcount']}</span>
+			</span>	
+		</p>
+		<p>
+			<span>
+				<span>评论次数：</span>
+				<span>{$result['commentcount']}</span>
+			</span>	
+		</p>
+	</div>
+	<!-- 事件详情 -->
+	<div class="detail">
+		<div class="job-title">
+			<span class="detail-line"></span>
+			<span>活动简介：</span>
+		</div>
+		<?php
+					$content =htmlspecialchars_decode($result['content']);
+					?>
+		<div class="deatil-cont">
+			<span>{$content} </span>
+		</div>
+	</div>
+	<!-- 分享 -->
+	<!--<div class="shares" >
+		<span class="label">分享给朋友：</span>
+		<ul class="options">
+			<li><a title="分享到微信" href="" target="_blank"><span class="ico"><i class="ico-fn-weixin"></i></span></a></li>
+			<li class=""><a title="分享到新浪微博" id="s_sina1" href="" target="_blank"><span class="ico"><i class="ico-fn-weibo"></i></span></a></li>
+			<li class="margin-r0 "><a title="分享到QQ好友" id="s_qq_haoyou1" href="" target="_blank"><span class="ico"><i class="ico-fn-qq"></i></span></a></li>
+		</ul>
+	</div>-->
+	<!-- JiaThis Button BEGIN -->
+	<div class="shares" >
+		<div class="share-f"><span class="s-line"></span><span class="my-label">分享给朋友：</span></div>		
+		<div class="jiathis_style_24x24" style="display: inline-block;">
+			<a class="jiathis_button_qzone"></a>
+			<a class="jiathis_button_weixin"></a>
+		</div>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+	<!-- 分享 -->
+	<div style="clear: both;"></div>
+     <!-- 发表评论 -->
+	<div class="detail comm">
+		<div class="job-title">
+			<span class="detail-line"></span>
+			<span>发表评论：</span>
+		</div>
+		<div class="comm-info">
+			<form action="__ROOT__/Admin/Front/addCommentm" method="post">
+				<input type="hidden" value="{$result['id']}" name="activity_id">
+				<textarea  name="comment" class="myarea form-control" placeholder="发表你的意见吧"></textarea>
+				<input type="submit" value="发表" class="mybtn">
+			</form>
+		</div>		 
+	</div>		
+
+	<!-- 查看评论信息 -->
+	<div class="comment">
+		<div class="commment-title"><span class="detail-line"></span><span>评论信息：</span></div>
+		<div class="commment-cont">
+		<volist id="vo" name="rs">
+			<div class="comm-title">
+				<p>{$vo['username']}:{$vo['comment']}</p>	
+				<p>发表时间:{$vo['createdate']}</p>	
+				<!--<p>[IP]:{$vo['ip_address']}</p>	-->
+			</div>
+			 </volist>
+		</div>
+	</div>
+	
+</body>
+</html>

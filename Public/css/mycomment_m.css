@@ -1,0 +1,37 @@
+/*返回 */
+.top-header{background-color: #56a1f0;height: 46px;position: relative;color: #fff;line-height: 46px;width: 100%;text-align: center;}
+.top-header:before {display: block;position: absolute;top: 0;bottom: 0;margin: auto 0 auto 10px;content: '';border: #fff solid;border-width: 2px 0 0 2px;width: 13px;height: 13px;-webkit-transform: rotate(-45deg);transform: rotate(-45deg);}
+.top-header .top-header-back{display: inline-block;color: #fff;margin:auto 0 auto 20px;line-height: 46px; position: absolute;left: 5px;}
+.top-header span{display: inline-block;color: #2E2727;line-height: 46px; font-size: 1.1rem;font-weight: bold;}
+
+
+/*评论主体*/ 
+#mycomment{background-color: #fff;}
+.comment-container .total {height: 30px;line-height: 30px;vertical-align: middle;background: #f4f4f4;color:  #6F6868;padding-left: 10px;border: 1px solid #ccc;}
+
+.comment-list{padding: 10px 5px;margin: 0 1%;line-height: 22px;color: #000;border-bottom: dashed 1px #d9d9d9;}
+.comment-list .title{display: block;word-wrap: break-word;}
+.comment-list .next{position: relative;display: block;padding: 5px 10px 5px 0;height: 15px;line-height: 15px;font-size: 1.5rem;font-weight: bold;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;color: #000;}
+.comment-list .next:after { position: absolute;top: 0;bottom: 0;margin: auto;right: 2px;-webkit-transform: rotate(-45deg); transform: rotate(-45deg);display: block;content: ''; height: 7px;width: 7px;border: 3px solid #534F4F;border-width: 0 1px 1px 0;}
+.comment-list .comment-time{color: #666;}
+
+/*管理员回复*/
+.comment-foot{border-top: 1px solid #ccc;padding-top: 1%;display: none;}
+.reply-a, .reply-upa{color: #666;}
+
+@media (max-width: 320px){
+	.top-header .top-header-back{font-size: 1.1em;}
+	.top-header span{font-size: 1.2em;}	
+	.comment-list .next{font-size: 1.3em;}
+	.comment-list .title{font-size: 1.1em;}
+	.comment-list .comment-time{font-size: 1.1em;}
+	 
+}
+@media (min-width: 321px){
+	.top-header .top-header-back{font-size: 1.2em;} 
+	.top-header span{font-size: 1.4em;}	
+	.comment-container .total {font-size: 1.2em;} 
+	.comment-list .next{font-size: 1.6em;}
+	.comment-list .title{font-size: 1.2em;}
+	.comment-list .comment-time{font-size: 1.2em;}
+}

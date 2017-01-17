@@ -1,0 +1,39 @@
+{__NOLAYOUT__}
+<empty name="remind_list">
+    <p class="goods_title">您还没有设置提醒</p>
+    <else /> 
+    <foreach name="remind_list" item="vo" key="k">
+        <div class="menu-list">
+            <ul>
+                <li class="list-item item-first">
+                    <div class="item-first-div">
+                        <a href="javascript:void(0)" class="item-a">{$vo.title}<a/>
+                    </div>
+                </li>
+                <li class="list-item">
+                    <div class="item-bg item-bg-time">
+                        <span class="item">{$vo.startdate}</span>
+                    </div>
+                    <div class="item-bg item-bg-type">
+                        <span class="item">{$vo.type}</span>
+                    </div>
+                </li>
+                <li class="list-item ">
+                    <div class="item-bg item-bg-building">
+                        <a href="{:U('Admin/Front/activitydet?id='.$vo['activity_id'].'')}"><span  class="item">查看详情</span></a>
+                    </div>
+                    <!--                                                                            <a href="javascript:void(0)" class="more fr">取消提醒</a>-->
+                <if condition="($vo['is_remind'] eq 2)">
+                    <a href="javascript:void(0)" class="more fr" style="color:grey;">提醒邮件已发送</a>
+                    <elseif condition="($vo['is_remind'] eq 3)"/>
+                    <a href="javascript:void(0)" class="more fr" style="color:grey;">提醒邮件发送失败</a>
+                    <else/>
+                    <span class="your-item">提醒时间:<?php echo date("Y-m-d H:i:s",$vo['remind_time']);?></span>
+                    <a href="javascript:void(0)" data-collect-id = {$vo.collect_id} onclick = "removeRemind(this)"class="more fr">取消提醒</a>
+                </if>
+                </li>
+            </ul>
+            <div class="my-target"></div>
+        </div>
+    </foreach>
+</empty>

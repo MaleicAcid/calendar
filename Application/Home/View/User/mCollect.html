@@ -1,0 +1,361 @@
+{__NOLAYOUT__}
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="" id="description">
+    <meta name="keywords" content="">
+    <meta name="author" content="Pzj">
+    <title>我的收藏</title>  
+    <link rel="stylesheet" href="{$Think.config.CSS_URL}reset_m.css">
+    <link rel="stylesheet" href="{$Think.config.CSS_URL}mycollect_m.css">
+    <script type="text/javascript" src="{$Think.config.JS_URL}jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="{$Think.config.JS_URL}bootstrap.min.js"></script>
+    <script type="text/javascript" src="{$Think.config.JS_URL}time/bootstrap-datetimepicker.js" charset="UTF-8"></script>
+    <link href="{$Think.config.CSS_URL}bootstrap.min.css" rel="stylesheet" media="screen">
+    <link href="{$Think.config.CSS_URL}time/bootstrap-datetimepicker.min.css" rel="stylesheet" media="screen">
+    <style>
+        .top-header a{text-decoration: none;}
+        .menu-list a{text-decoration: none;}
+        .load-more a{text-decoration: none;}
+        #no-ajax-content{margin: 0;}
+    </style>
+</head>
+<body>
+<!-- 最上面 -->
+<div class="top-header">
+    <a id="back-btn" href="javascript:history.go(-1)" class="top-header-back">返回</a>
+    <span>我的收藏</span>
+    <i class="del-icon"></i>
+</div>
+<div class="collect-list clearfix">
+    <!-- 删除选择框 -->
+    <div class="del-check clearfix" id="actionBox" style="display: none;">
+        <input type="checkbox" class="" name="chkAll" id="chkAll" onClick="ChkAllClick('chkSon','chkAll')">
+        <span class="all" onClick="ChkOppClick('chkSon')">全选</span>
+        <div class="del fr clearfix"><i id="del-event">删除</i><i id="cancel">取消</i></div>
+    </div>
+
+    <!-- 有收藏内容 -->
+    <div id="col-content" class="clearfix">
+        <!--                    <div class="menu-list clearfix">
+                        <input type="checkbox" class="mycheckbox clearfix" name="chkSon" id="ch1" onclick="ChkSonClick('chkSon','chkAll')" style="display: none;">
+                        <ul>
+                            <li class="list-item item-first">
+                            <div class="item-first-div"><a href="javascript:void(0)" class="item-a">事件标题1<a/></div></li>
+                            <li class="list-item"><div class="item-bg item-bg-time"><span class="item">事件时间</span></div><div class="item-bg item-bg-type"><span class="item">事件类型</span></div></li>
+                            <li class="list-item "><div class="item-bg item-bg-building"><span class="item">地点</span></div><a href="javascript:void(0)" class="more fr clearfix">设置提醒</a></li>
+                        </ul>
+                        <div class="my-target"></div>
+                    </div>-->
+
+        <empty name="collect_list">
+            <!-- 无收藏内容 -->
+            <div id="no-col-content"  style="display:block"><div class="no-collect"><span class="no-collect-icon"></span><em>您还没有收藏任何内容</em></div></div>
+            <else />
+            <foreach name="collect_list" item="vo" key="k">
+                <div class="menu-list clearfix" style="height: 91px">
+                    <input type="checkbox" class="mycheckbox clearfix" data-collect-id = {$vo.collect_id} name="chkSon" id="ch1" onclick="ChkSonClick('chkSon','chkAll')" style="display: none;">
+                    <ul>
+                        <li class="list-item item-first">
+                            <div class="item-first-div"><a href="{:U('Admin/Front/activitydetm?id='.$vo['activity_id'].'')}" class="item-a">{$vo.title}<a/></div>
+                        </li>
+                        <li class="list-item">
+                            <div class="item-bg item-bg-time">
+                                <span class="item">{$vo.startdate}</span>
+                            </div>
+                            <div class="item-bg item-bg-type">
+                                <span class="item">{$vo.type}</span>
+                            </div>
+                        </li>
+                        <li class="list-item ">
+                            <div class="item-bg item-bg-building">
+                                <span class="item" style="width: 40px;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;display: inline-block;color: #6F6868;">{$vo.address}</span>
+                            </div>
+                            <if condition="($vo['is_overdue'] eq 1)">
+                                <a  class="more fr" style="color:grey;">事件已逾期</a>
+                            <elseif condition="($vo['is_remind'] eq 1) and ($vo['is_comet_remind'] eq 1)"/>
+                                <a href="javascript:void(0)" class="more fr" style="color:grey;">已设置</a>
+                                <else/>
+
+                                <div class="input-group date form_datetime" style="display: inline-block;width: 150px;margin-left: 3%;vertical-align: super;">
+                                    <input class="picktime" type="text"  data-startdate = {$vo.starttime} id={$vo.collect_id}  placeholder="设置提醒时间"  style="width: 125px;margin-left: 5px;" onclick="setTime(this)">
+                                    <span class="input-group-addon" style="width: 20px;padding:0 ;float: right;display:none;"><span class="glyphicon glyphicon-th"></span></span>
+                                </div>
+                                <a onclick="addRemind(this)" data-startdate = {$vo.startdate} data-collect-id = {$vo.collect_id} data-enddate = {$vo.enddate} class="more fr clearfix">设置提醒</a>
+                            </if>
+
+                        </li>
+                    </ul>
+                    <div class="my-target"></div>
+                </div>
+            </foreach>
+        </empty>
+
+
+    </div>
+
+    <script type="text/javascript">
+        var page = 2;
+        var reg ="no-ajax-content"; //匹配<p>标签判断获取的页面是否没有更多了
+        function get_collectList(){
+            //$('.get_more').show();
+
+            $.ajax({
+                type : "get",
+                url: "__ROOT__/Home/User/m_get_ajax_collect/is_ajax/1/p/"+page,
+                dataType:'html',
+                success: function(data)
+                {
+                    var tmp = data;
+                    if(data){
+                        //alert($(data).attr("id") );
+                        $("#col-content").append(data);
+                        page++;
+                        if(tmp.match(reg)){
+                            //如果是p标签则隐藏加载按钮
+                            //$("#load").hide(data);
+                            $("#load").remove();
+                        }
+
+
+                    }else{
+//                                                $("#mycomment").append(data);
+//                                                page++;
+                    }
+                }
+            });
+        }
+    </script>
+    <!-- 加载更多 -->
+    <div class="load-more" id="load">
+        <a onclick="get_collectList()">点击加载更多</a>
+    </div>
+
+    <!--		 无收藏内容
+            <div id="no-col-content"  style="display:none"><div class="no-collect"><span class="no-collect-icon"></span><em>您还没有收藏任何内容</em></div></div>-->
+</div>
+
+
+<script type="text/javascript">
+
+
+//    $('.form_datetime').datetimepicker({
+//        //language:  'fr',
+//        format: 'yyyy-mm-dd hh:ii',
+//        weekStart: 1,
+//        todayBtn:  1,
+//        autoclose: 1,
+//        todayHighlight: 1,
+//        startView: 2,
+//        forceParse: 0,
+//        showMeridian: 1,
+//        startDate:'2015-05-05 11:30',
+//        endDate:'2015-06-10 11:30',
+//    }).on('changeDate', function(ev){
+//        //alert('no');
+//    });
+
+    function setTime(obj){
+        var myDate = new Date();
+        var startTime = "<?php echo createDate();?>"    //获取日期与时间
+        var endTime =$(obj).data("startdate");        //获取日期与时间
+        console.log(startTime);
+        console.log(endTime);
+        $(obj).datetimepicker({
+            //language:  'fr',
+            format: 'yyyy-mm-dd hh:ii',
+            weekStart: 1,
+            todayBtn:  1,
+            autoclose: 1,
+            todayHighlight: 1,
+            startView: 2,
+            forceParse: 0,
+            showMeridian: 1,
+            startDate:startTime,
+            endDate:endTime,
+        });
+        $(obj).datetimepicker('show');
+    }
+
+    //页面记载判断有无内容
+    function myTestDiv() {
+        var Test =document.getElementById("col-content").innerHTML;
+        //console.log($(this))
+//			if($('#col-content .menu-list').length){
+//				$("#no-col-content").css({"display":"none"});
+//				$(".del-icon").css({"display":"block"});
+//			}else{
+//				$("#no-col-content").css({"display":"block"});
+//				$(".del-icon").css({"display":"none"});
+//			}
+        if($('#no-col-content').length){
+            $("#no-col-content").css({"display":"block"});
+            $(".del-icon").css({"display":"none"});
+            $("#load").remove();//移除加载按钮
+
+        }else{
+            $("#no-col-content").css({"display":"none"});
+            $(".del-icon").css({"display":"block"});
+        }
+    }
+    myTestDiv();
+
+
+    //取消
+    function myCancal() {
+        $("#cancel").click(function() {
+            $(".del-check").css({"display":"none"});
+            $(".mycheckbox").css({"display":"none"});
+            $("#load").show()//加载按钮恢复
+        });
+    }
+    myCancal();
+
+    //删除收藏具体内容
+    function delEvent() {
+//                    var removeArr = new Array(); var i=0;
+        $("#del-event").click(function() {
+            var removeArr = new Array(); var i=0;
+            if($(".mycheckbox").is(':checked')){
+                //遍历被选中的input取data值
+                $(".mycheckbox:checked").each(function(){
+                    removeArr[i++] = $(this).attr("data-collect-id");
+                });
+                console.log(removeArr);
+                var removeList = removeArr.toString();
+                console.log(removeList);
+                $.ajax({
+                    type : "GET",
+                    dataType: "json",
+                    //url:"/index.php?m=Home&c=User&a=addRemind&collect_id="+collect_id,//+tab,
+                    url : '__ROOT__/Home/User/removeCollect',
+                    data :{removeList:removeList},
+                    success: function(data){
+                        //data = json_decode(data);
+                        if(data.status == 1){
+//                                            $(".mycheckbox:checked").closest("div").each(function(){
+//                                                $(this).remove()
+//                                            });
+                            $(".menu-list input[type='checkbox']:checked").parent().remove();
+                        }else{
+                            //alert(22);
+                        }
+                    }
+                });
+
+            }
+            $(".del-check").css({"display":"none"});
+            $(".mycheckbox").css({"display":"none"});
+            $("#load").show()//加载按钮恢复
+            myTestDiv();
+        });
+
+    }
+    delEvent()
+
+
+    //icon删除打开
+    function myDel() {
+        $(".del-icon").click(function() {
+            $(".del-check").css({"display":"block"});
+            $(".mycheckbox").css({"display":"-webkit-box"});
+            $("#load").hide();//点击时隐藏加载按钮
+        });
+    }
+    myDel()
+
+
+    //设置提醒
+    //		function myClick() {
+    //			$("#col-content .more").click(function() {
+    //				var top=$(this).offset().top;
+    //				var left=$(this).offset().left-100;
+    //				$(this).parent().parent().parent().find(".my-target").html("设置成功")
+    //				$(this).parent().parent().parent().find(".my-target").css({"position": "absolute","top":top,"left":left});
+    //				$(this).parent().parent().parent().find(".my-target").fadeOut(1500);
+    //				$(this).html("已设置提醒")
+    //				if (this.disabled){
+    //	                return false;
+    //	            }
+    //	            this.style.color = 'grey';
+    //	            this.disabed = true;
+    //			});
+    //		}
+    //		myClick();
+
+
+
+    function addRemind(obj) {
+        if(obj.disabled){
+            return false;
+        }
+        var collect_id= $(obj).data("collect-id");
+        var tmp = '#'+collect_id;
+        console.log(tmp);
+        var settime =$(tmp).val();
+        console.log(settime);
+        $.ajax({
+            type : "GET",
+            dataType: "json",
+            //url:"/index.php?m=Home&c=User&a=addRemind&collect_id="+collect_id,//+tab,
+            url : '__ROOT__/Home/User/addRemind',
+            data :{collect_id:collect_id,settime:settime},
+            success: function(data){
+                //data = json_decode(data);
+                if(data.status == 1){
+                    var top=$(obj).offset().top-50;
+                    var left=$(obj).offset().left-100;
+                    $(obj).parent().parent().parent().find(".my-target").html("设置成功")
+                    $(obj).parent().parent().parent().find(".my-target").css({"position": "absolute","top":top,"left":left});
+                    $(obj).parent().parent().parent().find(".my-target").fadeOut(1500);
+                    $(obj).html("已设置")
+                    obj.style.color = 'grey';
+                    obj.disabled = true;
+                }
+            }
+        });
+    }
+
+    //列头全选框被单击
+    function ChkAllClick(sonName, cbAllId){
+        var arrSon = document.getElementsByName(sonName);
+        var cbAll = document.getElementById(cbAllId);
+        var tempState=cbAll.checked;
+        for(i=0;i<arrSon.length;i++) {
+            if(arrSon[i].checked!=tempState)
+                arrSon[i].click();
+        }
+    }
+
+    //子项复选框被单击
+    function ChkSonClick(sonName, cbAllId) {
+        var arrSon = document.getElementsByName(sonName);
+        var cbAll = document.getElementById(cbAllId);
+        for(var i=0; i<arrSon.length; i++) {
+            if(!arrSon[i].checked) {
+                cbAll.checked = false;
+                return;
+            }
+        }
+        cbAll.checked = true;
+    }
+
+    //反选被单击
+    function ChkOppClick(sonName){
+        var arrSon = document.getElementsByName(sonName);
+        for(i=0;i<arrSon.length;i++) {
+            arrSon[i].click();
+        }
+    }
+
+    function getTime(obj){
+        return $("#text-2").val();
+    }
+
+
+</script>
+</body>
+</html>

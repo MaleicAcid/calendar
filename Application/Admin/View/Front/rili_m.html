@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>首页</title>
+	<meta charset="utf-8">
+	<meta name="copyright" content="">
+	<meta name="description" content="" id="description">
+	<meta name="keywords" content="">
+	<meta name="author" content="Vanklin">
+	<meta content="yes" name="apple-mobile-web-app-capable">
+	<meta content="black" name="apple-mobile-web-app-status-bar-style">
+	<meta content="telephone=no" name="format-detection">
+	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<link rel="stylesheet" type="text/css" href="__ROOT__/Public/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="__ROOT__/Public/css/index_m.css">
+	<link rel="stylesheet" type="text/css" href="__ROOT__/Public/css/simple-calendar-m.css">
+	<script type="text/javascript" src="__ROOT__/Public/js/simple-calendar.js"></script>
+	<style type="text/css">
+    		#footer{margin-top:10px;height: 30px;width: 100%;background-color: #2196F3;}
+    </style>
+</head>
+<body >
+	<!-- 搜索框 start-->
+	<div class="search-bar">
+			<form class="search_outer" style="margin-right: 35px;" action="__ROOT__/Admin/Front/getActivityByKeyword">
+				<div class="search-input-wrap input-group" style="width:90%">
+					<span class="input-group-addon">
+						<span class="glyphicon glyphicon-search" onclick="document.forms[0].submit()"></span>
+					</span>
+					<span id="bidui" style="display: none;color:#C1C0C0; "></span>
+					<input type="text" name="keyword" class="search-input form-control" id="search-input" placeholder="搜索" required />
+				</div>
+				<span class="user_icon glyphicon glyphicon-user"><a href="__ROOT__/Home/User/mindex
+">&nbsp;</a></span>
+			</form>
+	</div>
+	<!-- 搜索框 end -->
+	<!-- 图标 start -->
+	<div class="h-nav">
+            <a href="rili_m" >
+            <i class=" h-xf"></i>首页</a>
+            <a href="week_m">
+            <i class=" h-mf"></i>本周</a>
+            <a href="today_m">
+            <i class=" h-zf"></i> 今日</a>
+            <a href="hot_m">
+            <i class=" h-spxzl"></i>热门</a>  
+	</div>
+	<!-- 图标 end -->
+	<!-- 推荐 start -->
+    <div class="h-mod-pdl">
+		<div class="h-recommend">
+			<label class="home-icon h-rec-tit"></label>
+			<p class="h-rec-box animate" id="recScroll" style="margin-left: 20px">
+				<!-- <a href="javascript:;"><em>●</em>热门事件推荐1</a>
+				<a href="javascript:;"><em>●</em>热门事件推荐2</a>
+				<a href="javascript:;"><em>●</em>热门事件推荐3</a>
+				<a href="javascript:;"><em>●</em>热门事件推荐4</a>
+				<a href="javascript:;"><em>●</em>热门事件推荐1</a> -->
+			</p>	
+		</div>
+	</div>
+    <!-- 推荐 end -->
+    <!-- 日历start -->
+    <div id='container'>
+
+    </div>
+    <!-- 日历end -->
+    <!-- footer start -->
+    <div style="overflow: hidden;clear: both;height: 0;visibility: hidden;display: block;"></div>
+    <div id="footer">
+
+    </div>
+    <!-- footer end -->
+	<script type="text/javascript" src="__ROOT__/Public/js/jquery-1.6.4.min.js"></script>
+	<script type="text/javascript">
+	var myCalendar = new SimpleCalendar('#container');
+	var options = {
+		language: 'CH', //语言
+		showLunarCalendar: false, //阴历
+		showHoliday: false, //休假
+		showFestival: false, //节日
+		showLunarFestival: false, //农历节日
+		showSolarTerm: false, //节气
+		showMark: false, //标记
+		timeRange: {
+			startYear: 2000,
+			endYear: 2049
+		},
+		theme: {
+			changeAble: false,
+			weeks: {
+				backgroundColor: '#FBEC9C',
+				fontColor: '#4A4A4A',
+				fontSize: '20px',
+			},
+			days: {
+				backgroundColor: '#ffffff',
+				fontColor: '#565555',
+				fontSize: '24px'
+			},
+			todaycolor: 'orange',
+			activeSelectColor: 'orange',
+		}
+	}
+	//删除节气节点
+	$(".lunar-day").hide();
+	$(".sc-yleft,.sc-yright,.sc-mleft,.sc-mright").hide();
+
+
+	$(function(){
+			function getActivity() {
+				var c_ontent="";
+				//请求列表数据
+				$.ajax({
+				   url:"__ROOT__/Admin/Front/getHotActivity",
+				   success: function(active){		
+				   		//初始化列表
+				   		$("#recScroll").empty();
+						var div="";
+						for(var i=0;i<5;i++){
+							if(active.length>0){
+								//简介
+								c_ontent=active[i].content;										
+								//id
+								i_d=active[i].id;
+								div+="<a href='__ROOT__/Admin/Front/activitydetm/id/"+i_d+"'><em>●</em>"+c_ontent+"</a>";		
+							}else{
+								div="<a href='javascript:;'><em>●</em>今日无热门事件</a>";
+							}
+																								
+						}									
+						//追加节点
+						$("#recScroll").append(div);				   		
+				  },
+				error:function(){
+					//alert("数据加载失败");
+				},
+				'type':'post',
+				'dataType':'json', 
+				}); 
+			} 	
+			getActivity();	
+
+		//根据指定的年月获取当月天数
+		 function getDays(year, month){
+			// month 取自然值，从 1-12 而不是从 0 开始
+			return new Date(year, month, 0).getDate();
+			// 如果 month 按 javascript 的定义从 0 开始的话就是
+			// return new Date(year, month + 1, 0).getDate()
+		}
+		//初始化event
+		//获取所有表格的内容
+		var td = $(".sc-item");//获取当前页日期节点
+		var endday = getDays(Year,Month);;//本月最后一天
+		var selectYear = $('.sc-select-year');//获取当前页年份
+		var selectMonth = $('.sc-select-month');//获取当前页月
+		var Month ='';//初始化月
+		if(selectMonth.val().length==2){
+			Month = selectMonth.val();
+		}else{
+			Month = '0'+selectMonth.val();
+		}
+		var Year = selectYear.val();
+		
+		//遍历当前页的日期做清空事件处理函数
+		var clearEvent = function(){
+			$.each($(".sc-item"),function(){
+				$(".event").remove();
+				if($(this).find(".circle")){
+					$(".circle").remove();
+				}
+			})
+		};
+		//动态获取改变后的日期
+		function getActiveDay(){
+			if(td.find(".day").change()){
+				td.find(".day").live('change',function(){
+					td = $(".sc-item");
+				})
+			}else{
+				console.log(" getActivetyDay function false");
+			}
+		}
+		var todayButton = $(".sc-return-today");
+		todayButton.click(function(){
+			clearEvent();
+			Year = new Date().getFullYear();
+			Month = new Date().getMonth() + 1;
+			endday = getDays(Year,Month);
+			getActiveDay();
+			changeEvent();
+		});
+		//获取改变后的年月
+		selectYear.live("change",function(){
+			clearEvent();
+			Year = $(this).val();
+			endday = getDays(Year,Month);
+			getActiveDay();
+			changeEvent();
+		});
+		selectMonth.live("change",function(){
+			clearEvent();
+			Year = selectYear.val();
+			if($(this).val().length==2){
+				Month = $(this).val();
+			}else{
+				Month = '0'+$(this).val();
+			}
+			endday = getDays(Year,Month);
+			getActiveDay();
+			changeEvent();
+		})
+		//ajax请求后端数据
+		function changeEvent(){
+			$.ajax({
+				'url':'__ROOT__/Admin/Front/getMonthActivity',
+				'data':'startdate='+Year+'-'+Month+'-'+'01'+'&enddate='+Year+'-'+Month+'-'+endday,
+				'success':function(dt){
+					//遍历当前页日期节点
+					$.each(td,function(){
+						//判断是否为有效的日期节点
+						if($(this).children(".day").css("color")!=$("#bidui").css("color")){
+							//添加指定日期的事件到$(this)标签内
+							var $sc_item = $(this);
+							$.each(dt.data, function(i, item) {
+								//获取事件的日期
+								activitydates = item.activitydate;
+								//筛选指定日期
+								var my_day=$sc_item.children(".day").text();
+								if(my_day.length==2){
+									my_day=my_day;
+								}else{
+									my_day='0'+my_day;
+								}
+								if(my_day==activitydates.substring(8,10)){
+									//添加事件
+									$sc_item.append(
+											"<div class='evented pointer' url='activitydet/id/"+item.id+"'>&nbsp;<span class='time'></span>"+
+											"<span class='datetime'></span>"+
+											"<span class='company'>"+"new"+"</span></div>");
+									
+								}
+							});
+							$.each(dt.count, function(j, items) {
+								countsday = items.activitydate.substring(8,10);
+								counts = items.count;
+								//if($sc_item.children(".day").text()==countsday){
+									if($sc_item.find(".evented").length>0){
+										//删除多余事件节点
+										$sc_item.find(".evented").remove();
+										//添加事件标签
+										var zeroDay = $sc_item.children().siblings(".day").text();
+										if(zeroDay.length==2){
+											zeroDay=zeroDay;
+										}else{
+											zeroDay='0'+zeroDay;
+										}
+										$sc_item.css({"position":"relative","overflow":"hidden"}).append(
+												"<div class='circle pointer' style='font-size:10px;' url='today_m?"+Year+'-'+Month+'-'+zeroDay+"'>"+"new"+"</div>");
+									}
+								//}
+							});
+						}
+					});
+					// 添加链接
+					$('.sc-item div.pointer').click(function(){
+						window.location.href= $(this).attr('url');
+					});
+				},
+				'type':'post',
+				'dataType':'json',
+			});
+		}
+		//初始化的显示当前月事件
+		changeEvent();
+	})
+</script>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="description" content="" id="description">
+	<meta name="keywords" content="">
+	<meta name="author" content="Pzj">
+	<title>个人中心页</title>
+	<script type="text/javascript" src="__ROOT__/Public/js/jquery-1.6.4.min.js"></script>
+	<link rel="stylesheet" href="__ROOT__/Public/css/reset_m.css">
+	<link rel="stylesheet" href="__ROOT__/Public/css/personal_m.css">
+</head>
+<body>
+		<!-- 最上面 -->
+	<div class="top-header">
+		<a id="back-btn" href="javascript:history.go(-1)" class="top-header-back">返回</a>
+	</div>
+	<div class="bottom-header">
+		 <a class="user-pic" href="javascript:;">
+		 	<img src="__ROOT__/Public/image/userlogo.png" alt="用户头像">
+		 </a><br>
+		 <a href="javascript:;" class="btn-header">登录</a>
+		 <a href="javascript:;" class="btn-header">注册</a> 
+		 <span class="myid" style="display: none;">你好,某某某</span> <!-- 登录成功,休改display为inline-block -->
+	</div>
+	<ul class="middle-list">
+	    <li class="border-1px">
+	        <a id="middle-list-zl" class="next" href="javascript:;"><span class="icon-info"></span>我的资料</a>
+	    </li>
+	    <li class="border-1px">
+	        <a id="middle-list-pl" class="next" href="mycollect.html"><span class="icon-comment"></span>我的评论<em class="num">用来显示相应的条数</em></a>
+	    </li>
+	    <li class="border-1px">
+	        <a id="middle-list-sc" class="next" href="javascript:;"><span class="icon-collect"></span>我的收藏<em class="num">用来显示相应的条数</em></a>
+	    </li>
+	    <li class="border-bottom-10px">
+	        <a id="middle-list-tx" class="next" href="javascript:;"><span class="icon-alert"></span>我的提醒<em class="num">用来显示相应的条数</em></a>
+	    </li>
+	</ul>
+	<!-- 退出登录 -->
+	<div class="out" style="display: none;">
+		<a href="javascript:;" id="lgout">退出登录</a> <!-- 登录成功,休改display为inline-block . 退出登录后,休改display为none-->
+	</div>
+</body>
+</html>

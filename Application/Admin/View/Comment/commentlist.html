@@ -1,0 +1,71 @@
+<form id="pagerForm" action="__ROOT__/Admin/Comment/commentList" method="post">
+	<input type="hidden" name="page" value="{$currentPage}"/>
+	<input type="hidden" name="username" value="{$username}"/>
+</form>
+<div class="pageHeader">
+	<form rel="pagerForm" onsubmit="return navTabSearch(this);" action="__ROOT__/Admin/Comment/commentList" method="post">
+	<div class="searchBar">
+		<ul class="searchContent">
+			<li>
+				<label>用户名：</label>
+				<input type="text" name="username" value="{$username}" alt="请输入评论人"/>
+				<input type="hidden" name="page" value="{$currentPage}"/>
+			</li>
+		</ul>
+		<div class="subBar">
+			<ul>
+				<li><div class="buttonActive"><div class="buttonContent"><button type="submit">查询</button></div></div></li>
+			</ul>
+		</div>
+	</div>
+	</form>
+</div>
+
+<div class="pageContent">
+	<div class="panelBar">
+		<ul class="toolBar">
+       <li><a class="delete" href="__ROOT__/Admin/Comment/delComment/id/{sid_user}" target="ajaxTodo" title="你确定要删除吗？" warn="请选择行"><span>删除</span></a></li>
+	    <li><a class="add" href="__ROOT__/Admin/Comment/addCommentView/id/{sid_user}" target="dialog" warn="请选择行"><span>回复</span></a></li>
+		</ul>
+	</div>
+
+	<table class="table" width="100%" layoutH="138">
+		<thead>
+		<tr>
+			<th width="100">评论人</th>
+			<th>评论时间</th>
+            <th>评论内容</th>
+			<th>IP地址</th>	 
+		</tr>
+		</thead>
+		<tbody>
+		<volist id="vo" name="result">
+			<tr target="sid_user" rel="{$vo['id']}">
+				<td>{$vo['username']}</td>
+				<td>{$vo['createdate']}</td>
+				<td>{$vo['comment']}</td>
+				<td>{$vo['ip_address']}</td>
+			</tr>
+		</volist>
+		</tbody>
+	</table>
+ 
+	<div class="panelBar">
+		<div class="pages">
+			<span>显示</span>
+			<select class="combox" name="numPerPage"
+				onchange="navTabPageBreak({numPerPage:this.value})">
+				<option value="20">
+					20
+				</option>
+			</select>
+			<span>条，共{$totalCount}条，共{$totalPage }页</span>
+		</div>
+
+		<div class="pagination" targetType="navTab"
+			totalCount="{$totalCount}" numPerPage="{$pageSize }"
+			pageNumShown="10" currentPage="{$currentPage }"></div>
+	</div>
+</div>
+
+

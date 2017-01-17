@@ -1,0 +1,24 @@
+<div class="pageContent">
+	<form method="post" action="__ROOT__/Admin/Color/editColor" class="pageForm" onsubmit="return validateCallback(this, dialogAjaxDone);">
+		<div class="pageFormContent" layoutH="56">
+			<input name="id" type="hidden"  value="{$result.id}"/>
+			<p>
+				<label>颜色值：</label>
+				<input name="color" type="color" class="required" value="{$result['color']}"/>
+			</p>
+			<p>
+				<label>颜色名称：</label>
+				<input name="colorname" type="text" class="required" value="{$result['colorname']}"/>
+			</p>
+
+		</div>
+		<div class="formBar">
+			<ul>
+				<li><div class="buttonActive"><div class="buttonContent"><button type="submit">保存</button></div></div></li>
+				<li>
+					<div class="button"><div class="buttonContent"><button type="button" class="close">取消</button></div></div>
+				</li>
+			</ul>
+		</div>
+	</form>
+</div>

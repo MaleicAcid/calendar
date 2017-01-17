@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="description" content="" id="description">
+	<meta name="keywords" content="">
+	<meta name="author" content="Pzj">
+	<title>我的提醒</title>
+	<script type="text/javascript" src="__ROOT__/Public/js/jquery-1.6.4.min.js"></script>
+	<link rel="stylesheet" href="__ROOT__/Public/css/reset_m.css">
+	<link rel="stylesheet" href="__ROOT__/Public/css/mywarn_m.css">
+</head>
+<body>
+	<!-- 最上面 -->
+	<div class="top-header">
+		<a id="back-btn" href="javascript:history.go(-1)" class="top-header-back">返回</a>
+		<span>我的提醒</span>
+		<i class="del-icon"></i>
+	</div>
+	<div class="collect-list clearfix">
+		<!-- 删除选择框 -->
+		<div class="del-check clearfix" id="actionBox" style="display: none;">
+			<input type="checkbox" class="" name="chkAll" id="chkAll" onClick="ChkAllClick('chkSon','chkAll')">
+	        <span class="all" onClick="ChkOppClick('chkSon')">全选</span>
+	        <div class="del fr clearfix"><i id="del-event">删除</i><i id="cancel">取消</i></div>
+	    </div>
+
+		<!-- 有收藏内容时 -->
+		<div id="col-content" class="clearfix">
+			<div class="menu-list clearfix">
+				<input type="checkbox" class="mycheckbox clearfix" name="chkSon" id="ch1" onclick="ChkSonClick('chkSon','chkAll')" style="display: none;">
+				<ul>
+					<li class="list-item item-first">
+					<div class="item-first-div"><a href="javascript:void(0)" class="item-a">事件标题1<a/></div></li>
+					<li class="list-item"><div class="item-bg item-bg-time"><span class="item">事件时间</span></div><div class="item-bg item-bg-type"><span class="item">事件类型</span></div></li>
+					<li class="list-item "><div class="item-bg item-bg-building"><span class="item">地点</span></div><a href="javascript:void(0)" class="more fr clearfix">设置提醒</a></li>
+				</ul>
+				<div class="my-target"></div>
+			</div>
+		</div>
+
+		<!-- 无收藏内容时 -->
+		<div id="no-col-content"  style="display:none"><div class="no-collect"><span class="no-collect-icon"></span><em>您还没有设置任何提醒</em></div></div>
+	</div>
+	<script type="text/javascript"> 
+		//页面记载判断有无内容
+		function myTestDiv() {
+			var Test =document.getElementById("col-content").innerHTML;
+			//console.log($(this))
+			if($('#col-content .menu-list').length){
+				$("#no-col-content").css({"display":"none"});
+				$(".del-icon").css({"display":"block"});
+			}else{
+				$("#no-col-content").css({"display":"block"});
+				$(".del-icon").css({"display":"none"});				
+			} 
+		}
+		myTestDiv();
+		
+
+		//取消
+		function myCancal() {
+			$("#cancel").click(function() {
+				$(".del-check").css({"display":"none"});
+				$(".mycheckbox").css({"display":"none"});
+			});
+		}
+		myCancal();
+
+		//删除收藏
+		function delEvent() {
+			$("#del-event").click(function() {
+				if($(".mycheckbox").is(':checked')){
+					$(".menu-list input[type='checkbox']:checked").parent().remove()
+				}
+				$(".del-check").css({"display":"none"});
+				$(".mycheckbox").css({"display":"none"});
+				myTestDiv();
+			});
+
+		}
+		delEvent()
+
+
+		//icon删除
+		function myDel() {
+			$(".del-icon").click(function() {
+				$(".del-check").css({"display":"block"});
+				$(".mycheckbox").css({"display":"-webkit-box"});
+			});
+		}
+		myDel()
+
+	 
+		//设置提醒
+		function myClick() {
+			$("#col-content .more").click(function() {			 
+				var top=$(this).offset().top;
+				var left=$(this).offset().left-100;				 
+				$(this).parent().parent().parent().find(".my-target").html("设置成功")
+				$(this).parent().parent().parent().find(".my-target").css({"position": "absolute","top":top,"left":left});
+				$(this).parent().parent().parent().find(".my-target").fadeOut(1500);
+				$(this).html("已取消提醒")
+				if (this.disabled){
+	                return false;
+	            }
+	            this.style.color = 'grey';
+	            this.disabed = true;
+			});
+		}
+		myClick();
+
+		//列头全选框被单击
+		function ChkAllClick(sonName, cbAllId){
+		    var arrSon = document.getElementsByName(sonName);
+			var cbAll = document.getElementById(cbAllId);
+			var tempState=cbAll.checked;
+			for(i=0;i<arrSon.length;i++) {
+			if(arrSon[i].checked!=tempState)
+			        arrSon[i].click();
+			}
+		}
+
+		//子项复选框被单击
+		function ChkSonClick(sonName, cbAllId) {
+			var arrSon = document.getElementsByName(sonName);
+			var cbAll = document.getElementById(cbAllId);
+			for(var i=0; i<arrSon.length; i++) {
+			    if(!arrSon[i].checked) {
+			    	cbAll.checked = false;
+			     	return;
+			    }
+			 }
+			cbAll.checked = true;
+		}
+
+		//反选被单击
+		function ChkOppClick(sonName){
+			var arrSon = document.getElementsByName(sonName);
+			for(i=0;i<arrSon.length;i++) {
+				arrSon[i].click();
+			}
+		}
+		 
+		
+	</script>
+</body>
+</html>

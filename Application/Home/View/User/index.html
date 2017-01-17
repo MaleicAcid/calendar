@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="description" content="" id="description">
+	<meta name="keywords" content="">
+	<meta name="author" content="Pzj">
+	<title>个人中心页</title>
+	
+	<link rel="stylesheet" type="text/css" href="{$Think.config.CSS_URL}style.css"> 	
+	<link rel="stylesheet" type="text/css" href="{$Think.config.CSS_URL}personal.css">
+	<script type="text/javascript" src="{$Think.config.JS_URL}jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="{$Think.config.JS_URL}bootstrap.min.js"></script>
+    <script type="text/javascript" src="{$Think.config.JS_URL}time/bootstrap-datetimepicker.js" charset="UTF-8"></script>
+    <script type="text/javascript" src="{$Think.config.JS_URL}time/bootstrap-datetimepicker.fr.js" charset="UTF-8"></script>
+    <link href="{$Think.config.CSS_URL}bootstrap.min.css" rel="stylesheet" media="screen">
+    <link href="{$Think.config.CSS_URL}mydefault.css" rel="stylesheet">
+    <link href="{$Think.config.CSS_URL}time/bootstrap-datetimepicker.min.css" rel="stylesheet" media="screen">
+    <style>
+    	.your-item{margin-left: 50px;}
+    </style>
+
+</head>
+<body>
+<!-- //点击个人中心页面之后 , 默认显示的是收藏内容 , 点击我的动态点开下拉是收藏，评论，提醒   点击 评论 收藏 提醒 变成相应的内容, 收藏里面还要设置提醒时间 -->
+
+	<div class="container clearfix">
+		<div class="sidebar fl clearfix">
+          <ul class="my-nav">
+            <li class="menu-sub clearfix"><a href="javascript:void(0)"  class="active">首页</a></li>
+            <li class="menu-sub clearfix">
+            	<div class="my-thing clearfix"><a href="">我的动态</a><i class="icon"></i></div>
+            	<ul class="submenu clearfix">
+					<li class="comment clearfix"><i class="icon-comment"></i><a href="#">评论</a></li>
+					<li class="collect clearfix"><i class="icon-collect"></i><a href="#">收藏</a></li>
+					<li class="heart clearfix"><i class="icon-heart"></i><a onclick="getFirstRemind()" href="#">提醒<span id="new-event"></span></a></li>
+				</ul>
+            </li>
+          </ul>
+        </div>
+        <div class="maincontainer fl clearfix" >
+        	<div class="user-info clearfix">
+        		<div class="user-pic fl clearfix">
+        			<img src="{$Think.config.IMG_URL}userlogo.png" alt="用户头像">
+        		</div>
+        		<div class="user-content fl clearfix">
+        			<div class="name user-bot fl clearfix">
+        				<div class="nickname">
+        					<span class="edit-inf-name">{$user.user_mail}</span>
+<!--	        				<input type="text" value="{$user.user_mail}">-->
+        				</div>  
+        				<div class="edit">
+	        				<a href="javascript:;" class="edit-click">个人资料编辑</a>
+	        			</div>
+	        			 <div class="save">
+	        				<a href="javascript:;" onclick = "saveInfo(this)" class="save-click">保存</a>
+	        			</div>     				
+        			</div>
+        			<div class="edit-info fl clearfix">
+	        			<div class="username user-bot">
+	    					<span>姓名：</span>
+	        				<i class="edit-inf ">{$user.user_relname}</i>
+	        				<input type="text" name="relname">
+	    				</div>
+	        			<div class="professiona user-bot">
+	        				<span>专业班级：</span>
+	        				<i class=" edit-inf">{$user.user_class}</i>
+	        				<input type="text" name="userclass">
+	        			</div>
+	        			<div class="mail user-bot">
+	        				<span>邮箱状态：</span>
+                                                <if condition="($user['mail_check'] eq 1)">
+                                                    <i class="edit-inf-email">已激活</i>
+                                                    <else/>
+                                                    <i class="edit-inf-email">未激活</i>
+                                                </if>
+<!--	        				<i class="edit-inf-email">dzxc</i>-->
+<!--	        				<input type="text" value="dzxc">-->
+	        			</div>       				
+        			</div>
+        			
+        		</div>
+        	</div>
+			
+			<div class="content">
+				<div class="pannel">
+					<div id="heart">
+						<div class="content-header">我的提醒</div>
+						<div class="content-body">
+							<div id="menu-list3">
+<!--                                                            <div class="menu-list">
+                                                                <ul>
+                                                                    <li class="list-item item-first">
+                                                                        <div class="item-first-div">
+                                                                            <a href="javascript:void(0)" class="item-a">事件标题<a/>
+                                                                        </div>
+                                                                    </li>
+                                                                    <li class="list-item">
+                                                                        <div class="item-bg item-bg-time">
+                                                                            <span class="item">提醒时间</span>
+                                                                        </div>
+                                                                        <div class="item-bg item-bg-type">
+                                                                            <span class="item">事件类型</span>
+                                                                        </div>
+                                                                    </li>
+                                                                    <li class="list-item ">
+                                                                        <div class="item-bg item-bg-building">
+                                                                            <span class="item">地址</span>
+                                                                        </div>
+                                                                        <a href="javascript:void(0)" class="more fr">取消提醒</a>
+                                                                    </li>
+                                                                </ul>
+                                                                <div class="my-target"></div>
+                                                            </div>-->
+
+                                                        <empty name="remind_list">
+                                                            <p class="goods_title">您还没有设置提醒</p>
+                                                            <else /> 
+                                                            <foreach name="remind_list" item="vo" key="k">
+                                                                <div class="menu-list">
+                                                                    <ul>
+                                                                        <li class="list-item item-first">
+                                                                            <div class="item-first-div">
+                                                                                <a href="javascript:void(0)" class="item-a">{$vo.title}<a/>
+                                                                            </div>
+                                                                        </li>
+                                                                        <li class="list-item">
+                                                                            <div class="item-bg item-bg-time">
+                                                                                <span class="item">{$vo.startdate}</span>
+                                                                            </div>
+                                                                            <div class="item-bg item-bg-type">
+                                                                                <span class="item">{$vo.type}</span>
+                                                                            </div>
+                                                                        </li>
+                                                                        <li class="list-item ">
+                                                                            <div class="item-bg item-bg-building">
+                                                                                 <a href="{:U('Admin/Front/activitydet?id='.$vo['activity_id'].'')}"><span  class="item">查看详情</span></a>
+                                                                            </div>
+<!--                                                                            <a href="javascript:void(0)" class="more fr">取消提醒</a>-->
+                                                                            <if condition="($vo['is_remind'] eq 2)">
+                                                                                <a href="javascript:void(0)" class="more fr" style="color:grey;">提醒邮件已发送</a>
+                                                                            <elseif condition="($vo['is_remind'] eq 3)"/>
+                                                                                <a href="javascript:void(0)" class="more fr" style="color:grey;">提醒邮件发送失败</a>
+                                                                            <else/>
+                                                                                <span class="your-item" >提醒时间:<?php echo date("Y-m-d H:i:s",$vo['remind_time']);?></span>
+                                                                                <a href="javascript:void(0)" data-collect-id = {$vo.collect_id} onclick = "removeRemind(this)"class="more fr">取消提醒</a>
+                                                                            </if>
+                                                                        </li>
+                                                                    </ul>
+                                                                    <div class="my-target"></div>
+                                                                </div>
+                                                            </foreach>
+                                                        </empty>
+													
+						</div>	</div>	
+						<div class="page-change" id="remind-page-change">
+<!--							<span>共total条</span><span><div class="active" style="display: inline-block;">curPage</div>/ totalPage</span>
+							<span><a href="javascript:void(0)" >首页</a></span><span><a href="javascript:void(0)">上一页</a></span>
+							<span><a href="javascript:void(0)" >下一页</a></span><span><a href="javascript:void(0)">尾页</a></span>						-->
+                                                        {$remind_page}
+						</div>		
+                                                
+                                                    
+                                        </div>
+                                        <script type="text/javascript">
+                                            function getFirstRemind(){
+                                                show3(1);
+                                            }
+                                                function show3(id){    //user函数名 一定要和action中的第三个参数一致上面有
+                                                     var id = id;
+                                                        $.get('get_ajax_remind', {'p':id,'is_ajax':1}, function(res){  //用get方法发送信息到Use中的get_ajax_remind方法
+                                                            //alert(22);
+                                                         $("#menu-list3").replaceWith("<div  id='menu-list3'>"+res.content+"</div>"); //user一定要和tpl中的一致
+                                                         $("#remind-page-change").replaceWith("<div class='page-change' id='remind-page-change'>"+res.show+"</div>"); //user一定要和tpl中的一致
+                                                    });
+                                                 }
+
+                                            </script>
+                                      <script>
+                                        function removeRemind(obj) {
+                                            
+                                            if(obj.disabled){
+                                               return false; 
+                                            }
+                                            var collect_id= $(obj).data("collect-id");
+                                            //var url = "{:U(Admin/index,array('collect_id'=>$id))}";
+                                                $.ajax({
+                                                    type : "GET",
+                                                    dataType: "json",
+                                                    //url:"/index.php?m=Home&c=User&a=removeRemind&collect_id="+collect_id,//+tab,
+                                                    url:'__ROOT__/Home/User/removeRemind',
+                                                    data : {collect_id:collect_id},
+                                                    success: function(data){
+                                                        //data = json_decode(data);
+                                                            if(data.status == 1){
+                                                                var top=$(obj).offset().top-200;
+                                                                var left=$(obj).offset().left-320;
+                                                                $(obj).parent().parent().parent().find(".my-target").html("设置成功")
+                                                                $(obj).parent().parent().parent().find(".my-target").css({"position": "absolute","top":top,"left":left});
+                                                                $(obj).parent().parent().parent().find(".my-target").fadeOut(1500);
+                                                                $(obj).html("已取消提醒")
+                                                                obj.style.color = 'grey';
+                                                                obj.disabled = true;
+                                                            }else{
+//                                                                var top=$(obj).offset().top-200;
+//                                                                var left=$(obj).offset().left-320;
+//                                                                $(obj).parent().parent().parent().find(".my-target").html("设置失败")
+//                                                                $(obj).parent().parent().parent().find(".my-target").css({"position": "absolute","top":top,"left":left});
+//                                                                $(obj).parent().parent().parent().find(".my-target").fadeOut(1500);
+                                                                    alert("设置失败，请稍候重试");
+                                                            }
+                                                    }
+                                            });
+                                        }
+                                        
+                                        	// 将用户发来的数据写到聊天对话框中
+                                            function write_msg(msg){
+                                                    var i=1;
+                                                    msg = eval('('+msg+')');
+                                                    //$('<p><a href="javascript:;" onclick="setRec(\''+msg.pos+'\');">'+(msg.pos)+'</a>对你说：<br />&nbsp;&nbsp;'+(msg.content)+'</p>').appendTo($('#msgzone'));
+                                                    alert(i++);
+                                            }
+                                    </script>
+					<div id="comment">
+						<div class="content-header">我的评论</div>
+						<div class="content-body">
+							<div id="menu-list2">
+<!--								<div class="comment-body clearfix">
+									<div class="comment-head ">
+                                                                            <span>事件类型：</span>
+                                                                            <span>dasdasdasdafsssssssssssssssssssssssssssssssss坚实的考虑房价圣诞快乐反键卢卡斯的风景快乐撒静安寺考虑到</span>
+                                                                        </div>
+									<div class="comment-content">
+                                                                            <span class="comment-time">3/12 12:30</span>
+                                                                            <span class="reply fr">
+                                                                                <a class="reply-a" href="javascript:void(0)">查看回复</a>
+                                                                            </span>
+                                                                            <span style="display: none" class="reply-up fr">
+                                                                                <a href="javascript:void(0)" class="reply-upa">收起回复</a>
+                                                                            </span>
+                                                                        </div>
+									<div class="comment-foot">
+										<span>管理员：</span><span>asdasdaasdasdafsssssssssssssssssssssssssssssssss坚实的考虑房价圣诞快乐反键卢卡斯的风景快乐撒静安寺考s</span><span>(12.30)</span>
+										<a href="javascript:void(0);" class="S_txt1 ">回复</a>
+									</div>
+									<div class="reply-bottom">
+										<div class="test_box" contenteditable="true"></div> <div style="display: inline-block;"><a href="javascript:void(0);" class="submit">提交</a></div>
+									</div>
+								</div>-->
+                                                        <empty name="comment_list">
+                                                            <p class="goods_title">您还没有进行过评论</p>
+                                                            <else /> 
+                                                            <foreach name="comment_list" item="vo" key="k">
+                                                                    <div class="comment-body clearfix">
+									<div class="comment-head ">
+                                                                            <a href="{:U('Admin/Front/activitydet?id='.$vo['activity_id'].'')}"><span>事件名:{$vo.title}</span></a></br>
+                                                                            <span>评论内容:{$vo.comment}</span>
+                                                                        </div>
+                                                                        <if condition="$vo['is_reply'] eq 1">
+                                                                        <div class="comment-content">
+                                                                            <span class="comment-time">{$vo.createdate}</span>
+                                                                            
+                                                                            <span class="reply fr">
+                                                                                <a class="reply-a" onclick = "getReply(this)" href="javascript:void(0)">查看回复</a>
+                                                                            </span>
+                                                                            <span style="display: none" class="reply-up fr">
+                                                                                <a href="javascript:void(0)" onclick = "getReplyUp(this)" class="reply-upa">收起回复</a>
+                                                                            </span>
+                                                                            
+                                                                        </div>
+									<div class="comment-foot">
+										<span>管理员：</span>
+                                                                                <span>{$vo.reply_comment}</span></br>
+                                                                                <span>回复时间:{$vo.reply_time}</span>
+									</div>
+                                                                                
+                                                                                
+                                                                            <else/>
+                                                                            <div class="comment-content">
+                                                                            <span class="comment-time">{$vo.createdate}</span>
+                                                                            
+<!--                                                                            <span class="reply fr">
+                                                                                <a class="reply-a" href="javascript:void(0)">查看回复</a>
+                                                                            </span>
+                                                                            <span style="display: none" class="reply-up fr">
+                                                                                <a href="javascript:void(0)" class="reply-upa">收起回复</a>
+                                                                            </span>-->
+                                                                            
+                                                                        </div>
+                                                                        </if>
+								</div>
+                                                            </foreach>
+                                                        </empty>
+								
+							
+						</div></div>		
+						<div class="page-change " id ="comment-page-change">					
+                                                        {$comment_page}
+						</div>		
+					</div>
+                                        <script type="text/javascript">
+                                                function show2(id){    //user函数名 一定要和action中的第三个参数一致上面有
+                                                     var id = id;
+                                                        $.get('get_ajax_comment', {'p':id,'is_ajax':1}, function(data){  //用get方法发送信息到UserAction中的user方法
+                                                            //alert(22);
+                                                         $("#menu-list2").replaceWith("<div  id='menu-list2'>"+data.content+"</div>"); //user一定要和tpl中的一致
+                                                         $("#comment-page-change").replaceWith("<div class='page-change' id='comment-page-change'>"+data.show+"</div>"); //user一定要和tpl中的一致
+                                                    });
+                                                 }
+                                                 
+                                                 function getReply(obj){
+                                                     	$(obj).parent().parent().parent().find(".comment-foot").css({"display":"block"});
+                                                        $(obj).parent().hide();
+                                                        $(obj).parent().parent().find(".reply-up").css({"display":"inline-block"});
+                                                 }
+                                                 
+                                                function getReplyUp(obj){
+                                                    $(obj).parent().parent().parent().find(".comment-foot").css({"display":"none"});
+                                                    $(obj).parent().hide();
+                                                    $(obj).parent().parent().find(".reply").show();
+                                                    $(obj).parent().parent().parent().parent().find(".reply-bottom").css({"display":"none"});	
+                                                 }
+
+                                            </script>
+					<div id="collect">
+						<div class="content-header">我的收藏</div>
+                                                <div class="content-body">
+                                                    <div id="menu-list1">
+<!--                                                        <div class="menu-list">
+                                                            <ul>
+                                                                <li class="list-item item-first">
+                                                                    <div class="item-first-div">
+                                                                        <a href="javascript:void(0)" class="item-a">事件标题<a/>
+                                                                    </div>
+                                                                </li>
+                                                                <li class="list-item">
+                                                                    <div class="item-bg item-bg-time">
+                                                                        <span class="item">事件时间</span>
+                                                                    </div>
+                                                                    <div class="item-bg item-bg-type">
+                                                                        <span class="item">事件类型</span>
+                                                                    </div>
+                                                                </li>
+                                                                <li class="list-item ">
+                                                                    <div class="item-bg item-bg-building">
+                                                                        <span class="item">地点</span>
+                                                                    </div>
+                                                                    <a href="javascript:void(0)" class="more fr">设置提醒</a>
+                                                                </li>
+                                                            </ul>
+                                                            <div class="my-target"></div>
+                                                        </div>-->
+                                                        <empty name="collect_list">
+                                                            <p class="goods_title">您还没有收藏事件</p>
+                                                            <else /> 
+                                                            <foreach name="collect_list" item="vo" key="k">
+                                                                <div class="menu-list" data-collect-id = {$vo.collect_id}>
+                                                                    <ul>
+                                                                        <li class="list-item item-first">
+                                                                            <div class="item-first-div">
+                                                                                <a href="{:U('Admin/Front/activitydet?id='.$vo['activity_id'].'')}" class="item-a">{$vo.title}<a/>
+                                                                            </div>
+                                                                        </li>
+                                                                        <li class="list-item">
+                                                                            <div class="item-bg item-bg-time">
+                                                                                <span class="item">{$vo.startdate}</span>
+                                                                            </div>
+                                                                            <div class="item-bg item-bg-type">
+                                                                                <span class="item">{$vo.type}</span>
+                                                                            </div>
+                                                                        </li>
+                                                                        <li class="list-item ">
+                                                                            <div class="item-bg item-bg-building">
+                                                                                <a href="{:U('Admin/Front/activitydet?id='.$vo['activity_id'].'')}"><span  class="item">查看详情</span></a>
+                                                                            </div>
+                                                                            <if condition="($vo['is_overdue'] eq 1)">
+                                                                                <a  class="more fr" style="color:grey;">事件已逾期</a>
+                                                                            <elseif condition="($vo['is_remind'] eq 1) and ($vo['is_comet_remind'] eq 1)"/>
+                                                                                <a href="javascript:void(0)" class="more fr" style="color:grey;">已设置提醒</a>
+                                                                            <else/>
+                                                                                <div class="input-group date form_datetime" style="display: inline-block;width: 180px;margin-left: 15%;vertical-align: bottom;">
+                                                                                    <input class="picktime" type="text"  data-startdate = {$vo.starttime} id={$vo.collect_id}  placeholder="设置提醒时间"  style="cursor: pointer;width: 155px;margin-left: 5px;" onclick="setTime(this)">
+                                                                                    <span class="input-group-addon" style="width: 20px;padding:0 ;float: right;display:none;"><span class="glyphicon glyphicon-th"></span></span>
+                                                                                </div>
+                                                                                <a style="cursor: pointer;" onclick="addRemind(this)" data-startdate = {$vo.startdate} data-collect-id = {$vo.collect_id} data-enddate = {$vo.enddate} class="more fr clearfix">设置提醒</a>
+                                                                                <!--<a href="javascript:void(0)" data-collect-id = {$vo.collect_id} onclick = "addRemind(this)" class="more fr">设置提醒</a>-->
+                                                                            </if>
+<!--                                                                            <a href="javascript:void(0)" data-collect-id = {$vo.collect_id} onclick = "addRemind(this)"class="more fr">设置提醒</a>
+                                                                                <a href="javascript:void(0)" class="more fr" style="color:grey;">已设置提醒</a>-->
+                                                                        </li>
+                                                                    </ul>
+                                                                    <div class="my-target"></div>
+                                                                </div>
+                                                            </foreach>
+                                                        </empty>
+                                                    </div>
+
+                                                </div>		
+						<div class="page-change" id="collect-page-change">
+<!--						 	<span>共total条</span><span><div class="active" style="display: inline-block;">curPage</div>/ totalPage</span>
+							<span><a href="javascript:void(0)" >首页</a></span><span><a href="javascript:void(0)" >上一页</a></span>
+							<span><a href="javascript:void(0)" >下一页</a></span><span><a href="javascript:void(0)" >尾页</a></span>-->
+                                                           {$collect_page} 
+						</div>		
+					</div>
+                                            <script type="text/javascript">
+                                                function show(id){    //user函数名 一定要和action中的第三个参数一致上面有
+                                                     var id = id;
+                                                        $.get('get_ajax_collect', {'p':id,'is_ajax':1}, function(data){  //用get方法发送信息到UserAction中的user方法
+                                                            //alert(22);
+                                                         $("#menu-list1").replaceWith("<div  id='menu-list1'>"+data.content+"</div>"); //user一定要和tpl中的一致
+                                                         $("#collect-page-change").replaceWith("<div class='page-change' id='collect-page-change'>"+data.show+"</div>"); //user一定要和tpl中的一致
+                                                    });
+                                                 }
+
+                                            </script>
+
+                                    <script>
+                                        function addRemind(obj) {
+                                            
+                                            if(obj.disabled){
+                                               return false; 
+                                            }
+                                            var collect_id= $(obj).data("collect-id");
+                                            var tmp = '#'+collect_id;
+                                            console.log(tmp);
+                                            var settime =$(tmp).val();
+                                            console.log(settime);
+                                                $.ajax({
+                                                    type : "GET",
+                                                    dataType: "json",
+                                                    //url:"/index.php?m=Home&c=User&a=addRemind&collect_id="+collect_id,//+tab,
+                                                    url : '__ROOT__/Home/User/addRemind',
+                                                    data :{collect_id:collect_id,settime:settime},
+                                                    success: function(data){
+                                                        //data = json_decode(data);
+                                                            if(data.status == 1){
+                                                                var top=$(obj).offset().top-200;
+                                                                var left=$(obj).offset().left-320;
+                                                                $(obj).parent().parent().parent().find(".my-target").html("设置成功")
+                                                                $(obj).parent().parent().parent().find(".my-target").css({"position": "absolute","top":top,"left":left});
+                                                                $(obj).parent().parent().parent().find(".my-target").fadeOut(1500);
+                                                                $(obj).html("已设置提醒")
+                                                                obj.style.color = 'grey';
+                                                                obj.disabled = true;
+                                                            }
+                                                    }
+                                            });
+                                        }
+                                        
+                                        function removeRemind(obj) {
+                                            if(obj.disabled){
+                                               return false; 
+                                            }
+                                            var collect_id= $(obj).data("collect-id");
+                                                $.ajax({
+                                                    type : "GET",
+                                                    dataType: "json",
+                                                    //url:"/index.php?m=Home&c=User&a=removeRemind&collect_id="+collect_id,//+tab,
+                                                    url : '__ROOT__/Home/User/removeRemind',
+                                                    data :{collect_id:collect_id},
+                                                    success: function(data){
+                                                        //data = json_decode(data);
+                                                            if(data.status == 1){
+                                                                var top=$(obj).offset().top-200;
+                                                                var left=$(obj).offset().left-320;
+                                                                $(obj).parent().parent().parent().find(".my-target").html("设置成功")
+                                                                $(obj).parent().parent().parent().find(".my-target").css({"position": "absolute","top":top,"left":left});
+                                                                $(obj).parent().parent().parent().find(".my-target").fadeOut(1500);
+                                                                $(obj).html("已取消提醒")
+                                                                obj.style.color = 'grey';
+                                                                obj.disabled = true;
+                                                            }
+                                                    }
+                                            });
+                                        }
+
+                                    </script>
+                                </div>
+                        </div>
+        </div> 
+        </div>
+
+	<script>
+		//取消提醒
+//		$("#menu-list3 .more").click(function() {			 
+//			var top=$(this).offset().top-200;
+//			var left=$(this).offset().left-320;
+//			$(this).parent().parent().parent().find(".my-target").html("设置成功")
+//			$(this).parent().parent().parent().find(".my-target").css({"position": "absolute","top":top,"left":left});
+//			$(this).parent().parent().parent().find(".my-target").fadeOut(1500);
+//			$(this).html("已取消提醒")
+//			 if (this.disabled){
+//                return false;
+//            }
+//            this.style.color = 'grey';
+//            this.disabed = true;
+//		});
+	 
+
+		//设置提醒
+//		$("#menu-list1 .more").click(function() {			 
+//			var top=$(this).offset().top-200;
+//			var left=$(this).offset().left-320;
+//			$(this).parent().parent().parent().find(".my-target").html("设置成功")
+//			$(this).parent().parent().parent().find(".my-target").css({"position": "absolute","top":top,"left":left});
+//			$(this).parent().parent().parent().find(".my-target").fadeOut(1500);
+//			$(this).html("已设置提醒")
+//			 if (this.disabled){
+//                return false;
+//            }
+//            
+//            this.style.color = 'grey';
+//            this.disabed = true;
+//		});
+        function setTime(obj){
+            var myDate = new Date();
+            var startTime = "<?php echo createDate();?>"    //获取日期与时间
+            var endTime =$(obj).data("startdate");        //获取日期与时间
+            console.log(startTime);
+            console.log(endTime);
+            $(obj).datetimepicker({
+                //language:  'fr',
+                format: 'yyyy-mm-dd hh:ii',
+                weekStart: 1,
+                todayBtn:  1,
+                autoclose: 1,
+                todayHighlight: 1,
+                startView: 2,
+                forceParse: 0,
+                showMeridian: 1,
+                startDate:startTime,
+                endDate:endTime,
+            });
+            $(obj).datetimepicker('show');
+        }
+
+		//提交
+		function mySubmit() {
+			$(".submit").click(function() {
+				$(this).parent().parent().css({"display":"none"})
+				$(this).parent().parent().parent().parent().find(".comment-foot").css({"display":"none"});
+				$(this).parent().parent().parent().parent().find(".reply").show();
+				$(this).parent().parent().parent().parent().find(".reply").parent().show();
+				$(this).parent().parent().parent().parent().find(".reply-up").css({"display":"none"});
+				return false;
+			});
+		}
+		mySubmit();
+
+		//回复
+//		function myReply() {
+//			$(".S_txt1").click(function() {
+//				$(this).parent().parent().find(".reply-bottom").css({"display":"block"})
+//				return false;
+//			});
+//		}
+//		myReply();
+
+		//查看回复
+//		function getReply() {
+//			$(".reply-a").click(function() {
+//				/*$(this).parent().parent().find(".comment-foot").css({"display":"block"});*/
+//				$(this).parent().parent().parent().find(".comment-foot").css({"display":"block"});
+//				$(this).parent().hide();
+//				$(this).parent().parent().find(".reply-up").css({"display":"inline-block"});
+//				return false;			 
+//			});
+//		}
+//		getReply();
+
+		//收起回复
+		function getReplyUp() {
+			$(".reply-upa").click(function() {
+				$(this).parent().parent().parent().find(".comment-foot").css({"display":"none"});
+				$(this).parent().hide();
+				$(this).parent().parent().find(".reply").show();
+				$(this).parent().parent().parent().parent().find(".reply-bottom").css({"display":"none"});				
+				return false;			 
+			});
+		}
+		getReplyUp();
+
+		//评论切换
+		function getComment() {
+			$('.comment').click(function(){
+				$(".reply-bottom").css({"display":"none"});
+				$(".comment-foot").css({"display":"none"});
+				$(".reply-up").hide();
+				$(".reply").show();
+				$('#heart').css('display','none');
+				$('#comment').css('display','block');
+				$('#collect').css('display','none');
+				return false;
+			});
+		}
+		getComment();
+
+		//收藏切换
+		function getCollect() {
+			$('.collect').click(function(){
+				$(".reply-bottom").css({"display":"none"});
+				$(".comment-foot").css({"display":"none"});
+				$(".reply-up").hide();
+				$(".reply").show();
+				$('#heart').css('display','none');
+				$('#comment').css('display','none');
+				$('#collect').css('display','block');
+				return false;
+			});
+		}
+		getCollect();
+
+		//提醒切换
+		function getHeart() {
+			$('.heart').click(function(){
+				$(".reply-bottom").css({"display":"none"});
+				$(".comment-foot").css({"display":"none"});
+				$(".reply-up").hide();
+				$(".reply").show();
+				$('#heart').css('display','block');
+				$('#comment').css('display','none');
+				$('#collect').css('display','none');
+				$('#new-event').css({'display':'none'});
+
+				return false;
+
+			});
+		}
+		getHeart();
+
+		//信息保存
+		function saveInfo(obj) {
+				$(obj).parent().hide()
+				$(obj).parent().siblings().children().show();
+				$('.edit-info  input').css("display","none");
+				$('.edit-inf').show();
+				var edit_inf=document.getElementsByClassName("edit-inf");
+				var myname="";
+				var myclass="";
+				for(var i=0;i<edit_inf.length;i++){
+					myname=edit_inf[0].innerHTML;
+					myclass=edit_inf[1].innerHTML;
+					
+				}
+              
+                                var inputname = $("input[name='relname']").val();
+                                var inputclass = $("input[name='userclass']").val();
+
+                                if(inputname=="" || inputclass==""){
+                                    //alert(1);
+                                    return false;
+                                }
+                                
+                                if(inputname==myname || inputclass==myclass){
+                                    //alert(2);
+                                    return false;
+                                }
+
+                                $.ajax({
+                                    type : 'post',
+                                    //url : '/index.php/Home/User/editInfo',
+                                    url : '__ROOT__/Home/User/editInfo',
+                                    data : {user_relname:inputname,user_class:inputclass},
+                                    dataType : 'json',
+                                    success : function(res){
+                                        //res = json_decode(res);
+                                            if(res.status == 1){
+                                                    window.location.href = "{:U('User/index','','')}";
+                                            }else{
+                                                alert(res.msg);
+                                            }
+                                    },
+//            			error : function(XMLHttpRequest, textStatus, errorThrown) {
+//            				showErrorMsg('网络失败，请刷新页面后重试');
+//            			}
+                            });
+
+                        }
+
+		//saveInfo();
+
+		
+		//信息编辑
+		$(function () {
+                        $('.edit-click').click(function(){				
+				$('.edit-info  input').css("display","inline-block");
+				$(this).hide();
+				$(this).parent().parent().parent().find(".edit-inf").hide()
+				$(this).parent().siblings().show();		 
+			});
+
+			$('.my-thing').click(function() {
+				//$(this).siblings().slideUp();
+			/*	$('.submenu').fadeOut();
+				$('.submenu').fadeIn();*/
+				var flag = $(".submenu").css("display");
+		        if(flag == 'none') {
+		            $(".submenu").show();
+		            $('.sidebar .my-nav .menu-sub .icon').css("background-image","url({$Think.config.IMG_URL}i_02.png)");
+		        }else {
+		            $(".submenu").hide();
+		            $('.sidebar .my-nav .menu-sub .icon').css("background-image","url({$Think.config.IMG_URL}i_01.png)");
+		        }
+
+				 return false;
+			});
+		});
+	</script>
+</body>
+</html>

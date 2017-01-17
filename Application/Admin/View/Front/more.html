@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="description" content="" id="description">
+	<meta name="keywords" content="">
+	<meta name="author" content="Pzj">
+	<title>{$result['title']}</title>
+	<link rel="stylesheet" type="text/css" href="__ROOT__/Public/css/style.css">
+	<link rel="stylesheet" type="text/css" href="__ROOT__/Public/css/more.css">
+	<style>
+		.mybtn{padding: 10px 15px;background-color: #4671F6;border-radius: 4px;color: #fff;vertical-align: text-bottom;}
+		.comment{margin-left: 20px;font-size: 15px;}
+	</style>
+	<script type="text/javascript" src="__ROOT__/Public/js/jquery-1.6.4.min.js"></script>
+
+	<script>
+	function collect(activity_id){
+	$.ajax({
+			type : 'post',
+			url : '__ROOT__/Home/User/collect_activity',
+			data : {'activity_id':activity_id},
+			dataType : 'json',
+			success : function(res){
+
+				if(res.status == 1){
+					alert("收藏成功!");
+					window.location.reload();
+				}else if(res.status== -3){
+				alert("您已经取消收藏");
+					window.location.reload();
+				}else if(res.status == -1){
+ 				alert('请先登录.');
+				location.href="__ROOT__/Home/User/login";
+				}
+
+			},
+ 			error : function(XMLHttpRequest, textStatus, errorThrown) {
+ 				alert('收藏失败,请先登录');
+				location.href="__ROOT__/Home/User/login";
+ 			}
+
+		})
+	}
+
+	$(function(){
+		/*发表评论为空*/
+		$(".mybtn").live('click',function(){
+			var comment=$('.comment').val();
+			if(comment.length==0){
+				alert("请输入内容!");
+				$('.comment').focus();
+				return false;
+			}else if(comment.length<5){
+				alert("字数太少哟。。");
+				return false;
+			}else{
+				if("$_SESSION['user']['username']"){
+					alert("提交失败，请先登录!");
+				}else{
+					alert("提交成功!");
+				}
+
+
+			}
+		});
+	});
+	</script>
+</head>
+<body>
+	<header role="header" class="head_wrap">
+		<div class="main_head">
+			<a href="#"><img id="logo_img" src="__ROOT__/Public/image/logo_img.png"/></a>
+			<span class="head_txt">欢迎进入日历网<if condition="!empty($_SESSION['user']['username'])">
+			<a class="register_txt" href="__ROOT__/Home/User/index">{$_SESSION['user']['username']},个人中心</a><a href="__ROOT__/Home/User/logout">退出系统</a>
+		<else/>
+		<a class="register_txt" href="__ROOT__/Home/User/reg">注册</a>或<a href="__ROOT__/Home/User/login">登录</a>
+		</if>
+		</span>
+			<div class="search_wrap">
+				<form action="__ROOT__/Admin/Front/getActivityByKeyword">
+					<input type="text" name="keyword" class="search_input"/><input type="submit" class="search_btn button" value="搜索">
+				</form>
+			</div>
+		</div>
+		<div class="sub_head_wrap">
+		<ul class="sub_head">
+			<li style="margin-left: 65px;border-left: none;"><a href="../../rili">首页</a></li>
+			<li><a href="../../year">今年</a></li>
+			<li><a href="../../rili">本月</a></li>
+			<li><a href="../../week">本周</a></li>
+			<li><a href="../../today">今日</a></li>
+			<li style="border-right: none;"><a href="../../hot">热门</a></li>
+		</ul>
+		</div>
+	</header>
+	<div class="container clearfix" style="margin-bottom: 0">
+		<div class="pannel">
+			<div class="title">
+				<h1>{$result['title']}</h1>
+				<h3 style="width:650px">{$result['unit']} &nbsp &nbsp&nbsp
+				阅读次数{$result['readcount']}&nbsp &nbsp
+				评论次数{$result['commentcount']}&nbsp &nbsp
+					<if condition="$status eq 0">
+						<a href="javascript:collect('{$result['id']}')">收藏本活动</a>
+						<else/>
+						<a href="javascript:collect('{$result['id']}')">取消收藏</a>
+					</if>
+				<if/>
+			</div>
+			<div class="job-info">
+				<p class="address">
+					<span>
+						<i class="icon" title="举办地址"></i>
+						<span>{$result['address']}</span>
+					</span>
+				</p>
+				<p class="date-time">
+					<span>开始时间：</span>
+					<span>{$result['startdate']}</span>
+					<span class="over-time">结束时间：</span>
+					<span>{$result['enddate']}</span>
+				</p>
+				<p class="type">
+					<span>
+						<i class="icon" title="类型"></i>
+						<span>{$result['type']}</span>
+					</span>
+				</p>
+				<!--<p class="people">-->
+					<!--<span>-->
+						<!--<span>联系人：</span>-->
+						<!--<span>{$result['people']}</span>-->
+					<!--</span>-->
+				<!--</p>-->
+				<!--<p class="people">-->
+					<!--<span>-->
+						<!--<span>联系人手机：</span>-->
+						<!--<span>{$result['telephone']}</span>-->
+					<!--</span>-->
+				<!--</p>-->
+			</div>
+		</div>
+		<div class="detail">
+			<div class="job-item">
+				<div class="job-title"><span class="line"></span><span>活动简介：</span></div>
+				<?php
+					$content =htmlspecialchars_decode($result['content']);
+					?>
+				<div class="job-info"><span>{$content}</span>
+				</div>
+			</div>
+		</div>
+		<!-- <div class="shares" >
+			<div class="share-f"><span class="line"></span><span class="label">分享给朋友：</span></div>
+			<ul class="options">
+				<li><a title="分享到微信" href="" target="_blank"><span class="ico"><i class="ico-fn-weixin"></i></span></a></li>
+				<li class=""><a title="分享到新浪微博" id="s_sina1" href="" target="_blank"><span class="ico"><i class="ico-fn-weibo"></i></span></a></li>
+				<li class="margin-r0 "><a title="分享到QQ好友" id="s_qq_haoyou1" href="" target="_blank"><span class="ico"><i class="ico-fn-qq"></i></span></a></li>
+			</ul>
+		</div> -->
+		<!-- 分享 -->
+		<!-- JiaThis Button BEGIN -->
+		<div class="shares" >
+			<div class="share-f"><span class="line"></span><span class="label">分享给朋友：</span></div>
+			<div class="jiathis_style_24x24" style="display: inline-block;">
+				<a class="jiathis_button_qzone"></a>
+				<a class="jiathis_button_weixin"></a>
+			</div>
+		</div>
+		<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+		<!-- JiaThis Button END -->
+	</div>
+
+	
+		<div style="clear: both;"></div>
+	<!-- 评论 -->
+		<div class="container clearfix" style="margin-top:0 ">
+	     <div class="detail">
+					<div class="job-item">
+						<div class="job-title">
+							<span class="line"></span><span>发表评论：</span>
+						</div>
+					 </div>
+					<div class="job-info" style="margin-top: 10px;padding-bottom: 15px;">
+						<form action="__ROOT__/Admin/Front/addComment" method="post">
+						<input type="hidden" value="{$result['id']}" name="activity_id"/>
+						<textarea cols="90" rows="10" class="comment" name="comment" placeholder="发表你的意见吧"></textarea>
+						<input type="submit" value="发表" class="mybtn" />
+						</form>
+					</div>
+
+				</div>
+
+		<volist id="vo" name="rs">
+		<div class="pannel">
+			<div class="title">
+			<h3>{$vo['username']}:{$vo['comment']}</h3>
+			<h5>发表时间:{$vo['createdate']}</h3>
+			<h5>[IP]:{$vo['ip_address']}</h3>
+			</div>
+		</div>	
+		 </volist>
+		</div>
+	</div>
+
+
+	<footer>
+		<div class="foot_up">
+			<ul class="subfoot_left" style="margin-left: 350px;">
+				<li><a href="#" style="border-bottom: 2px solid #fff;padding-bottom: 13px;">About us</a></li>
+				<li>Tel：0411-84724185</li>
+				<li>Email：dlhsjy@vip.126.com</li>
+				<li>地址:辽宁省大连市甘井子区凌海路1号大连海事大学</li>
+			</ul>
+			<ul class="subfoot_right" style="margin-left: 200px;">
+				<li style="border-bottom: 2px solid #fff;padding-bottom: 13px;width: 69px;">友情链接</li>
+				<li><a href="#">蝌蚪就业</a></li>
+				<li><a href="#">大连海事大学</a></li>
+			</ul>
+		</div>
+		<div class="foot_down">Copyright &copy; 2014 myjob.dlmu.edu.cn 版权所有<span id="bidui" style="display: none;color:#C1C0C0; "></span></div>
+	</footer>
+</body>
+</html>

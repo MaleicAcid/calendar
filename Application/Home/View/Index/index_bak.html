@@ -1,0 +1,24 @@
+ <DOCTYPE HTML5>
+     <html>
+     <head>
+         <meta charset="UTF-8">
+         <meta name="viewport"
+               content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+         <meta http-equiv="X-UA-Compatible" content="ie=edge">
+         <title>Document</title>
+     </head>
+     <body>
+        <form action="{:U('login')}" method="post">
+            账号<input name="username" type="text"/><br/>
+            密码<input name="password" type="password"/><if condition="isset($login_error)">{$login_error}</if><br/>
+            <button type="submit">登陆</button>
+        </form>
+        <br/>
+        <form action="{:U('register')}" method="post">
+            账号<input name="username" value="{$old.username}" type="text"/> <if condition="isset($error['username'])">{$error.username}</if><br/>
+            密码<input name="password" value="{$old.password}" type="password"/><if condition="isset($error['password'])">{$error.password}</if><br/>
+            密码<input name="password2" value="{$old.password2}" type="password"/><if condition="isset($error['password2'])">{$error.password2}</if><br/>
+            <button type="submit">注册</button>
+        </form>
+     </body>
+     </html>

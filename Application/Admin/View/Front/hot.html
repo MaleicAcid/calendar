@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<!--[if lte IE 9]><div style="position:absolute;z-index:999;width:1920px;height:1500px;color:red;background-color:white;font-size:50px;">为了更好的用户体验，我们强烈建议你升级浏览器到IE10或者更高,<a target="_blank" href="https://support.microsoft.com/zh-cn/help/17621/internet-explorer-downloads">浏览器升级入口</a></div><![endif]-->
+<html lang="zh">
+<head>
+	<meta charset="UTF-8"> 
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="description" content="" id="description">
+	<meta name="keywords" content="">
+	<meta name="author" content="Pzj">
+	<title>热门页</title>
+	<link rel="stylesheet" type="text/css" href="__ROOT__/Public/css/style.css">
+	<link rel="stylesheet" type="text/css" href="__ROOT__/Public/css/simple-calendar.css">
+	<link rel="stylesheet" type="text/css" href="__ROOT__/Public/css/today.css">	 
+	<script type="text/javascript" src="__ROOT__/Public/js/jquery-1.6.4.min.js"></script>
+	<script type="text/javascript" src="__ROOT__/Public/js/simple-calendar.js"></script>
+	<style>
+		.btn-new-group{text-align:center;line-height: 35px;color: #999;font-size: 16px;font-weight: bold;position: absolute;bottom: 20px;left: 40%; }
+		#mybtn a{display: inline-block;width:46px;height: 35px;border: 1px solid #ccc;margin-right:10px;color: #999;margin-right:  12px;border-radius: 8px;}
+		.btn-new-change .active{color: #2c81d6}
+		#mybtn span{margin-right:18px; font-size:14px;display: inline-block;}
+
+		.new-list{width: 470px;height: 344px;z-index: 999;font-size: 22px;color: #584F4F}
+	</style>
+</head>
+<body>
+	<header role="header" class="head_wrap">
+		<div class="main_head">
+			<a href="#"><img id="logo_img" src="__ROOT__/Public/image/logo_img.png"/></a>
+			<span class="head_txt">欢迎进入日历网<if condition="!empty($_SESSION['user']['username'])">
+			<a class="register_txt" href="__ROOT__/Home/User/index">{$_SESSION['user']['username']},个人中心</a><a href="__ROOT__/Home/User/logout">退出系统</a>
+		<else/>
+		<a class="register_txt" href="__ROOT__/Home/User/reg">注册</a>或<a href="__ROOT__/Home/User/login">登录</a>
+		</if>
+		</span>
+			<div class="search_wrap">
+				<form action="__ROOT__/Admin/Front/getActivityByKeyword">
+					<input type="text" name="keyword" class="search_input"/><input type="submit" class="search_btn button" value="搜索">
+				</form>	
+			</div>
+		</div>
+		<div class="sub_head_wrap">
+		<ul class="sub_head">
+			<li style="margin-left: 65px;border-left: none;"><a href="rili">首页</a></li>
+			<li><a href="year">今年</a></li>
+			<li><a href="rili">本月</a></li>
+			<li><a href="week">本周</a></li>
+			<li><a href="today">今日</a></li>
+			<li style="border-right: none;"  class="active" ><a href="hot">热门</a></li>
+		</ul>
+		</div>
+	</header>
+	<div class="container clearfix">
+		<div class="menu fl  clearfix">
+			 <div class="menu-header">
+				<span class="text fl"> </span>
+				<span class="text fr"></span>
+			</div>	
+			<div id="menu-list">
+				
+			</div>		
+			<div class="page-change">
+			</div>
+		</div>
+		<div class="all-con fr ">		
+			<div id="calendar">				
+			</div>							
+			<div class="hot-events fr clearfix">
+				<div class="title">今日事件</div>
+				<div class="line"></div>
+				<div>
+					<div class="hot-items" >
+						<ul class="clearfix"  id="hot-news" style="display: block;">
+						</ul>							
+					</div>
+				</div>			
+				
+				<div class="btn-new-group" id="mybtn">					 
+				</div>
+			</div>
+		</div>
+	</div>
+	<footer>
+		<div class="foot_up">
+			<ul class="subfoot_left" style="margin-left: 350px;">
+				<li><a href="#" style="border-bottom: 2px solid #fff;padding-bottom: 13px;">About us</a></li>
+				<li>Tel：0411-84724185</li>
+				<li>Email：dlhsjy@vip.126.com</li>
+				<li>地址:辽宁省大连市甘井子区凌海路1号大连海事大学</li>
+			</ul>
+			<ul class="subfoot_right" style="margin-left: 200px;">
+				<li style="border-bottom: 2px solid #fff;padding-bottom: 13px;width: 69px;">友情链接</li>
+				<li><a href="#">蝌蚪就业</a></li>
+				<li><a href="#">大连海事大学</a></li>
+			</ul>
+		</div>
+		<div class="foot_down">Copyright &copy; 2014 myjob.dlmu.edu.cn 版权所有<span id="bidui" style="display: none;color:#C1C0C0; "></span></div>
+	</footer>
+	<script type="text/javascript">
+		var myCalendar = new SimpleCalendar('#calendar');
+		var options = {
+		      language: 'CH', //语言
+		      showLunarCalendar: false, //阴历
+		      showHoliday: false, //休假
+		      showFestival: false, //节日
+		      showLunarFestival: false, //农历节日
+		      showSolarTerm: false, //节气
+		      showMark: false, //标记
+		      timeRange: {
+		        startYear: 2000,
+		        endYear: 2049
+		      },
+		      theme: {
+		        changeAble: false,
+		        weeks: {
+		          backgroundColor: '#FBEC9C',
+		          fontColor: '#4A4A4A',
+		          fontSize: '20px',
+		        },
+		        days: {
+		          backgroundColor: '#ffffff',
+		          fontColor: '#565555',
+		          fontSize: '24px'
+		        },
+		        todaycolor: 'orange',
+		        activeSelectColor: 'orange',
+		      }
+		    }
+
+	    //删除不要的节点
+	    $(".lunar-day").hide();
+	    $(".sc-yleft").hide();
+	    $(".sc-select-year").hide();
+	    $(".sc-yright").hide();
+	    $(".sc-return-today ").hide();
+	    $(".sc-time").parent().remove();
+	    $(".sc-select-month").parent().addClass('select-month'); 
+	    $(".sc-mright").addClass("pointer");
+	    $(".sc-mleft").addClass("pointer");
+	    $(".sc-yleft,.sc-yright,.sc-mleft,.sc-mright").hide();
+
+
+	    var myDate = new Date();
+		function getDate(){			
+			//获取当日日期
+			var day=myDate.getDate()+'';
+			var month=(myDate.getMonth()+1)+'';
+			var year=myDate.getFullYear();
+			var week=myDate.getDay();
+			
+
+			if(day.length==2){
+  				day = day;
+  			}else{
+  				day = '0'+day;
+  			}
+			if(month.length==2){
+  				month = month;
+  			}else{
+  				month = '0'+month;
+  			}
+			return  year+'-'+month+'-'+day ; 
+		}
+		function getWeek(){
+			//初始化星期
+			var weekday=new Array(7)
+			weekday[0]="星期日"
+			weekday[1]="星期一"
+			weekday[2]="星期二"
+			weekday[3]="星期三"
+			weekday[4]="星期四"
+			weekday[5]="星期五"
+			weekday[6]="星期六" 
+			return weekday;
+		}
+
+		$(function(){
+			var mydate=getDate();
+			var myweek=getWeek();
+			var curPage = 1; //当前页码
+			var total,pageSize,totalPage;
+			$(".menu-header :first-child").text("热门事件").css({"font-size":"26px"});
+			function getActivity() {
+				var t_itle="";
+				var s_tartdate="";
+				var e_nddate="";
+									 
+				//请求列表数据
+				$.ajax({
+				   url:"__ROOT__/Admin/Front/getHotActivity",
+				   success: function(active){		
+				   		//初始化列表
+				   		$("#menu-list").empty();
+						var div="";
+						for(var i=0;i<active.length;i++){
+							if(active.length>0){
+								//时间 
+								s_tartdate=active[i].startdate;																								
+								e_nddate=active[i].enddate;							
+								t_ime=s_tartdate.substr(0,10)+' '+s_tartdate.substr(11,16); 
+								//简介
+								t_itle=active[i].title;								
+								//地址
+								address=active[i].address;
+								//类型
+								t_ype=active[i].type;
+								i_d=active[i].id;
+								div+="<div class='menu-list'><ul><li class='list-item item-first'><div class='item-first-div'><a href='javascript:void(0)' class='item-a'>"+t_itle+"<a/></div></li><li class='list-item '><div class='item-bg item-bg-time'><span class='item'>"+t_ime+"</span></div><div class='item-bg item-bg-type'><span class='item'>"+t_ype+"</span></div></li><li class='list-item '><div class='item-bg item-bg-building'><span class='item'>"+address+"</span></div><a href='__ROOT__/Admin/Front/activitydet/id/"+i_d+"' class='more fr'>more</a></li></ul></div>";		
+							}else{
+								div="<div class='menu-list'><ul><li class='list-item item-first'>无热门内容</li></ul></div>";
+							}
+																								
+						}									
+						//追加节点
+						$("#menu-list").append(div);	
+										   		
+				  },
+				error:function(){
+					//alert("数据加载失败");
+				},
+				'type':'post',
+				'dataType':'json', 
+						}); 
+			} 	
+			getActivity();	
+			function html2Escape(str) {
+				var arrEntities={'lt':'<','gt':'>','nbsp':' ','amp':'&','quot':'"'};
+ 				return str.replace(/&(lt|gt|nbsp|amp|quot);/ig,function(all,t){return arrEntities[t];});
+			}
+			function getTab(page){
+				pageSize = 5; //每页显示条数
+				//请求热点新闻数据
+				$.ajax({
+					url:"__ROOT__/Admin/Front/getDayActivity",
+				   	'data': {'startdate':mydate,'page':page,'pageSize':pageSize},
+				    success: function(active){	 
+				    	$("#hot-news").empty();
+				   		total = active.count; //总记录数				   		
+						
+						curPage = page; //当前页
+						totalPage = Math.ceil(total/pageSize); //总页数 
+						
+						var div=""; 
+						if(total==0){
+							div="<div class='new-list'><ul><li class='list-item item-first'>今日无内容</li></ul></div>";
+							$("#mybtn").remove();
+							totalPage=1;
+						}else{
+							for(var i=0;i<active.data.length;i++){
+								t_itle=active.data[i].title;	
+								//获取日期
+								s_tartdate=active.data[i].startdate;																						
+								e_nddate=active.data[i].enddate;		
+								s_tartdate=active.data[i].startdate;						
+								t_ime=s_tartdate.substr(11,16)+'-'+e_nddate.substr(11,16); 
+								i_d=active.data[i].id;
+								div+="<li class='hot-item fl clearfix'><a href='__ROOT__/Admin/Front/activitydet/id/"+i_d+"' class='fl'>"+t_itle+"</a><div class='fr date'>"+t_ime+"</div>";
+							}
+						}
+
+						//追加节点
+						$("#hot-news").append(div);	
+					},complete:function(){ //生成分页条
+						getPageBar();
+					},'type':'post'
+					,'dataType':'json',
+				});
+			} 
+
+			//获取分页条
+			function getPageBar(){
+				//页码大于最大页数
+				if(curPage>totalPage) {curPage=totalPage;}
+				
+				//页码小于1
+				if(curPage<1) {curPage=1;}
+				pageStr = "";
+				
+				//如果是第一页
+				if(curPage==1){
+					pageStr += "<span>上一页</span>";
+				}else{
+					pageStr += "<span><a href='javascript:void(0)' rel='"+(curPage-1)+"'>上一页</a></span>";
+				}
+				
+				//如果是最后页
+				if(curPage>=totalPage){
+					pageStr += "<span>下一页</span>";
+				}else{
+					pageStr += "<span><a href='javascript:void(0)' rel='"+(parseInt(curPage)+1)+"'>下一页</a></span>";
+				}
+					
+				$(".btn-new-group").html(pageStr);
+			}
+
+			getTab(1);
+			$(".btn-new-group span a").live('click',function(){
+				var rel = $(this).attr("rel");
+				if(rel){
+					getTab(rel);
+				}
+			});
+	
+		});	
+
+		
+
+	$(function() {
+		//根据指定的年月获取当月天数
+		 function getDays(year, month){
+			// month 取自然值，从 1-12 而不是从 0 开始
+			return new Date(year, month, 0).getDate();
+			// 如果 month 按 javascript 的定义从 0 开始的话就是
+			// return new Date(year, month + 1, 0).getDate()
+		}
+		//初始化event
+		//获取所有表格的内容
+		var td = $(".sc-item");//获取当前页日期节点
+		var endday = getDays(Year,Month);;//本月最后一天
+		var selectYear = $('.sc-select-year');//获取当前页年份
+		var selectMonth = $('.sc-select-month');//获取当前页月
+		var Month ='';//初始化月
+		if(selectMonth.val().length==2){
+			Month = selectMonth.val();
+		}else{
+			Month = '0'+selectMonth.val();
+		}
+		var Year = selectYear.val();
+		
+		//遍历当前页的日期做清空事件处理函数
+		var clearEvent = function(){
+			$.each($(".sc-item"),function(){
+				$(".event").remove();
+				if($(this).find(".event_label")){
+					$(".event_label").remove();
+				}
+			})
+		};
+		//动态获取改变后的日期
+		function getActiveDay(){
+			if(td.find(".day").change()){
+				td.find(".day").live('change',function(){
+					td = $(".sc-item");
+				})
+			}else{
+				console.log(" getActivetyDay function false");
+			}
+		}
+		//获取改变后的年月
+		selectYear.live("change",function(){
+			clearEvent();
+			Year = $(this).val();
+			getActiveDay();
+			changeEvent();
+		});
+		selectMonth.live("change",function(){
+			clearEvent();
+			Year = selectYear.val();
+			if($(this).val().length==2){
+				Month = $(this).val();
+			}else{
+				Month = '0'+$(this).val();
+			}
+			getActiveDay();
+			changeEvent();
+		})
+		//ajax请求后端数据
+		function changeEvent(){
+			var myactivitydate="";
+			var mycount="";
+			$.ajax({
+				'url':'__ROOT__/Admin/Front/getRightMonthActivity',
+				'data':'startdate='+Year+'-'+Month,
+				'success':function(dt){
+					//遍历当前页日期节点
+					$.each(td,function(){
+						//判断是否为有效的日期节点
+						if($(this).children(".day").css("color")!=$("#bidui").css("color")){
+							//添加指定日期的事件到$(this)标签内
+							var $sc_item = $(this);
+							for(var i=0;i<dt.data.length;i++){
+								myactivitydate=dt.data[i].activitydate;
+								mycount=dt.data[i].count;
+								var my_day=$sc_item.children(".day").text();
+								if(my_day.length==2){
+									my_day=my_day;
+								}else{
+									my_day='0'+my_day;
+								}
+								if(my_day==myactivitydate.substring(8,10)){
+									$sc_item.css({"position":"relative","overflow":"hidden"}).append(
+												"<div class='event_label pointer' url='today?"+Year+'-'+Month+'-'+my_day+"'>本日事件:"+mycount+"&nbsp;</div>");
+								}
+							}
+						}	 
+						
+					});
+					// 添加链接
+					$('.sc-item div.pointer').click(function(){
+						window.location.href= $(this).attr('url');
+					});
+				},
+				'type':'post',
+				'dataType':'json',
+			});
+		}
+		//初始化的显示当前月事件
+		changeEvent();
+		//获取点击label的日期		
+	});
+
+
+	</script>
+</body>
+</html>
+									
+						

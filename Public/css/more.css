@@ -1,0 +1,33 @@
+h1,h3,p{padding: 0;margin: 0;}
+.container{position: relative;width: 1040px;margin: 0 auto;margin-top: 30px; margin-bottom: 96px;background-color: #fff;}
+.pannel{padding-top: 18px;padding-bottom: 20px;border:1px solid #ccc; box-shadow: 3px 3px 3px #888888;margin-bottom: 5px;border-radius: 2px;}
+.pannel .title {margin-left: -20px;padding-left: 20px;background-color: #3482E3;width: 700px;color: #fff;border-radius: 5px;font-size: 16px;padding-top:12px;padding-bottom: 10px;box-shadow: 5px 5px 5px #888888;}
+.pannel .title h1{margin-bottom: 10px;width: 460px;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;}
+.pannel .title h3{width: 460px;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;}
+/* .pannel .level{margin-top: 10px;margin-right: 16px;font-size: 22px;} */
+.pannel .job-info{padding-left: 20px;padding-top: 26px;}
+.pannel .job-info .address .icon{display: inline-block;height: 20px;width: 20px;background-image: url(../image/building.jpg);vertical-align: top;}
+.pannel .job-info p{padding-bottom: 20px;}
+.pannel .job-info span{font-size: 20px;color: #363333;}
+.pannel .job-info .over-time{margin-left: 40px;}
+.pannel .job-info .type .icon{display: inline-block;height: 20px;width: 20px;background-image: url(../image/type.jpg);vertical-align: top;}
+
+.detail { border: 1px #ccc solid;border-radius: 2px;box-shadow: 3px 3px 3px #888888;}
+.detail .job-item{padding-left: 20px;padding-top: 16px;}
+.detail .job-item .job-title .line{display: inline-block;width:3px;height: 20px;background-color: #1e65ab;vertical-align: sub;margin-right: 10px;}
+.detail .job-item .job-info{padding-bottom: 160px;margin-top: 10px;margin-left: 40px;padding-right: 100px;}
+.detail span{font-size: 18px;color: #2B2929;}
+.detail .job-info span{font-size: 16px;color: #333;line-height: 1.6;}
+
+/*分享*/
+.shares{border-top: solid 1px #C5C0C0;padding-top:8px; border: 1px #ccc solid;border-radius: 2px;box-shadow: 3px 3px 3px #888888;margin-bottom: 5px;padding: 20px 0;}
+.shares .line{display: inline-block;width:3px;height: 20px;background-color: #1e65ab;vertical-align: sub;margin-right: 10px;}
+.share-f{display: inline-block;vertical-align: super;padding-left: 20px;}
+.shares .label{font-size: 18px;color: #2B2929;}
+.shares .options {display: inline-block;}
+.shares .options i{display: inline-block;width: 29px;height: 29px;}
+.shares .options li{float: left;}
+.shares .ico{margin-right: 15px;margin-top: 5px;}
+.shares .ico-fn-weixin{background: url(../image/weixin.png) no-repeat;background-size: 29px 29px;}
+.shares .ico-fn-weibo{background: url(../image/sina.png) no-repeat;background-size: 29px 29px;}
+.shares .ico-fn-qq{background: url(../image/qq.png) no-repeat;background-size: 29px 29px;}

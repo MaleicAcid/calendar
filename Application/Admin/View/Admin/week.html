@@ -1,0 +1,265 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<title>本周</title>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="description" content="" id="description">
+	<meta name="keywords" content="">
+	<meta name="author" content="Vanklin">
+	<link rel="stylesheet" type="text/css" href="__ROOT__/Public/css/style.css">
+    <script type="text/javascript" src="__ROOT__/Public/js/jquery-1.6.4.min.js"></script>
+</head>
+<body>
+	<header role="header" class="head_wrap">
+		<div class="main_head">
+			<a href="#"><img id="logo_img" src="__ROOT__/Public/image/logo_img.png"/></a>
+			<span class="head_txt">欢迎进入日历网<a class="register_txt" href="#">注册</a>或<a href="#">登录</a></span>
+			<div class="search_wrap">
+				<input type="text" name="search_input" class="search_input"/><button class="search_btn">搜索</button>
+			</div>
+		</div>
+		<div class="sub_head_wrap">
+		<ul class="sub_head">
+			<li  style="margin-left: 65px;border-left: none;"><a href="#">首页</a></li>
+			<li ><a href="#">今年</a></li>
+			<li><a href="#">本月</a></li>
+			<li class="active"><a href="#">本周</a></li>
+			<li><a href="#">今日</a></li>
+			<li style="border-right: none;"><a href="#">热门</a></li>
+		</ul>
+		</div>
+	</header>
+    <div id="weekContent">
+    	<ul class="weekhead">
+    		<li><span class="year"></span>年<span class="month"></span>月</li>
+    		<li>
+    			<span class="day1"></span>周一
+    		</li>
+    		<li>
+    			<span class="day2"></span>周二
+    		</li>
+    		<li>
+    			<span class="day3"></span>周三
+    		</li>
+    		<li>
+    			<span class="day4"></span>周四
+    		</li>
+    		<li>
+    			<span class="day5"></span>周五
+    		</li>
+    		<li>
+    			<span class="day6"></span>周六
+    		</li>
+    		<li style="border-right: none;">
+    			<span class="day7"></span>周日
+    		</li>
+    	</ul>
+    	<ul class="weekbody">
+    		<li class="weekbody_row">
+    			<ul class="weekbody_column time10">
+    				<li class="week_time">10:00</li><li class="event10_1"></li><li class="event10_2"></li><li class="event10_3"></li><li class="event10_4"></li><li class="event10_5"></li><li class="event10_6"></li><li class="event10_7"></li>
+    			</ul>
+    		</li>
+    		<li class="weekbody_row">
+    			<ul class="weekbody_column time11">
+    				<li class="week_time">11:00</li><li class="event11_1"></li><li class="event11_2"></li><li class="event11_3"></li><li class="event11_4"></li><li class="event11_5"></li><li class="event11_6"></li><li class="event11_7"></li>
+    			</ul>
+    		</li>
+    		<li class="weekbody_row">
+    			<ul class="weekbody_column time12">
+    				<li class="week_time">12:00</li><li class="event12_1"></li><li class="event12_2"></li><li class="event12_3"></li><li class="event12_4"></li><li class="event12_5"></li><li class="event12_6"></li><li class="event12_7"></li>
+    			</ul>
+    		</li>
+    		<li class="weekbody_row">
+    			<ul class="weekbody_column time13">
+    				<li class="week_time">13:00</li><li class="event13_1"></li><li class="event13_2"></li><li class="event13_3"></li><li class="event13_4"></li><li class="event13_5"></li><li class="event13_6"></li><li class="event13_7"></li>
+    			</ul>
+    		</li>
+    		<li class="weekbody_row">
+    			<ul class="weekbody_column time14">
+    				<li class="week_time">14:00</li><li class="event14_1"></li><li class="event14_2"></li><li class="event14_3"></li><li class="event14_4"></li><li class="event14_5"></li><li class="event14_6"></li><li class="event14_7"></li>
+    			</ul>
+    		</li>
+    		<li class="weekbody_row">
+    			<ul class="weekbody_column time15">
+    				<li class="week_time">15:00</li><li class="event15_1"></li><li class="event15_2"></li><li class="event15_3"></li><li class="event15_4"></li><li class="event15_5"></li><li class="event15_6"></li><li class="event15_7"></li>
+    			</ul>
+    		</li>
+    		<li class="weekbody_row">
+    			<ul class="weekbody_column time16">
+    				<li class="week_time">16:00</li><li class="event16_1"></li><li class="event16_2"></li><li class="event16_3"></li><li class="event16_4"></li><li class="event16_5"></li><li class="event16_6"></li><li class="event16_7"></li>
+    			</ul>
+    		</li>
+    		<li class="weekbody_row">
+    			<ul class="weekbody_column time17">
+    				<li class="week_time">17:00</li><li class="event17_1"></li><li class="event17_2"></li><li class="event17_3"></li><li class="event17_4"></li><li class="event17_5"></li><li class="event17_6"></li><li class="event17_7"></li>
+    			</ul>
+    		</li>
+    		<li class="weekbody_row">
+    			<ul class="weekbody_column time18">
+    				<li class="week_time">18:00</li><li class="event18_1"></li><li class="event18_2"></li><li class="event18_3"></li><li class="event18_4"></li><li class="event18_5"></li><li class="event18_6"></li><li class="event18_7"></li>
+    			</ul>
+    		</li>
+    		<li class="weekbody_row">
+    			<ul class="weekbody_column time19">
+    				<li class="week_time">19:00</li><li class="event19_1"></li><li class="event19_2"></li><li class="event19_3"></li><li class="event19_4"></li><li class="event19_5"></li><li class="event19_6"></li><li class="event19_7"></li>
+    			</ul>
+    		</li>
+    		<li class="weekbody_row">
+    			<ul class="weekbody_column time20">
+    				<li class="week_time">20:00</li><li class="event20_1"></li><li class="event20_2"></li><li class="event20_3"></li><li class="event20_4"></li><li class="event20_5"></li><li class="event20_6"></li><li class="event20_7"></li>
+    			</ul>
+    		</li>
+    		<li class="weekbody_row">
+    			<ul class="weekbody_column time21">
+    				<li class="week_time">21:00</li><li class="event21_1"></li><li class="event21_2"></li><li class="event21_3"></li><li class="event21_4"></li><li class="event21_5"></li><li class="event21_6"></li><li class="event21_7"></li>
+    			</ul>
+    		</li>
+    		<li class="weekbody_row">
+    			<ul class="weekbody_column time22">
+    				<li class="week_time">22:00</li><li class="event22_1"></li><li class="event22_2"></li><li class="event22_3"></li><li class="event22_4"></li><li class="event22_5"></li><li class="event22_6"></li><li class="event22_7"></li>
+    			</ul>
+    		</li>
+    		<li class="weekbody_row">
+    			<ul class="weekbody_column time23">
+    				<li class="week_time">23:00</li><li class="event23_1"></li><li class="event23_2"></li><li class="event23_3"></li><li class="event23_4"></li><li class="event23_5"></li><li class="event23_6"></li><li class="event23_7"></li>
+    			</ul>
+    		</li>
+    	</ul>
+    </div>
+	<footer>
+		<div class="foot_up">
+			<ul class="subfoot_left" style="margin-left: 350px;">
+				<li><a href="#" style="border-bottom: 2px solid #fff;padding-bottom: 13px;">About us</a></li>
+				<li>Tel：0411-84724185</li>
+				<li>Email：dlhsjy@vip.126.com</li>
+				<li>地址:辽宁省大连市甘井子区凌海路1号大连海事大学</li>
+			</ul>
+			<ul class="subfoot_right" style="margin-left: 200px;">
+				<li style="border-bottom: 2px solid #fff;padding-bottom: 13px;width: 69px;">友情链接</li>
+				<li><a href="#">蝌蚪就业</a></li>
+				<li><a href="#">大连海事大学</a></li>
+			</ul>
+		</div>
+		<div class="foot_down">Copyright &copy; 2014 myjob.dlmu.edu.cn 版权所有<span id="bidui" style="display: none;color:#C1C0C0; "></span></div>
+	</footer>
+    <script type="text/javascript" >
+    $(function(){
+		var startday = '';
+		var enday = '';
+		var dd = new Date();
+		var y= dd.getFullYear();
+		var m = dd.getMonth() +1 ;
+		var d = dd.getDate() -1;
+		var now = new Date(y+"/"+m+"/"+d); 
+		var nowTime = now.getTime() ; 
+		var day = now.getDay();
+		var oneDayLong = 24*60*60*1000 ; 
+		var MondayTime = nowTime - (day -1)*oneDayLong ; 
+		var SundayTime =  nowTime + (7-day)*oneDayLong ;
+		var monday = new Date(MondayTime);
+		var sunday = new Date(SundayTime);
+		function formatDateTime(date) {  
+		    var y = date.getFullYear();  
+		    var m = date.getMonth() + 1;  
+		    m = m < 10 ? ('0' + m) : m;  
+		    var d = date.getDate();  
+		    d = d < 10 ? ('0' + d) : d;
+			return y + '-' + m + '-' + d;  
+		};  
+		startday = formatDateTime(monday);
+		enday = formatDateTime(sunday);
+		console.log(startday+'&'+enday);
+
+		//清空事件
+		function clearWeekEvent(){
+      		$.each($(".sc-item"),function(){
+      			$(".event").remove();
+	      	})
+	    }
+
+		//绑定数据
+		$(".year").text(enday.substring(0,4));
+		$(".month").text(enday.substring(5,7));
+		var n = 7;
+		var number = n.toString();
+		var a = parseInt(number);
+		function getDays(year, month) {
+			// month 取自然值，从 1-12 而不是从 0 开始
+			return new Date(year, month, 0).getDate();
+		}
+
+		var year = startday.substring(0,4);
+		var month = startday.substring(5,7);
+		var lastday = getDays(year,month);
+		console.log(year+month+lastday);
+		if(parseInt(startday.substring(8,10))+6>parseInt(lastday)){
+			var interval =  parseInt(lastday) - parseInt(startday.substring(8,10));
+			for(var i=0;i<=interval;i++){
+				var n = i+1;
+				var span1 = ".day"+n;
+				$(span1).text(parseInt(startday.substring(8,10))+i);
+			}
+			for(var j=interval;j<=7-interval;j++){
+				var o = j+2;
+				var span2 = ".day"+o;
+				$(span2).text(j-1);
+			}
+			
+		}else{
+			for(var k=0;k<7;k++){
+				var m = k+1;
+				var span = ".day"+m;
+				$(span).text(parseInt(startday.substring(8,10))+k);
+			}
+		}
+		//添加事件到当前页面
+		//请求后端数据并填充事件		
+		$.ajax({
+		    'url':'__ROOT__/Admin/Activity/getDayActivity',
+		    'data':'startdate='+startday+'&enddate='+enday,
+		 	'success':function(dt){
+				for(var k=10;k<=23;k++){
+					for(var j=1;j<=7;j++){
+						$.each(dt.data,function(i,item){
+							items = item.startdate;
+							dyear = items.substring(0,4);
+							dmonth = items.substring(5,7);
+							dday = items.substring(8,10);
+							day = new Date(dyear+'/'+dmonth+'/'+dday).getDay();
+							if(day == '0'){
+								day = '7';
+							}
+							if(k == item.startdate.substring(11,13)&&j ==day){
+								target =  '.event'+k+'_'+j;
+								$(target).append(
+									            	"<div class='event' style='margin-top:15px;background:"+item.color+"' url=' '>&nbsp;<span class='time'></span>"+
+									            	"<span class='datetime'>"+item.startdate.substring(11,16)+"</span>"+
+									            	"<span class='company'>"+item.content+"</span></div>");
+							}
+						});
+						if($('.event'+k+'_'+j).find(".event").length>=3){
+							//添加事件标签
+							$('.event'+k+'_'+j).css({"position":"relative","overflow":"hidden"}).append(
+							"<div class='event_label'>本日事件:"+$('.event'+k+'_'+j).find(".event").length+"&nbsp;</div>");
+							//删除多余事件节点
+							$('.event'+k+'_'+j).find(".event:gt(2)").remove();	
+						}
+					}
+					
+				}
+			},
+			'type':'get',
+			'dataType':'json', 
+		});
+
+			//鼠标样式
+			$('div.event').mousemove(function(){$('div.event').addClass("pointer")});
+			// 添加链接
+			$('div.event').click(function(){window.location.href= $(this).attr('url');});
+
+	})
+    </script>
+</body>
+</html>

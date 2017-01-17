@@ -1,0 +1,31 @@
+{__NOLAYOUT__}
+<empty name="comment_list">
+    <p id="no-ajax-content" style="text-align: center;font-size: 16px;color: #575151;padding: 15px 0 18px 0;">没有更多了</p>
+    <else /> 
+    <foreach name="comment_list" item="vo" key="k">
+        <if condition="$vo['is_reply'] eq 1">
+            <div class="comment-list">
+                <a href="{:U('Admin/Front/activitydetm?id='.$vo['activity_id'].'')}" class="next">{$vo.title}</a>我的评论: 
+                <div class="title">{$vo.comment}</div>
+                <div class="morebtn"><i class="i_global upicon downicon"></i></div>
+                <div class="comment-head">
+                    <span class="comment-time">{$vo.createdate}</span>
+                    <span class="reply fr"><a class="reply-a" href="javascript:void(0)">查看回复</a></span>
+                    <span style="display: none" class="reply-up fr"><a href="javascript:void(0)" class="reply-upa">收起回复</a></span>
+                </div>
+                <div class="comment-foot">
+                    <span>管理员：</span><span>{$vo.reply_comment}</span><span>{$vo.reply_time}</span>
+                </div>
+            </div>
+            <else/>
+            <div class="comment-list">
+                <a href="{:U('Admin/Front/activitydetm?id='.$vo['activity_id'].'')}" class="next">{$vo.title}</a>我的评论: 
+                <div class="title">{$vo.comment}</div>
+                <div class="morebtn"><i class="i_global upicon downicon"></i></div>
+                <div class="comment-head">
+                    <span class="comment-time">{$vo.createdate}</span>
+                </div>
+            </div>
+        </if>
+    </foreach>
+</empty>

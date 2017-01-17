@@ -1,0 +1,45 @@
+{__NOLAYOUT__}
+<empty name="comment_list">
+    <p class="goods_title">您还没有进行过评论</p>
+    <else /> 
+    <foreach name="comment_list" item="vo" key="k">
+        <div class="comment-body clearfix">
+            <div class="comment-head ">
+                <a href="{:U('Admin/Front/activitydet?id='.$vo['activity_id'].'')}"><span>事件名:{$vo.title}</span></a></br>
+                <span>评论内容:{$vo.comment}</span>
+            </div>
+            <if condition="$vo['is_reply'] eq 1">
+                <div class="comment-content">
+                    <span class="comment-time">{$vo.createdate}</span>
+
+                    <span class="reply fr">
+                        <a class="reply-a" onclick = "getReply(this)" href="javascript:void(0)">查看回复</a>
+                    </span>
+                    <span style="display: none" class="reply-up fr">
+                        <a href="javascript:void(0)" onclick = "getReplyUp(this)" class="reply-upa">收起回复</a>
+                    </span>
+
+                </div>
+                <div class="comment-foot">
+                    <span>管理员：</span>
+                    <span>{$vo.reply_comment}</span></br>
+                    <span>回复时间:{$vo.reply_time}</span>
+                </div>
+
+
+                <else/>
+                <div class="comment-content">
+                    <span class="comment-time">{$vo.createdate}</span>
+
+                    <!--                                                                            <span class="reply fr">
+                                                                                                    <a class="reply-a" href="javascript:void(0)">查看回复</a>
+                                                                                                </span>
+                                                                                                <span style="display: none" class="reply-up fr">
+                                                                                                    <a href="javascript:void(0)" class="reply-upa">收起回复</a>
+                                                                                                </span>-->
+
+                </div>
+            </if>
+        </div>
+    </foreach>
+</empty>

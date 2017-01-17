@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<head>
+	<title>今年</title>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="description" content="" id="description">
+	<meta name="keywords" content="">
+	<meta name="author" content="Vanklin">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" type="text/css" href="__ROOT__/Public/css/style.css">
+	<script type="text/javascript" src="__ROOT__/Public/js/jquery-2.1.1.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="__ROOT__/Public/css/bootstrap.min.css" />
+	<link rel="stylesheet" type="text/css" href="__ROOT__/Public/css/default.css">
+	<link rel="stylesheet" type="text/css" href="__ROOT__/Public/css/bootstrap-year-calendar.min.css">
+</head>
+<body>
+	<header role="header" class="head_wrap">
+		<div class="main_head">
+			<a href="#"><img id="logo_img" src="__ROOT__/Public/image/logo_img.png"/></a>
+			<span class="head_txt">欢迎进入日历网<if condition="!empty($_SESSION['user']['username'])">
+			<a class="register_txt" href="__ROOT__/Home/User/index">{$_SESSION['user']['username']},个人中心</a><a href="__ROOT__/Home/User/logout">退出系统</a>
+		<else/>
+		<a class="register_txt" href="__ROOT__/Home/User/reg">注册</a>或<a href="__ROOT__/Home/User/login">登录</a>
+		</if>
+		</span>
+			<div class="search_wrap">
+				<form action="__ROOT__/Admin/Front/getActivityByKeyword">
+					<input type="text" name="keyword" class="search_input"/><input type="submit" class="search_btn button" value="搜索">
+				</form>	
+			</div>
+		</div>
+		<div class="sub_head_wrap" style="height: 54px">
+		<ul class="sub_head">
+			<li  style="margin-left: 65px;border-left: none;"><a href="rili">首页</a></li>
+			<li class="active"><a href="#">今年</a></li>
+			<li><a href="rili">本月</a></li>
+			<li><a href="week">本周</a></li>
+			<li><a href="today">今日</a></li>
+			<li style="border-right: none;"><a href="hot">热门</a></li>
+		</ul>
+		</div>
+	</header>
+	<div id="container" style="margin-top: 20px;margin-bottom: 72px;">
+		<div id="calendar" style="background-color: #0E4075;box-shadow: 5px 5px 5px #bdbdbd;"></div>
+	</div>
+	<footer>
+		<div class="foot_up">
+			<ul class="subfoot_left" style="margin-left: 350px;">
+				<li><a href="#" style="border-bottom: 2px solid #fff;padding-bottom: 13px;">About us</a></li>
+				<li>Tel：0411-84724185</li>
+				<li>Email：dlhsjy@vip.126.com</li>
+				<li>地址:辽宁省大连市甘井子区凌海路1号大连海事大学</li>
+			</ul>
+			<ul class="subfoot_right" style="margin-left: 200px;">
+				<li style="border-bottom: 2px solid #fff;padding-bottom: 13px;width: 69px;">友情链接</li>
+				<li><a href="#">蝌蚪就业</a></li>
+				<li><a href="#">大连海事大学</a></li>
+			</ul>
+		</div>
+		<div class="foot_down">Copyright &copy; 2014 myjob.dlmu.edu.cn 版权所有<span id="bidui" style="display: none;color:#C1C0C0; "></span></div>
+	</footer>
+	<script type="text/javascript" src="__ROOT__/Public/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="__ROOT__/Public/js/bootstrap-datepicker.min.js"></script>
+	<script type="text/javascript" src="__ROOT__/Public/js/bootstrap-year-calendar.js"></script>
+	<script type="text/javascript" src="__ROOT__/Public/js/bootstrap-popover.js"></script>
+</body>
+</html>

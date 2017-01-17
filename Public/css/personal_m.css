@@ -1,0 +1,42 @@
+﻿/*返回 */
+.top-header{background-color: #56a1f0;height: 46px;position: relative;color: #fff;line-height: 46px;width: 100%}
+.top-header:before {display: block;position: absolute;top: 0;bottom: 0;margin: auto 0 auto 10px;content: '';border: #fff solid;border-width: 2px 0 0 2px;width: 13px;height: 13px;-webkit-transform: rotate(-45deg);transform: rotate(-45deg);}
+.top-header .top-header-back{display: inline-block;color: #fff;margin:auto 0 auto 20px;line-height: 46px;position: absolute;
+    left: 5px; }
+
+/*头像*/
+.bottom-header{height: 118px;background-color: #56a1f0;text-align: center;margin-top: -1px;}
+.bottom-header .user-pic{display: inline-block;width: 65px;height: 65px;overflow: hidden;border-radius: 100px; }
+.bottom-header .user-pic img{vertical-align: middle;height: 65px;width: 65px;}
+.bottom-header .btn-header{border: 1px solid #fff;width: 80px;line-height: 22px;display: inline-block;margin-top: 10px;font-size: 13px;color: #fff;}
+.bottom-header .myid{color:#3A3333;font-size: 15px;margin-top:12px;display: inline-block; }
+
+/*列表*/
+.middle-list>li{background-color: #fff;}
+.middle-list>li>a{display: -webkit-box;line-height: 66px;color: #534F4F;font-size:1.2rem;-webkit-box-align: center;position: relative;margin:0 10px;overflow: hidden;}
+.middle-list .border-1px{border-bottom: 1px solid #ccc;}
+.middle-list span{display: inline-block; height: 16px;width: 16px; background-size: 16px 16px;margin-right: 10px;line-height: 46px;}
+
+.icon-info{background: url(../image/myinfo.png) no-repeat;}
+.icon-comment{background: url(../image/comm.png) no-repeat;}
+.icon-collect{background: url(../image/heart02.png) no-repeat;}
+.icon-alert{background: url(../image/alert02.png) no-repeat;}
+.num{position: absolute;color: #DB2D2D;right: 16px;font-style: normal;}
+.next:after { position: absolute;top: 0;bottom: 0;margin: auto;right: 2px;-webkit-transform: rotate(-45deg); transform: rotate(-45deg);display: block;content: ''; height: 7px;width: 7px;border: 3px solid #534F4F;border-width: 0 1px 1px 0;}
+
+/*退出*/
+.out{text-align: center;}
+#lgout{display: inline-block;line-height: 35px;color: #534F4F;font-size: 20px;margin-top: 20%;border: 1px solid #534F4F;padding: 0 8px;border-radius: 3px; }
+
+/*媒体查询*/
+@media (max-width: 320px){
+	.top-header .top-header-back{font-size: 1.1em;}
+	.bottom-header .btn-header{font-size: 1.1em;width: 75px;}
+	.middle-list>li>a{font-size:1rem;}
+}
+@media (min-width: 321px){
+	.top-header .top-header-back{font-size: 1.2em;}
+	.bottom-header .btn-header{font-size: 1.2em;}
+	.middle-list>li>a{font-size:1.1rem;}
+}
+ 

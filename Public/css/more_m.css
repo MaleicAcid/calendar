@@ -1,0 +1,72 @@
+/*返回 */
+.top-header{background-color: #56a1f0;height: 46px;position:fixed;color: #fff;line-height: 46px;width: 100%;text-align: center;z-index: 99;}
+.top-header:before {display: block;position: absolute;top: 0;bottom: 0;margin: auto 0 auto 10px;content: '';border: #fff solid;border-width: 2px 0 0 2px;width: 13px;height: 13px;-webkit-transform: rotate(-45deg);transform: rotate(-45deg);}
+.top-header .top-header-back{display: inline-block;color: #fff;margin:auto 0 auto 20px;line-height: 46px; position: absolute;left: 5px;}
+.top-header span{display: inline-block;color: #2E2727;line-height: 46px; font-size: 1.1rem;font-weight: bold;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;width: 50%}
+.user-icon{position: absolute;top: 35%;right: 7%;color: #fff;font-size: 18px;}
+
+/*标题*/
+.title {display: -webkit-box;-webkit-box-align: center;-webkit-box-pack: center;font-size: 1.5em;line-height: 24px;color: #000;background: #fff;padding: 12px 0 12px 10px;overflow: hidden; padding-top: 55px;}
+.title span {display: block;-webkit-box-flex: 1;margin-right: 5px;}
+.line{border-left: 1px solid #C5C0C0;height: 36px;margin-right: 12px;margin-left: 4px;}
+.title a { -webkit-box-flex: 1;margin-right: 7px;font-size: 0.8em;color: #3E9AF5;}
+
+/*基本信息*/
+.job-info{padding: 6px 10px;border-top: solid 1px #C5C0C0;font-size: 1.3em;color: #575353;}
+.job-info p{line-height: 29px;}
+.job-info .address .icon{display: inline-block;height: 17px;width: 17px;background-image: url(../image/building.jpg);background-size: 17px 17px;vertical-align: sub;}
+.job-info .type .icon{display: inline-block;height: 17px;width: 17px;background-image: url(../image/type.jpg);background-size: 17px 17px;vertical-align: sub;}
+.job-info .phone .myphone-icon{display: inline-block;color:#93beea;vertical-align: sub;font-size: 17px;}
+
+/*详情*/
+.detail{padding: 10px 10px 15px 10px;font-size: 1.4em;line-height: 24px;word-break: break-all;word-wrap: break-word;border-top: solid 1px #C5C0C0;color: #2B2A2A;}
+.detail .detail-line{border-left: 3px solid #43C2F7;margin-right: 12px; }
+.job-title{font-weight: bold;}
+.deatil-cont{margin-top: 1%;}
+
+/*评论信息*/
+.comment{padding: 10px 10px 8px 10px;font-size: 1.4em;line-height: 24px;word-break: break-all;word-wrap: break-word;border-top: solid 1px #C5C0C0;color: #2B2A2A;}
+.comment .detail-line{border-left: 3px solid #43C2F7;margin-right: 12px; }
+.comment  .commment-title{font-weight: bold;}
+.commment-cont{padding: 6px 0;}
+.comm-title{border-top:dashed 1px #C5C0C0;padding:4px 0;line-height: 27px;color: #595858}
+
+/*发表评论*/
+.comm{padding-bottom: 15%;overflow: hidden;position: relative;position: relative;}
+.comm .myarea{ padding: 10px 2%;width: 99%;height: 95px;resize: none;font-size: 1em;outline: 0;margin-top: 6px;}
+.comm .mybtn{background-color: #4490F0;padding: 1% 2%;color: #fff;border-radius: 3px;position: absolute;right: 4%;top: 76%;border:1px solid #4490F0;}
+
+
+/*分享*/
+.shares{border-top: solid 1px #C5C0C0;padding:8px 0; }
+.share-f{vertical-align: super;padding: 10px 10px 8px 10px;display: inline-block;}
+.s-line{border-left: 3px solid #43C2F7;margin-right: 12px;height: 19px;display: inline-block;vertical-align: text-bottom;}
+.my-label{font-size: 1.4em;color: #2B2A2A;font-weight: bold;}
+.options {display: inline-block;}
+.options i{display: inline-block;width: 24px;height: 24px;}
+.options li{float: left;}
+.ico{margin-right: 5px;margin-top: 5px;}
+.ico-fn-weixin{background: url(../image/weixin.png) no-repeat;background-size: 24px 24px;}
+.ico-fn-weibo{background: url(../image/sina.png) no-repeat;background-size: 24px 24px;}
+.ico-fn-qq{background: url(../image/qq.png) no-repeat;background-size: 24px 24px;}
+
+@media (max-width: 320px){
+	.top-header .top-header-back{font-size: 1.1em;}
+	.top-header span{font-size: 1.2em;}	 
+	.job-info{font-size: 1.2em;}
+	.job-info p{line-height: 27px;}
+	.detail{font-size: 1.2em;}
+	.comm-title{font-size: 0.9em;}
+	.myarea{font-size: 0.9em;}
+	.my-label{font-size: 1.2em;}
+ 
+}
+
+@media (min-width: 321px){
+	.top-header .top-header-back{font-size: 1.2em;}
+	.top-header span{font-size: 1.4em;}	 
+	.title{font-size: 1.7em;}
+	.line{height: 38px;}
+	.title a{font-size: 0.9em;}
+
+}

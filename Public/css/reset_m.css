@@ -1,0 +1,14 @@
+body{min-width: 320px;background-color: #eee;font-size: 12px;background-color: #fff; }
+html,body,header,div,img,span,input,button,ul,li,a,footer,table,thead,tbody,tr,td,p{padding:0;margin:0;border:none;}
+input,button{outline: none;}button::-moz-focus-inner,input::-moz-focus-inner {border: none;outline: inset;}
+a{text-decoration: none;}a:link,a:hover,a:visited,a:active{text-decoration: none;outline: none;}
+ul{list-style: none;}
+/*清浮动*/
+.clearfix:after{content:"";display:block;clear:both;visibility: hidden;height: 0;}
+.clearfix{zoom:1;}
+.fl{float:left;}
+.fr{float:right;}
+
+/*加载更多*/
+.load-more{text-align: center;padding: .75rem .24rem .4rem; }
+.load-more a{color: #575151;font-size: 16px;}

@@ -1,0 +1,9 @@
+<notempty name='Think.session.user'>	
+    <div class="out" style="display: block;">
+        <a href="{:U('Home/User/logout?is_m=1')}" id="lgout">退出登录</a> <!-- 登录成功,休改display为inline-block . 退出登录后,休改display为none-->
+    </div>
+    <else />
+        <div class="out" style="display: none;">
+        <a href="javascript:;" id="lgout">退出登录</a> <!-- 登录成功,休改display为inline-block . 退出登录后,休改display为none-->
+    </div>
+</notempty>

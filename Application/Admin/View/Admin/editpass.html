@@ -1,0 +1,28 @@
+<div class="pageContent">
+	<form method="post" action="__ROOT__/Admin/Admin/editPass" class="pageForm" onsubmit="return validateCallback(this, dialogAjaxDone);">
+		<div class="pageFormContent" layoutH="56">
+			<input name="id" type="hidden"  value="{$result.id}"/>
+			<p>
+				<label>原密码：</label>
+				<input name="password" type="password"  class="required" />
+			</p>
+			<p>
+				<label>新密码：</label>
+				<input name="newpassword" type="password" id="w_newpassword" minlength="6" maxlength="20" class="required"/>
+			</p>
+			<p>
+				<label>确认密码：</label>
+				<input name="confirmpassword" equalto="#w_newpassword" type="password" class="required"/>
+			</p>
+			 
+		</div>
+		<div class="formBar">
+			<ul>
+				<li><div class="buttonActive"><div class="buttonContent"><button type="submit">保存</button></div></div></li>
+				<li>
+					<div class="button"><div class="buttonContent"><button type="button" class="close">取消</button></div></div>
+				</li>
+			</ul>
+		</div>
+	</form>
+</div>

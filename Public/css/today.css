@@ -1,0 +1,45 @@
+﻿@charset:"utf-8";
+
+/*列表*/
+.container{position: relative;width: 1274px;margin: 0 auto;margin-top: 30px;}
+.container .menu{width: 727px;margin-right: 9px;margin-bottom: 40px;}
+.container .menu-header{height: 60px;border-top-left-radius:8px;border-top-right-radius:8px;background-color: #b1d2f5;box-shadow:2px 2px #d4d4d4;}
+.container .text{color: #fff;font-size: 20px;line-height: 60px;margin-left: 20px;margin-right: 28px;}
+.container .menu-list{height: 142px;margin-top: 2px;background-color: #fff;box-shadow:2px 2px #d4d4d4;border-bottom-left-radius:8px;border-bottom-right-radius:8px;border-top-left-radius:3px;border-top-right-radius:3px;}
+.container .menu-list ul{padding-top: 24px;margin-left:13px;}	
+.container .menu-list .list-item{margin-bottom: 17px;color: #333;} 
+.container .menu-list .item-first{font-size: 18px;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;} 
+.container .menu-list .list-item .item-bg{margin-left: 6px;display: inline-block; height: 20px;}  
+.container .menu-list .list-item .item-bg-time{background: url(../image/time02.jpg) no-repeat  ;}
+.container .menu-list .list-item .item-bg-building{background: url(../image/building.jpg) no-repeat  ;}
+.container .menu-list .list-item .item-bg-type{background: url(../image/type.jpg) no-repeat ;margin-left: 220px;}
+.container .menu-list .list-item .item-a{color: #333;}
+.container .menu-list .list-item .item{margin-left: 33px;}
+.container .menu-list .more{margin-right: 20px;font-size: 20px;color: #2c81d6;font-weight: bolder;} 
+ 
+ /*分页*/
+.page-change{ margin:0 auto;margin-top: 18px;margin-bottom: 96px; text-align:center;line-height: 35px;color: #999;font-size: 16px;font-weight: bold;}
+.page-change .text-input{width: 43px;height: 35px;border: 1px solid #ccc;vertical-align: top;margin-right: 10px;border-radius: 8px;background-color: #f5f5f5}
+.page-change a{display: inline-block;width:46px;height: 35px;border: 1px solid #ccc;margin-right:10px;color: #999;margin-right:  12px;border-radius: 8px;}
+.page-change .active{color: #2c81d6}
+.page-change span{margin:4px; font-size:14px}
+
+/*小日历*/
+.container .all-con{width: 538px;margin-bottom: 96px;}
+#calendar{background-color: #eee;font-family: "MicrosoftYaHei";border:none;float: right;width: 538px;height: 431px;padding-bottom: 7px;border-radius: 8px;box-shadow:2px 2px #d4d4d4;}
+#calendar .sc-header{border-top-left-radius:8px;border-top-right-radius:8px;}
+#calendar .sc-item{font-size:16px;font-weight: 500;}
+#calendar .sc-body{box-shadow: none;}
+#calendar .select-month{margin-left: 66px;}
+/*热门事件*/
+.hot-events{position: relative;height: 410px;width: 538px;margin-top: 9px;background-color: #fff;box-shadow:2px 2px #d4d4d4;border-radius: 8px;}
+.hot-events .title{margin-top: 17px;color: #9dc7f2;margin:0 auto;font-weight: bold;text-align: center;font-size: 26px;}
+.hot-events .line{width: 55px;height: 3px;background-color: #9dc7f2;margin:0 auto;margin-top: 11px; }
+.hot-events ul{width: 410px;margin-top: 13px;padding-left: 20px;}
+.hot-events .hot-item{margin-bottom: 17px;width: 494px;font-size: 20px;}
+.hot-events .hot-item a{width: 330px;display: inline-block;color: #333;height: 47px;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;line-height: 1.5;}
+.hot-events .hot-item .date{color: #666;line-height: 1.8;} 
+.hot-events .btn-group{position: absolute;bottom: 20px;left: 235px;font-size:0;}
+.hot-events .btn-group .tab{display: inline-block;width: 10px;height: 10px;background: #b5b5b5;margin-right:  10px;}
+.hot-events .btn-group .active{background-color: #2c81d6;}
+.hot-events #hot-news  {display: none;} 	

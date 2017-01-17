@@ -1,0 +1,45 @@
+/*返回 */
+.top-header{background-color: #56a1f0;height: 46px;position: relative;color: #fff;line-height: 46px;width: 100%;text-align: center;}
+.top-header:before {display: block;position: absolute;top: 0;bottom: 0;margin: auto 0 auto 10px;content: '';border: #fff solid;border-width: 2px 0 0 2px;width: 13px;height: 13px;-webkit-transform: rotate(-45deg);transform: rotate(-45deg);}
+.top-header .top-header-back{display: inline-block;color: #fff;margin:auto 0 auto 20px;line-height: 46px; position: absolute;left: 5px;}
+.top-header span{display: inline-block;color: #2E2727;line-height: 46px; font-size: 1.1rem;font-weight: bold;}
+.top-header .del-icon{background: url(../image/del.png) no-repeat;background-size: 20px 22px ;width: 20px;height: 22px;display: inline-block;position: absolute;top: 12px;right: 8px; }
+
+/*删除选择复选框*/
+.del-check{background-color: #ffffea;padding: 11px 0;font-size: 14px;display: none;border-bottom: 1px solid #d9d9d9;}
+.del-check input[type="checkbox"]{display: -webkit-box;-webkit-box-align: center;-webkit-box-pack: center;height: 32px;float: left;margin-left: 2%;margin-right: 3%; border:1px solid red;border-radius:0.5em;}
+.all{display: inline-block;height: 32px;line-height: 32px;color: #6F6868;cursor: pointer;}
+.del i{display: inline-block;height: 32px;border: 1px solid #bdbdbd;line-height: 32px;width: 42px;text-align: center;margin-right: 10px;border-radius: 3px;cursor: pointer;font-style: normal;font-size: 1em;}
+
+
+/*收藏内容*/
+.menu-list{height: 84px;background-color: #fff;border-top: 2px solid #ccc; }
+.menu-list ul{padding-top: 5px;margin-left:2%;}	
+.menu-list .list-item{margin-bottom: 8px;color: #6F6868;} 
+.menu-list .item-first{font-size: 17px;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;margin-left: 1%;font-weight: bolder; } 
+.menu-list .list-item .item-bg{margin-left: 1%;display: inline-block; height: 20px;}  
+.menu-list .list-item .item-bg-time{background: url(../image/time02.jpg) no-repeat;background-size: 17px 16px;}
+.menu-list .list-item .item-bg-building{background: url(../image/building.jpg) no-repeat;background-size: 17px 16px;}
+.menu-list .list-item .item-bg-type{background: url(../image/type.jpg) no-repeat ;margin-left: 20%;background-size: 17px 16px;}
+.menu-list .list-item .item-a{color: #6F6868;font-size: 17px;white-space: normal;}
+.menu-list .list-item .item{margin-left: 33px;}
+.menu-list .more{margin-right: 2%;font-size: 15px;color: #2c81d6;font-weight: bold; } 
+.my-target{color: #504545;}
+
+/*无收藏*/
+.no-collect{margin: 90px 0;text-align: center;}
+.no-collect .no-collect-icon{display: inline-block;background: url(../image/no_collect.png) no-repeat;background-size: 75px;height: 75px;width: 76px;}
+.no-collect em{display: block;padding-top: 30px;font-size: 1.4em;font-style: normal;color: #6F6868;}
+
+/*复选框*/
+.menu-list input[type="checkbox"]{display: -webkit-box;-webkit-box-align: center;-webkit-box-pack: center;height: 84px;float: left;margin-left: 2%;margin-right: 3%; border:1px solid red;border-radius:0.5em;}
+
+@media (max-width: 320px){
+	.top-header .top-header-back{font-size: 1.1em;}		
+	.top-header span{font-size: 1.2em;}	 
+	.top-header .del-icon{background: url(../image/del.png) no-repeat;background-size: 18px 20px ;width: 18px;height: 20px; }
+}
+@media (min-width: 321px){
+	.top-header .top-header-back{font-size: 1.2em;}
+	.top-header span{font-size: 1.4em;}			 
+}

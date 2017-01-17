@@ -1,0 +1,38 @@
+{__NOLAYOUT__}                    
+<empty name="remind_list">
+    <!-- 无提醒内容 -->
+<!--    <div id="no-ajax-content"  style="display:block">
+        <div class="no-collect">
+            <span class="no-collect-icon"></span>
+            <em>没有更多了</em>
+        </div>
+    </div>-->
+    <p id="no-ajax-content" style="text-align: center;font-size: 16px;color: #575151;padding: 15px 0 18px 0;">没有更多了</p>
+    <else /> 
+    <foreach name="remind_list" item="vo" key="k">
+        <div class="menu-list clearfix">
+            <input type="checkbox" class="mycheckbox clearfix" name="chkSon" id="ch1" onclick="ChkSonClick('chkSon', 'chkAll')" style="display: none;">
+            <ul>
+                <li class="list-item item-first">
+                    <div class="item-first-div"><a href="{:U('Admin/Front/activitydetm?id='.$vo['activity_id'].'')}" class="item-a">{$vo.title}<a/></div></li>
+                <li class="list-item"><div class="item-bg item-bg-time"><span class="item">{$vo.startdate}</span></div><div class="item-bg item-bg-type"><span class="item">{$vo.type}</span></div></li>
+                <li class="list-item ">
+                    <div class="item-bg item-bg-building">
+                        <!--<span class="item">{$vo.address}</span>-->
+                        <!--<a href="{:U('Admin/Front/activitydet?id='.$vo['activity_id'].'')}"><span  class="item">查看详情</span></a>-->
+                    </div>
+                <if condition="($vo['is_remind'] eq 2)">
+                    <a href="javascript:void(0)" class="more fr" style="color:grey;">提醒邮件已发送</a>
+                    <elseif condition="($vo['is_remind'] eq 3)"/>
+                    <a href="javascript:void(0)" class="more fr" style="color:grey;">提醒邮件发送失败</a>
+                    <else/>
+                    <span style="vertical-align: top; margin-left: -1%;" class="your-item">提醒时间:<?php echo date("Y-m-d H:i:s",$vo['remind_time']);?></span>
+                    <a onclick ="removeRemind(this)" data-collect-id = {$vo.collect_id} class="more fr clearfix">取消提醒</a>
+                </if>
+                <!--                                        <a onclick ="removeRemind(this)" data-collect-id = {$vo.collect_id} class="more fr clearfix">取消提醒</a>-->
+                </li>
+            </ul>
+            <div class="my-target"></div>
+        </div>
+    </foreach>
+</empty>

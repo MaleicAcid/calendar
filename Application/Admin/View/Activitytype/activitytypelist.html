@@ -1,0 +1,72 @@
+<form id="pagerForm" action="__ROOT__/Admin/Activitytype/activityTypeList" method="post">
+	<input type="hidden" name="page" value="{$currentPage}"/>
+	<input type="hidden" name="type" value="{$type}"/>
+</form>
+<div class="pageHeader">
+	<form rel="pagerForm" onsubmit="return navTabSearch(this);" action="__ROOT__/Admin/Activitytype/activityTypeList" method="post">
+	<div class="searchBar">
+		<ul class="searchContent">
+			<li>
+				<label>类别：</label>
+				<input type="text" name="type" value="{$type}" alt="请输入类别"/>
+				<input type="hidden" name="page" value="{$currentPage}"/>
+			</li>
+		</ul>
+		<div class="subBar">
+			<ul>
+				<li><div class="buttonActive"><div class="buttonContent"><button type="submit">查询</button></div></div></li>
+			</ul>
+		</div>
+	</div>
+	</form>
+</div>
+
+<div class="pageContent">
+	<div class="panelBar">
+		<ul class="toolBar">
+			<li><a class="add" href="__ROOT__/Admin/Activitytype/add" target="dialog" mask="true" height="200" width="400"><span>新增</span></a></li>
+       <li><a class="delete" href="__ROOT__/Admin/Activitytype/delActivityType/id/{sid_user}" target="ajaxTodo" title="你确定要删除吗？" warn="请选择行"><span>删除</span></a></li>
+
+		</ul>
+	</div>
+
+	<table class="table" width="100%" layoutH="138">
+		<thead>
+		<tr>
+			<th width="100">类别</th>
+			<th>创建人</th>
+			<th>创建时间</th>
+
+		</tr>
+		</thead>
+		<tbody>
+		<volist id="vo" name="result">
+			<tr target="sid_user" rel="{$vo['id']}">
+				<td>{$vo['type']}</td>
+				<td>{$vo['creator']}</td>
+				<td>{$vo['createdate']}</td>
+
+			</tr>
+		</volist>
+		</tbody>
+	</table>
+ 
+	<div class="panelBar">
+		<div class="pages">
+			<span>显示</span>
+			<select class="combox" name="numPerPage"
+				onchange="navTabPageBreak({numPerPage:this.value})">
+				<option value="20">
+					20
+				</option>
+			</select>
+			<span>条，共{$totalCount}条，共{$totalPage }页</span>
+		</div>
+
+		<div class="pagination" targetType="navTab"
+			totalCount="{$totalCount}" numPerPage="{$pageSize }"
+			pageNumShown="10" currentPage="{$currentPage }"></div>
+	</div>
+</div>
+
+

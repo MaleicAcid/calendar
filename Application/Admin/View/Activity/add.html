@@ -1,0 +1,76 @@
+<div class="pageContent">
+	<form method="post" action="__ROOT__/Admin/Activity/addActivity" class="pageForm" onsubmit="return validateCallback(this, dialogAjaxDone);">
+		<div class="pageFormContent" layoutH="56">
+			<p>
+				<label>活动标题：</label>
+				<input name="title" type="text" class="required" id="title"/>
+			</p>
+			<p>
+				<label>活动等级：</label>
+				<select class="combox" name="level">
+					<option value="1">1</option>
+					<option value="2">2</option>
+					<option value="3">3</option>
+					<option value="4">4</option>
+					<option value="5">5</option>
+				</select>
+			</p>
+			<p>
+			<label>开始时间</label>
+			<input type="text" name="startdate" class="date textInput readonly valid required" datefmt="yyyy-MM-dd HH:mm" readonly="true">
+			</p>
+			<p>
+				<label>结束时间</label>
+				<input type="text" name="enddate" class="date textInput readonly valid required" datefmt="yyyy-MM-dd HH:mm" readonly="true">
+			</p>
+			<p>
+				<label>颜色</label>
+				<select name="color" >
+					<volist id="vo" name="colorlist">
+						<option value="{$vo['color']}" style="background-color:{$vo['color']}">{$vo['colorname']}</option>
+
+
+					</volist>
+				</select>
+			</p>
+			<p>
+				<label>类型</label>
+				<select name="type" class="combox">
+				<volist id="vo" name="typelist">
+					<option value="{$vo['type']}">{$vo['type']}</option>
+
+
+				</volist>
+				</select>
+			</p>
+			<p>
+			<label>举办单位</label>
+			<input name="unit" type="text" class="required" id="unit"/>
+			</p>
+			<p>
+				<label>举办地址</label>
+				<input name="address" type="text" class="required" id="address"/>
+			</p>
+				<p>
+				<label>联系人</label>
+				<input name="people" type="text"  id="people"/>
+			</p>
+			<p>
+				<label>联系人手机</label>
+				<input name="telephone" type="text"  id="telephone"/>
+			</p>
+			<p>
+				<label>活动简介</label>
+				<textarea rows="25" cols="120" class="editor required" name="content"></textarea>
+			</p>
+		</div>
+		<div class="formBar">
+			<ul>
+				<li><div class="buttonActive"><div class="buttonContent"><button type="submit">保存</button></div></div></li>
+				<li>
+					<div class="button"><div class="buttonContent"><button type="button" class="close">取消</button></div></div>
+				</li>
+			</ul>
+		</div>
+	</form>
+</div>

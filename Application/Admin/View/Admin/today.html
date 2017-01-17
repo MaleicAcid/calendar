@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<!--[if lte IE 9]><div style="position:absolute;z-index:999;width:1920px;height:1500px;color:red;background-color:white;font-size:50px;">为了更好的用户体验，我们强烈建议你升级浏览器到IE10或者更高,<a target="_blank" href="https://support.microsoft.com/zh-cn/help/17621/internet-explorer-downloads">浏览器升级入口</a></div><![endif]-->
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="description" content="" id="description">
+	<meta name="keywords" content="">
+	<meta name="author" content="Pzj">
+	<title>今日页</title>	 
+	<link rel="stylesheet" type="text/css" href="__ROOT__/Public/css/style.css">
+	<link rel="stylesheet" type="text/css" href="__ROOT__/Public/css/simple-calendar.css">
+	<link rel="stylesheet" type="text/css" href="__ROOT__/Public/css/today.css">	 
+	<script type="text/javascript" src="__ROOT__/Public/js/jquery-1.6.4.min.js"></script>
+	<script type="text/javascript" src="__ROOT__/Public/js/simple-calendar.js"></script>
+</head>
+<body>
+	<header role="header" class="head_wrap">
+		<div class="main_head">
+			<a href="#"><img id="logo_img" src="__ROOT__/Public/image/logo_img.png"/></a>
+			<span class="head_txt">欢迎进入日历网<a class="register_txt" href="#">注册</a>或<a href="#">登录</a></span>
+			<div class="search_wrap">
+				<input type="text" name="search_input" class="search_input"/><button class="search_btn">搜索</button>
+			</div>
+		</div>
+		<div class="sub_head_wrap">
+		<ul class="sub_head">
+			<li style="margin-left: 65px;border-left: none;"><a href="#">首页</a></li>
+			<li><a href="#">今年</a></li>
+			<li><a href="#">本月</a></li>
+			<li><a href="#">本周</a></li>
+			<li class="active" ><a href="#">今日</a></li>
+			<li style="border-right: none;"><a href="#">热门</a></li>
+		</ul>
+		</div>
+	</header>
+	<div class="container clearfix">
+		<div class="menu fl  clearfix">
+			 <div class="menu-header">
+				<span class="text fl"> </span>
+				<span class="text fr"></span>
+			</div>	
+			<div id="menu-list">
+				
+			</div>		
+			<div class="page-change">
+			</div>
+		</div>
+		<div class="all-con fr ">		
+			<div id="calendar">				
+			</div>							
+			<div class="hot-events fr clearfix">
+				<div class="title">热门事件</div>
+				<div class="line"></div>
+				<div>
+					<div class="hot-items" >
+						<ul class="clearfix"  id="hot-news" style="display: block;">
+						</ul>							
+					</div>
+				</div>			
+				
+				<div class="btn-group">
+					<a href="javascript:void(0)" class="tab active"></a>
+					<a href="javascript:void(0)" class="tab"></a>
+					<a href="javascript:void(0)" class="tab"></a> 
+				</div>
+			</div>
+		</div>
+	</div>
+	<footer>
+		<div class="foot_up">
+			<ul class="subfoot_left" style="margin-left: 350px;">
+				<li><a href="#" style="border-bottom: 2px solid #fff;padding-bottom: 13px;">About us</a></li>
+				<li>Tel：0411-84724185</li>
+				<li>Email：dlhsjy@vip.126.com</li>
+				<li>地址:辽宁省大连市甘井子区凌海路1号大连海事大学</li>
+			</ul>
+			<ul class="subfoot_right" style="margin-left: 200px;">
+				<li style="border-bottom: 2px solid #fff;padding-bottom: 13px;width: 69px;">友情链接</li>
+				<li><a href="#">蝌蚪就业</a></li>
+				<li><a href="#">大连海事大学</a></li>
+			</ul>
+		</div>
+		<div class="foot_down">Copyright &copy; 2014 myjob.dlmu.edu.cn 版权所有<span id="bidui" style="display: none;color:#C1C0C0; "></span></div>
+	</footer>
+	<script type="text/javascript">
+		var myCalendar = new SimpleCalendar('#calendar');
+		var options = {
+		      language: 'CH', //语言
+		      showLunarCalendar: false, //阴历
+		      showHoliday: false, //休假
+		      showFestival: false, //节日
+		      showLunarFestival: false, //农历节日
+		      showSolarTerm: false, //节气
+		      showMark: false, //标记
+		      timeRange: {
+		        startYear: 2000,
+		        endYear: 2049
+		      },
+		      theme: {
+		        changeAble: false,
+		        weeks: {
+		          backgroundColor: '#FBEC9C',
+		          fontColor: '#4A4A4A',
+		          fontSize: '20px',
+		        },
+		        days: {
+		          backgroundColor: '#ffffff',
+		          fontColor: '#565555',
+		          fontSize: '24px'
+		        },
+		        todaycolor: 'orange',
+		        activeSelectColor: 'orange',
+		      }
+		    }
+
+	    //删除不要的节点
+	    $(".lunar-day").hide();
+	    $(".sc-yleft").hide();
+	    $(".sc-select-year").hide();
+	    $(".sc-yright").hide();
+	    $(".sc-return-today ").hide();
+	    $(".sc-time").parent().remove();
+	    $(".sc-select-month").parent().addClass('select-month'); 
+	    $(".sc-mright").addClass("pointer");
+	    $(".sc-mleft").addClass("pointer");
+
+		var myDate = new Date();
+		function getDate(){			
+			//获取当日日期
+			var day=myDate.getDate()+'';
+			var month=(myDate.getMonth()+1)+'';
+			var year=myDate.getFullYear();
+			var week=myDate.getDay();
+
+			if(day.length==2){
+  				day = day;
+  			}else{
+  				day = '0'+day;
+  			}
+			if(month.length==2){
+  				month = month;
+  			}else{
+  				month = '0'+month;
+  			}
+			return  year+'-'+month+'-'+day ; 
+		}
+		function getWeek(){
+			//初始化星期
+			var weekday=new Array(7)
+			weekday[0]="星期日"
+			weekday[1]="星期一"
+			weekday[2]="星期二"
+			weekday[3]="星期三"
+			weekday[4]="星期四"
+			weekday[5]="星期五"
+			weekday[6]="星期六" 
+			return weekday;
+		}
+		
+		$(function(){
+			var mydate=getDate();
+			var myweek=getWeek();
+			var curPage = 1; //当前页码
+			var total,pageSize,totalPage;
+			var ta;
+			function getActivity(page) {
+				var c_ontent="";
+				var s_tartdate="";
+				var e_nddate="";
+				
+				//请求列表数据
+				$.ajax({
+				   url:"__ROOT__/Admin/Activity/getDayActivity",
+				   'data': {'startdate':mydate,'page':page},
+				   success: function(active){		
+				   		//初始化列表
+				   		$("#menu-list").empty();
+				   		total = active.count; //总记录数				   		
+						pageSize = 10; //每页显示条数
+						curPage = page; //当前页
+						totalPage = Math.ceil(total/pageSize); //总页数 
+						var div="";
+						$(".menu-header :first-child").text(mydate);
+						$(".menu-header :last-child").text(myweek[myDate.getDay()]);
+						if(total==0){
+							div="<div class='menu-list'><ul><li class='list-item item-first'>今日无内容</li></ul></div>";
+							totalPage=1;
+						}else{
+							for(var i=0;i<active.data.length;i++){
+								if(mydate==active.data[i].activitydate){								
+									//获取日期
+									a_ctivitydate=active.data[i].activitydate;
+									//时间 
+									s_tartdate=active.data[i].startdate;																								
+									e_nddate=active.data[i].enddate;							
+									t_ime=s_tartdate.substr(11,16)+'-'+e_nddate.substr(11,16); 
+									//简介
+									c_ontent=active.data[i].content;								
+									//地址
+									address=active.data[i].address;
+									//类型
+									t_ype=active.data[i].type;
+									div+="<div class='menu-list'><ul><li class='list-item item-first'><div class='item-first-div'><a href='javascript:void(0)' class='item-a'>"+c_ontent+"<a/></div></li><li class='list-item '><div class='item-bg item-bg-time'><span class='item'>"+t_ime+"</span></div><div class='item-bg item-bg-type'><span class='item'>"+t_ype+"</span></div></li><li class='list-item '><div class='item-bg item-bg-building'><span class='item'>"+address+"</span></div><a href='javascript:void(0)' class='more fr'>more</a></li></ul></div>";
+								}												
+							}
+						}				
+						//追加节点
+						$("#menu-list").append(div);	
+										   		
+				  },
+					complete:function(){ //生成分页条
+						getPageBar();
+					},
+					error:function(){
+						//alert("数据加载失败");
+					},
+					'type':'post',
+					'dataType':'json', 
+							}); 
+			} 
+
+			//获取分页条
+			function getPageBar(){
+				//页码大于最大页数
+				if(curPage>totalPage) {curPage=totalPage;}
+				
+				//页码小于1
+				if(curPage<1) {curPage=1;}
+				pageStr = "<span>共"+total+"条</span><span><div class='active' style='display: inline-block;'>"+curPage+"</div>/"+totalPage+"</span>";
+				
+				//如果是第一页
+				if(curPage==1){
+					pageStr += "<span>首页</span><span>上一页</span>";
+				}else{
+					pageStr += "<span><a href='javascript:void(0)' rel='1'>首页</a></span><span><a href='javascript:void(0)' rel='"+(curPage-1)+"'>上一页</a></span>";
+				}
+				
+				//如果是最后页
+				if(curPage>=totalPage){
+					pageStr += "<span>下一页</span><span>尾页</span>";
+				}else{
+					pageStr += "<span><a href='javascript:void(0)' rel='"+(parseInt(curPage)+1)+"'>下一页</a></span><span><a href='javascript:void(0)' rel='"+totalPage+"'>尾页</a></span>";
+				}
+					
+				$(".page-change").html(pageStr);
+			}
+
+			getActivity(1);
+			$(".page-change span a").live('click',function(){
+				var rel = $(this).attr("rel");
+				if(rel){
+					getActivity(rel);
+				}
+			});
+		});	
+
+	</script>
+</body>
+</html>

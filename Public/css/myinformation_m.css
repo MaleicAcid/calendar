@@ -1,0 +1,32 @@
+/*返回 */
+.top-header{background-color: #56a1f0;height: 46px;position: relative;color: #fff;line-height: 46px;width: 100%;text-align: center;}
+.top-header:before {display: block;position: absolute;top: 0;bottom: 0;margin: auto 0 auto 10px;content: '';border: #fff solid;border-width: 2px 0 0 2px;width: 13px;height: 13px;-webkit-transform: rotate(-45deg);transform: rotate(-45deg);}
+.top-header .top-header-back{display: inline-block;color: #fff;margin:auto 0 auto 20px;line-height: 46px; position: absolute;left: 5px;}
+.top-header span{display: inline-block;color: #2E2727;line-height: 46px; font-size: 1.1rem;font-weight: bold;}
+.top-header .edit-icon{background: url(../image/edit.png) no-repeat;background-size: 20px 22px ;width: 20px;height: 22px;display: inline-block;position: absolute;top: 12px;right: 8px; }
+.top-header .save{display: none;position: absolute;top: 0px;right: 8px;}
+
+/*资料编辑主体*/
+.container{}
+.container .my-header {position: relative;display: -webkit-box;padding: 3%;height: 26px;line-height: 26px;color: #403E3E;overflow: hidden;font-size: 1.2em;border-bottom: 1px solid #564E4E;background-color: #fff;}
+.container .my-header .user-pic{display: inline-block;width: 23px;height: 23px;overflow: hidden;border-radius: 100px;line-height:26px; vertical-align: top;}
+.container .my-header .user-pic img{height: 23px;width: 23px;}
+
+.container .my-header span{display: block;margin-left: 3%; }
+.container .my-header i{display: block;font-style: normal; }
+.my-postion{position: absolute;right: 3%;vertical-align: middle;}
+.input-postion{position: absolute;right: 1%;vertical-align: middle;}
+.my-name input[type='text'], .my-class input[type='text']{display: none;height: 20px;background-color: #FBF2F2;width: 120px;border: 2px solid #ccc;}
+
+
+@media (max-width: 320px){
+	.top-header .top-header-back{font-size: 1.1em;}		
+	.top-header span{font-size: 1.2em;}	 
+	.top-header .edit-icon{background: url(../image/edit.png) no-repeat;background-size: 18px 20px ;width: 18px;height: 20px; }
+}
+@media (min-width: 321px){
+	.top-header .top-header-back{font-size: 1.2em;}
+	.top-header span{font-size: 1.4em;}	
+	.container .my-header{font-size: 1.3em;}
+				 
+}

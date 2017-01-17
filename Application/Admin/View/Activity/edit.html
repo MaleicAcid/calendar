@@ -1,0 +1,76 @@
+<div class="pageContent">
+	<form method="post" action="__ROOT__/Admin/Activity/editActivity" class="pageForm" onsubmit="return validateCallback(this, dialogAjaxDone);">
+		<div class="pageFormContent" layoutH="56">
+			<input type="hidden" name="id" value="{$result.id}" >
+			<p>
+				<label>活动标题：</label>
+				<input name="title" value="{$result.title}" type="text" class="required" id="title"/>
+			</p>
+			<p>
+				<label>活动等级：</label>
+				<select class="combox" name="level">
+					<option value="1" <if condition="($result['level'] eq 1)">selected</if> >1</option>
+					<option value="2" <if condition="($result['level'] eq 2)">selected</if>>2</option>
+					<option value="3" <if condition="($result['level'] eq 3)">selected</if>>3</option>
+					<option value="4" <if condition="($result['level'] eq 4)">selected</if>>4</option>
+					<option value="5" <if condition="($result['level'] eq 5)">selected</if>>5</option>
+				</select>
+			</p>
+			<p>
+			<label>开始时间</label>
+			<input type="text" name="startdate" value="{$result.startdate}" class="date textInput readonly valid required" datefmt="yyyy-MM-dd HH:mm" readonly="true">
+			</p>
+			<p>
+				<label>结束时间</label>
+				<input type="text" name="enddate"  value="{$result.enddate}" class="date textInput readonly valid required" datefmt="yyyy-MM-dd HH:mm" readonly="true">
+			</p>
+			<p>
+				<label>颜色</label>
+				<select name="color" >
+					<foreach item="vo" name="colorlist">
+						<option value="{$vo['color']}" <if condition="($result['color'] eq $vo['color'])">selected</if> style="background-color:{$vo['color']}">{$vo['colorname']}</option>
+
+					</foreach>
+				</select>
+			</p>
+			<p>
+				<label>类型</label>
+				<select name="type" class="combox">
+				<foreach item="vo" name="typelist">
+					<option value="{$vo['type']}" <if condition="($result['type'] eq $vo['type'])">selected</if> >{$vo['type']}</option>
+
+
+				</foreach>
+				</select>
+			</p>
+			<p>
+			<label>举办单位</label>
+			<input name="unit" type="text" value="{$result.unit}" class="required" id="unit"/>
+			</p>
+			<p>
+				<label>举办地址</label>
+				<input name="address" type="text" value="{$result.address}" class="required" id="address"/>
+			</p>
+				<p>
+				<label>联系人</label>
+				<input name="people" type="text"  value="{$result.people}"  id="people"/>
+			</p>
+			<p>
+				<label>联系人手机</label>
+				<input name="telephone" type="text" value="{$result.telephone}"  id="telephone"/>
+			</p>
+			<p>
+				<label>活动简介</label>
+				<textarea rows="25" cols="120" class="editor required" name="content">{$result.content}</textarea>
+			</p>
+		</div>
+		<div class="formBar">
+			<ul>
+				<li><div class="buttonActive"><div class="buttonContent"><button type="submit">保存</button></div></div></li>
+				<li>
+					<div class="button"><div class="buttonContent"><button type="button" class="close">取消</button></div></div>
+				</li>
+			</ul>
+		</div>
+	</form>
+</div>
